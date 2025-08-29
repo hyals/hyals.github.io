@@ -128,7 +128,7 @@ a:visited {
   padding: 0.4em;
   max-width: 200px;
 }
-.filter-body .columns {
+.img-gallery {
   flex-wrap: wrap;       /* already added */
   gap: 0.2rem;             /* adds spacing between columns and rows */
 }
