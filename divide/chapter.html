@@ -29,7 +29,7 @@
       text-align: center;
       margin: 1rem;
     }
-    button {
+    select, button {
       margin: 0.3rem;
       padding: 0.5rem 1rem;
       font-size: 16px;
@@ -51,10 +51,15 @@
 <body class="light">
 
   <div id="controls">
-    <!-- Chapter select -->
-    <button onclick="goToChapter(1)">Chapter 1</button>
-    <button onclick="goToChapter(2)">Chapter 2</button>
-    <button onclick="goToChapter(3)">Chapter 3</button>
+    <!-- Dropdown chapter selection -->
+    <label for="chapterSelect">Choose Chapter:</label>
+    <select id="chapterSelect" onchange="goToChapter(this.value)">
+      <option value="">-- Select --</option>
+      <option value="1">Chapter 1</option>
+      <option value="2">Chapter 2</option>
+      <option value="3">Chapter 3</option>
+      <!-- Add more as needed -->
+    </select>
     <br><br>
     <!-- Navigation -->
     <button onclick="prevChapter()">⟨ Prev</button>
@@ -123,12 +128,16 @@
         // Save last read chapter
         setCookie("lastChapter", num);
 
+        // Update dropdown
+        document.getElementById("chapterSelect").value = num;
+
       } catch (err) {
         container.innerHTML = `<span style="color:red;">Failed to load chapter: ${err.message}</span>`;
       }
     }
 
     function goToChapter(num) {
+      if (!num) return;
       window.location.hash = num;
     }
 
@@ -152,14 +161,14 @@
 
     function prevChapter() {
       const num = currentChapterNum();
-      if (num !== null && num > 1) goToChapter(num - 1);
+      if (num !== null && num > 0) goToChapter(num - 1);
     }
 
     // ------------------ FONT SIZE ------------------
     function changeFontSize(delta) {
       const container = document.getElementById("chapter-container");
       let currentSize = parseInt(window.getComputedStyle(container).fontSize);
-      currentSize = Math.max(12, currentSize + delta); // min 12px
+      currentSize = Math.max(12, currentSize + delta);
       container.style.fontSize = currentSize + "px";
       setCookie("fontSize", currentSize);
     }
@@ -183,7 +192,7 @@
         document.getElementById("chapter-container").style.fontSize = savedFontSize + "px";
       }
 
-      // Resume last chapter if no hash is set
+      // Resume last chapter if no hash
       if (!window.location.hash) {
         const last = getCookie("lastChapter");
         if (last) goToChapter(last);
