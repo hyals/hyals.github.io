@@ -301,10 +301,12 @@ text = text.trim();
 // Apply character replacements
 text = applyCharacterReplacements(text);
 
-text = text.replace(/\n{2,}/g, '\n'); //line breaks
+
         
 // Parse markdown (marked.js)
 container.innerHTML = marked.parse(text);
+
+        text = text.replace(/\n{2,}/g, '\n'); //line breaks
 
         // Save last read chapter
         setCookie("lastChapter", num);
