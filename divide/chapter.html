@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Novel Reader</title>
+  <style>
+    body.light {
+      background: #fdfdfd;
+      color: #222;
+    }
+    body.dark {
+      background: #1c1c1c;
+      color: #eee;
+    }
+    #chapter-container {
+      width: 60%;
+      margin: auto;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: inherit;
+      font-family: Georgia, serif;
+      font-size: var(--font-size, 18px);
+      line-height: 1.6;
+      min-height: 200px;
+      white-space: pre-wrap;
+    }
+    #controls {
+      text-align: center;
+      margin: 1rem;
+    }
+    button {
+      margin: 0.3rem;
+      padding: 0.5rem 1rem;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    img.character {
+      max-width: 80px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 4px;
+    }
+    img.chapter-img {
+      max-width: 100%;
+      display: block;
+      margin: 1rem auto;
+    }
+  </style>
+</head>
+<body class="light">
+
+  <div id="controls">
+    <!-- Chapter select -->
+    <button onclick="goToChapter(1)">Chapter 1</button>
+    <button onclick="goToChapter(2)">Chapter 2</button>
+    <button onclick="goToChapter(3)">Chapter 3</button>
+    <br><br>
+    <!-- Navigation -->
+    <button onclick="prevChapter()">⟨ Prev</button>
+    <button onclick="nextChapter()">Next ⟩</button>
+    <br><br>
+    <!-- Reader settings -->
+    <button onclick="changeFontSize(2)">A+</button>
+    <button onclick="changeFontSize(-2)">A-</button>
+    <button onclick="toggleTheme()">Toggle Theme</button>
+  </div>
+
+  <div id="chapter-container">
+    <em>Select a chapter to begin reading...</em>
+  </div>
+
+  <script>
+    // ------------------ COOKIE HELPERS ------------------
+    function setCookie(name, value, days = 365) {
+      const d = new Date();
+      d.setTime(d.getTime() + (days*24*60*60*1000));
+      document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
+    }
+
+    function getCookie(name) {
+      const cookies = document.cookie.split(';').map(c => c.trim());
+      for (let c of cookies) {
+        if (c.startsWith(name + "=")) {
+          return decodeURIComponent(c.substring(name.length + 1));
+        }
+      }
+      return null;
+    }
+
+    // ------------------ CHAPTER LOADING ------------------
+    const replacements = {
+      "[character1]": '<img class="character" src="images/char1.png" alt="Character 1">',
+      "[character2]": '<img class="character" src="images/char2.png" alt="Character 2">'
+    };
+
+    function applyReplacements(text) {
+      for (const [placeholder, replacement] of Object.entries(replacements)) {
+        text = text.split(placeholder).join(replacement);
+      }
+      return text;
+    }
+
+    async function loadChapter(filePath, num) {
+      const container = document.getElementById("chapter-container");
+      container.innerHTML = "<em>Loading...</em>";
+
+      try {
+        const response = await fetch(filePath);
+        if (!response.ok) throw new Error(`Error: ${response.status} ${response.statusText}`);
+
+        let text = await response.text();
+        text = applyReplacements(text.trim());
+
+        if (/^https?:\/\/.*\.(jpg|jpeg|png|gif|webp|svg)$/i.test(text)) {
+          container.innerHTML = `<img class="chapter-img" src="${text}" alt="Chapter image">`;
+        } else if (/<\/?[a-z][\s\S]*>/i.test(text)) {
+          container.innerHTML = text;
+        } else {
+          container.innerHTML = text;
+        }
+
+        // Save last read chapter
+        setCookie("lastChapter", num);
+
+      } catch (err) {
+        container.innerHTML = `<span style="color:red;">Failed to load chapter: ${err.message}</span>`;
+      }
+    }
+
+    function goToChapter(num) {
+      window.location.hash = num;
+    }
+
+    function handleHashChange() {
+      const hash = window.location.hash.substring(1);
+      if (hash && !isNaN(hash)) {
+        loadChapter(`chapters/chapter${hash}.txt`, hash);
+      }
+    }
+
+    // ------------------ NAVIGATION ------------------
+    function currentChapterNum() {
+      const hash = window.location.hash.substring(1);
+      return hash && !isNaN(hash) ? parseInt(hash) : null;
+    }
+
+    function nextChapter() {
+      const num = currentChapterNum();
+      if (num !== null) goToChapter(num + 1);
+    }
+
+    function prevChapter() {
+      const num = currentChapterNum();
+      if (num !== null && num > 1) goToChapter(num - 1);
+    }
+
+    // ------------------ FONT SIZE ------------------
+    function changeFontSize(delta) {
+      const container = document.getElementById("chapter-container");
+      let currentSize = parseInt(window.getComputedStyle(container).fontSize);
+      currentSize = Math.max(12, currentSize + delta); // min 12px
+      container.style.fontSize = currentSize + "px";
+      setCookie("fontSize", currentSize);
+    }
+
+    // ------------------ THEME ------------------
+    function toggleTheme() {
+      const body = document.body;
+      body.classList.toggle("dark");
+      body.classList.toggle("light");
+      setCookie("theme", body.classList.contains("dark") ? "dark" : "light");
+    }
+
+    // ------------------ INIT ------------------
+    window.addEventListener("load", () => {
+      // Apply saved preferences
+      const savedTheme = getCookie("theme");
+      if (savedTheme) document.body.className = savedTheme;
+
+      const savedFontSize = getCookie("fontSize");
+      if (savedFontSize) {
+        document.getElementById("chapter-container").style.fontSize = savedFontSize + "px";
+      }
+
+      // Resume last chapter if no hash is set
+      if (!window.location.hash) {
+        const last = getCookie("lastChapter");
+        if (last) goToChapter(last);
+      }
+
+      handleHashChange();
+    });
+
+    window.addEventListener("hashchange", handleHashChange);
+  </script>
+
+</body>
+</html>
