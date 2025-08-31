@@ -151,9 +151,9 @@
 
     // ------------------ NAVIGATION ------------------
     function currentChapterNum() {
-      const hash = window.location.hash.substring(1);
-      return hash && !isNaN(hash) ? parseInt(hash) : null;
-    }
+  const hash = window.location.hash.substring(1);
+  return hash !== "" && !isNaN(hash) ? Number(hash) : null;
+}
 
     function nextChapter() {
       const num = currentChapterNum();
