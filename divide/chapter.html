@@ -221,6 +221,12 @@
   </div>
 
   <script>
+
+    // configure marked
+marked.setOptions({
+  breaks: false
+});
+    
     // ------------------ COOKIE HELPERS ------------------
     function setCookie(name, value, days = 365) {
       const d = new Date();
