@@ -47,6 +47,148 @@
       display: block;
       margin: 1rem auto;
     }
+
+
+
+     /* Chapter container */
+  #chapter-container {
+    width: 60%;
+    margin: auto;
+    padding: 1.5rem;
+    border-radius: 10px;
+    background: inherit;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 18px;
+    line-height: 1.8;
+    min-height: 250px;
+    white-space: pre-wrap;
+    transition: all 0.3s;
+  }
+
+  /* Headings */
+  #chapter-container h1 {
+    font-size: 2.2em;
+    margin: 1.5rem 0 0.8rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  #chapter-container h2 {
+    font-size: 1.8em;
+    margin: 1.3rem 0 0.7rem;
+  }
+  #chapter-container h3 {
+    font-size: 1.5em;
+    margin: 1rem 0 0.5rem;
+  }
+
+  /* Paragraphs */
+  #chapter-container p {
+    margin: 0.6rem 0;
+    text-align: justify;
+  }
+
+  /* Bold & italic */
+  #chapter-container strong {
+    font-weight: bold;
+  }
+  #chapter-container em {
+    font-style: italic;
+  }
+
+  /* Lists */
+  #chapter-container ul,
+  #chapter-container ol {
+    margin: 0.6rem 0 0.6rem 2rem;
+  }
+
+  /* Images inside markdown */
+  #chapter-container img {
+    max-width: 90%;
+    display: block;
+    margin: 1rem auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  /* Character images inline */
+  #chapter-container img.character {
+    max-width: 70px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.3rem;
+    box-shadow: none;
+  }
+
+  /* Links */
+  #chapter-container a {
+    color: #0077cc;
+    text-decoration: underline;
+    transition: color 0.3s;
+  }
+  #chapter-container a:hover {
+    color: #005fa3;
+  }
+
+  /* Blockquotes */
+  #chapter-container blockquote {
+    border-left: 4px solid #ccc;
+    margin: 0.6rem 0;
+    padding-left: 1rem;
+    color: #555;
+    font-style: italic;
+    background: rgba(0,0,0,0.02);
+    border-radius: 4px;
+  }
+
+  /* Code blocks */
+  #chapter-container pre {
+    background: #f4f4f4;
+    padding: 0.8rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 0.8rem 0;
+  }
+  #chapter-container code {
+    font-family: monospace;
+    background: #eee;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+  }
+
+  /* Dark theme adjustments */
+  body.dark #chapter-container {
+    color: #ddd;
+  }
+  body.dark #chapter-container h1,
+  body.dark #chapter-container h2,
+  body.dark #chapter-container h3 {
+    color: #fff;
+  }
+  body.dark #chapter-container p {
+    color: #ccc;
+  }
+  body.dark #chapter-container blockquote {
+    border-left-color: #888;
+    background: rgba(255,255,255,0.05);
+    color: #aaa;
+  }
+  body.dark #chapter-container pre {
+    background: #333;
+    color: #eee;
+  }
+  body.dark #chapter-container code {
+    background: #444;
+    color: #fff;
+  }
+  body.dark #chapter-container a {
+    color: #66aaff;
+  }
+
+    #chapter-container p {
+  margin: 0.6rem 0;
+  text-align: justify;
+  text-indent: 2em; /* classic first-line indent */
+}
   </style>
 </head>
 <body class="light">
@@ -129,6 +271,9 @@
 
         // Update dropdown
         document.getElementById("chapterSelect").value = num;
+
+         // Smooth scroll to top
+    container.scrollIntoView({ behavior: "smooth" });
 
       } catch (err) {
         container.innerHTML = `<span style="color:red;">Failed to load chapter: ${err.message}</span>`;
