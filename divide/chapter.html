@@ -192,28 +192,63 @@
   text-indent: 2em; /* classic first-line indent */
 }
 
+
+
     .character-box {
-  border: 2px solid #0077cc;
-  border-radius: 8px;
-  padding: 1rem;
+  border: none;              /* remove default fieldset border */
+  border-radius: 16px;       /* rounded bubble shape */
+  padding: 0.8rem 1rem;
   margin: 1rem 0;
-  background: rgba(0, 119, 204, 0.05);
+  max-width: 70%;            /* not full width → bubble look */
+  position: relative;
+  background: #e6f3ff;       /* light blue bubble */
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+  font-size: 1rem;
 }
+
 .character-box legend {
   font-weight: bold;
+  font-size: 0.85rem;
   padding: 0 0.5rem;
+  margin-left: 0.5rem;
   color: #0077cc;
 }
-body.dark .character-box {
-  border-color: #66aaff;
-  background: rgba(102, 170, 255, 0.1);
-}
-body.dark .character-box legend {
-  color: #66aaff;
-}
+
 .character-box p {
-  margin: 0.3rem 0;
+  margin: 0.2rem 0 0;
 }
+
+/* Left vs Right alignment */
+.character-left {
+  margin-right: auto;
+  background: #e6f3ff; /* blue-ish */
+}
+
+.character-right {
+  margin-left: auto;
+  background: #f2f2f2; /* grey-ish */
+}
+
+/* Tail for chat bubble */
+.character-left::after,
+.character-right::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  transform: rotate(45deg);
+}
+
+.character-left::after {
+  left: 12px;
+}
+
+.character-right::after {
+  right: 12px;
+}
+
   </style>
 </head>
 <body class="light">
@@ -273,7 +308,7 @@ function applyCharacterReplacements(text) {
   // Matches lines like: [character1] some dialogue
   return text.replace(/\[(\w+)\]\s*(.*)/g, (match, charKey, dialogue) => {
     if (characterNames[charKey]) {
-      return `<fieldset class="character-box">
+      return `<fieldset class="character-box character-left">
                 <legend>${characterNames[charKey]}</legend>
                 <p>${dialogue}</p>
               </fieldset>`;
