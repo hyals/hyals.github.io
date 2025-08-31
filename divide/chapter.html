@@ -191,6 +191,29 @@
   text-align: justify;
   text-indent: 2em; /* classic first-line indent */
 }
+
+    .character-box {
+  border: 2px solid #0077cc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  background: rgba(0, 119, 204, 0.05);
+}
+.character-box legend {
+  font-weight: bold;
+  padding: 0 0.5rem;
+  color: #0077cc;
+}
+body.dark .character-box {
+  border-color: #66aaff;
+  background: rgba(102, 170, 255, 0.1);
+}
+body.dark .character-box legend {
+  color: #66aaff;
+}
+.character-box p {
+  margin: 0.3rem 0;
+}
   </style>
 </head>
 <body class="light">
@@ -239,17 +262,25 @@
     }
 
     // ------------------ CHAPTER LOADING ------------------
-    const replacements = {
-      "[character1]": '<img class="character" src="images/char1.png" alt="Character 1">',
-      "[character2]": '<img class="character" src="images/char2.png" alt="Character 2">'
-    };
+const characterNames = {
+  "Hya": "Hya",
+  "Lina": "Lina",
+  "Vita": "Vita",
+  "Gaukel": "Gaukel"
+};
 
-    function applyReplacements(text) {
-      for (const [placeholder, replacement] of Object.entries(replacements)) {
-        text = text.split(placeholder).join(replacement);
-      }
-      return text;
+function applyCharacterReplacements(text) {
+  // Matches lines like: [character1] some dialogue
+  return text.replace(/\[(\w+)\]\s*(.*)/g, (match, charKey, dialogue) => {
+    if (characterNames[charKey]) {
+      return `<fieldset class="character-box">
+                <legend>${characterNames[charKey]}</legend>
+                <p>${dialogue}</p>
+              </fieldset>`;
     }
+    return match; // leave unchanged if character not found
+  });
+}
 
 
 
@@ -262,15 +293,14 @@
         if (!response.ok) throw new Error(`Error: ${response.status} ${response.statusText}`);
 
         let text = await response.text();
-        text = applyReplacements(text.trim());
+text = text.trim();
+
+// Apply character replacements
+text = applyCharacterReplacements(text);
 
 
-
-        if (/^#|\*\*|__|\[.*\]\(.*\)|!\[.*\]\(.*\)/m.test(text)) {
-      container.innerHTML = marked.parse(text); // try to parse markdown as html
-    } else {
-          container.innerHTML = text;
-        }
+// Parse markdown (marked.js)
+container.innerHTML = marked.parse(text);
 
         // Save last read chapter
         setCookie("lastChapter", num);
