@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Novel Reader</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body.light {
       background: #fdfdfd;
@@ -117,11 +118,9 @@
         let text = await response.text();
         text = applyReplacements(text.trim());
 
-        if (/^https?:\/\/.*\.(jpg|jpeg|png|gif|webp|svg)$/i.test(text)) {
-          container.innerHTML = `<img class="chapter-img" src="${text}" alt="Chapter image">`;
-        } else if (/<\/?[a-z][\s\S]*>/i.test(text)) {
-          container.innerHTML = text;
-        } else {
+        if (/^#|\*\*|__|\[.*\]\(.*\)|!\[.*\]\(.*\)/m.test(text)) {
+      container.innerHTML = marked.parse(text); // try to parse markdown as html
+    } else {
           container.innerHTML = text;
         }
 
