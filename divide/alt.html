@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Novel Reader</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      line-height: 1.6;
+      background: #fdfdfd;
+      color: #222;
+      margin: 0;
+      padding: 1rem;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: #111;
+      color: #ddd;
+    }
+    #controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    select, button {
+      padding: 0.3rem 0.6rem;
+      font-size: 1rem;
+    }
+    #content {
+      max-width: 800px;
+      margin: auto;
+      font-size: var(--font-size, 1rem);
+    }
+    /* Character dialogue box */
+    .character-box {
+      border: 2px solid #0077cc;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      margin: 1rem 0;
+      background: rgba(0, 119, 204, 0.05);
+    }
+    .character-box legend {
+      font-weight: bold;
+      padding: 0 0.5rem;
+      color: #0077cc;
+    }
+    body.dark .character-box {
+      border-color: #66aaff;
+      background: rgba(102, 170, 255, 0.1);
+    }
+    body.dark .character-box legend {
+      color: #66aaff;
+    }
+    .character-box p {
+      margin: 0.3rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <button id="prev">◀ Prev</button>
+    <select id="chapterSelect"></select>
+    <button id="next">Next ▶</button>
+    <button id="toggleTheme">Toggle Theme</button>
+    <button id="increaseFont">A+</button>
+    <button id="decreaseFont">A-</button>
+  </div>
+
+  <div id="content">Loading...</div>
+
+<script>
+  // === CONFIGURATION ===
+  const totalChapters = 10; // Now 1..10, no prologue
+
+  // === LOAD CHAPTER ===
+  async function loadChapter(num) {
+    const container = document.getElementById("content");
+    try {
+      const response = await fetch(`chapters/chapter${num}.txt`);
+      let text = await response.text();
+
+      text = text.trim();
+      text = text.replace(/\n{2,}/g, "\n"); // collapse double breaks
+      text = applyCharacterReplacements(text);
+
+      container.innerHTML = marked.parse(text);
+
+      // Update dropdown
+      document.getElementById("chapterSelect").value = num;
+    } catch (e) {
+      container.innerHTML = `<p>Chapter ${num} not found.</p>`;
+    }
+  }
+
+  // === INITIALIZE ===
+  function init() {
+    // Theme + font size cookie restore
+    if (getCookie("theme") === "dark") document.body.classList.add("dark");
+    const savedSize = getCookie("fontSize");
+    if (savedSize) document.getElementById("content").style.fontSize = savedSize;
+
+    // Build dropdown (1..totalChapters only)
+    const select = document.getElementById("chapterSelect");
+    for (let i = 1; i <= totalChapters; i++) {
+      const opt = document.createElement("option");
+      opt.value = i;
+      opt.textContent = "Chapter " + i;
+      select.appendChild(opt);
+    }
+
+    // Load from hash or default to 1
+    let chapterNum = parseInt(location.hash.replace("#", "")) || 1;
+    if (chapterNum < 1) chapterNum = 1;
+    loadChapter(chapterNum);
+
+    // Events
+    select.addEventListener("change", e => {
+      const num = parseInt(e.target.value);
+      location.hash = num;
+    });
+
+    window.addEventListener("hashchange", () => {
+      let num = parseInt(location.hash.replace("#", "")) || 1;
+      if (num < 1) num = 1;
+      loadChapter(num);
+    });
+
+    document.getElementById("prev").addEventListener("click", () => {
+      let num = parseInt(location.hash.replace("#", "")) || 1;
+      if (num > 1) {
+        num--;
+        location.hash = num;
+      }
+    });
+
+    document.getElementById("next").addEventListener("click", () => {
+      let num = parseInt(location.hash.replace("#", "")) || 1;
+      if (num < totalChapters) {
+        num++;
+        location.hash = num;
+      }
+    });
+
+    // Theme + font size buttons same as before...
+  }
+
+  window.addEventListener("DOMContentLoaded", init);
+</script>
+
+</body>
+</html>
