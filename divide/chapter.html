@@ -221,12 +221,6 @@
   </div>
 
   <script>
-
-    // configure marked
-marked.setOptions({
-  breaks: false
-});
-    
     // ------------------ COOKIE HELPERS ------------------
     function setCookie(name, value, days = 365) {
       const d = new Date();
@@ -256,6 +250,12 @@ marked.setOptions({
       }
       return text;
     }
+
+    text = applyReplacements(text.trim());
+
+// Remove all double (or multiple) line breaks
+text = text.replace(/\n{2,}/g, '\n'); // collapses two or more line breaks into a single one
+
 
     async function loadChapter(filePath, num) {
       const container = document.getElementById("chapter-container");
