@@ -251,10 +251,6 @@
       return text;
     }
 
-    text = applyReplacements(text.trim());
-
-// Remove all double (or multiple) line breaks
-text = text.replace(/\n{2,}/g, '\n'); // collapses two or more line breaks into a single one
 
 
     async function loadChapter(filePath, num) {
@@ -267,6 +263,12 @@ text = text.replace(/\n{2,}/g, '\n'); // collapses two or more line breaks into 
 
         let text = await response.text();
         text = applyReplacements(text.trim());
+
+            text = applyReplacements(text.trim());
+
+// Remove all double (or multiple) line breaks
+text = text.replace(/\n{2,}/g, '\n'); // collapses two or more line breaks into a single one
+
 
         if (/^#|\*\*|__|\[.*\]\(.*\)|!\[.*\]\(.*\)/m.test(text)) {
       container.innerHTML = marked.parse(text); // try to parse markdown as html
