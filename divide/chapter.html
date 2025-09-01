@@ -301,7 +301,7 @@ text = text.trim();
 // Apply character replacements
 text = applyCharacterReplacements(text);
 
-text = text.replace(/\n{3,}/g, '\n\n');
+text = text.replace(/\n{2,}/g, ' ');
         
 // Parse markdown (marked.js)
 container.innerHTML = marked.parse(text);
