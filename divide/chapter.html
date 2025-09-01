@@ -199,12 +199,19 @@
 
    /* Character dialogue box */
     .character-box {
-      border: 2px solid #0077cc;
       border-radius: 8px;
       padding: 0.7rem 1rem;
       margin: 1rem 0;
-      background: rgba(0, 119, 204, 0.05);
     }
+    .character-box.red {
+    background: rgba(204, 0, 100, 0.05);
+      border: 2px solid #cc0064;
+    }
+    .character-box.blue {
+    background: rgba(0, 119, 204, 0.05);
+      border: 2px solid #0077cc;
+    }
+    
     .character-box legend {
       font-weight: bold;
       padding: 0 0.5rem;
@@ -269,19 +276,19 @@
 
     // ------------------ CHAPTER LOADING ------------------
 const characterNames = {
-  "Hya": "Hya",
-  "Lina": "Lina",
-  "Vita": "Vita",
-  "Gaukel": "Gaukel"
+  "Hya": { label: "Character 1", color: "red" },
+  "Lina": { label: "Character 2", color: "blue" },
+  "Vita": { label: "Narrator", color: "blue" },
+  "Gaukel": { label: "Narrator", color: "blue" }
 };
 
 function applyCharacterReplacements(text) {
-  // Matches lines like: [character1] some dialogue
   return text.replace(/\[(\w+)\]\s*(.*)/g, (match, charKey, dialogue) => {
-    if (characterNames[charKey]) {
-      return `<fieldset class="character-box character-left"><legend><i class="ti ti-bubble-text"></i> ${characterNames[charKey]}</legend><p>${dialogue}</p></fieldset>`;
+    const char = characterNames[charKey];
+    if (char) {
+      return `<fieldset class="character-box ${char.color}"><legend><i class="ti ti-bubble-text"></i> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
     }
-    return match; // leave unchanged if character not found
+    return match;
   });
 }
 
