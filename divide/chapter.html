@@ -276,10 +276,7 @@ function applyCharacterReplacements(text) {
   // Matches lines like: [character1] some dialogue
   return text.replace(/\[(\w+)\]\s*(.*)/g, (match, charKey, dialogue) => {
     if (characterNames[charKey]) {
-      return `<fieldset class="character-box character-left">
-                <legend>${characterNames[charKey]}</legend>
-                <p>${dialogue}</p>
-              </fieldset>`;
+      return `<fieldset class="character-box character-left"><legend>${characterNames[charKey]}</legend><p>${dialogue}</p></fieldset>`;
     }
     return match; // leave unchanged if character not found
   });
@@ -302,9 +299,7 @@ text = text.trim();
 text = applyCharacterReplacements(text);
         
 // Parse markdown (marked.js)
-text = marked.parse(text);
-
-       container.innerHTML = text.replace(/ {2,}/g, ' ');
+container.innerHTML = marked.parse(text);
 
         // Save last read chapter
         setCookie("lastChapter", num);
