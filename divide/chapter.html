@@ -306,7 +306,7 @@ text = applyCharacterReplacements(text);
 // Parse markdown (marked.js)
 $text = marked.parse(text);
 
-        text = text.replace(/\n{2,}/g, '\n');
+        text = text.replace(/\n{2,}/g, ' ');
 
         container.innerHTML = text;
 
