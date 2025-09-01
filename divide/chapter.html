@@ -321,8 +321,8 @@ container.innerHTML = marked.parse(text);
 
       } catch (err) {
         container.innerHTML = `<span style="color:red;">Failed to load chapter: ${err.message}</span>`;
-        document.getElementById("next-button").style.display = "none";
-      }else{document.getElementById("next-button").style.display = "block";}
+        
+      }
     }
 
     function goToChapter(num) {
