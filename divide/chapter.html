@@ -243,7 +243,7 @@ color:#0077cc;
     <br><br>
     <!-- Navigation -->
     <button onclick="prevChapter()">⟨ Prev</button>
-    <button onclick="nextChapter()">Next ⟩</button>
+    <button id="next-button" onclick="nextChapter()">Next ⟩</button>
     <br><br>
     <!-- Reader settings -->
     <button onclick="changeFontSize(2)">A+</button>
@@ -321,6 +321,7 @@ container.innerHTML = marked.parse(text);
 
       } catch (err) {
         container.innerHTML = `<span style="color:red;">Failed to load chapter: ${err.message}</span>`;
+        document.getElementById("next-button").style.display = "none";
       }
     }
 
