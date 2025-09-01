@@ -300,11 +300,11 @@ text = text.trim();
 
 // Apply character replacements
 text = applyCharacterReplacements(text);
-
-text = text.replace(/\n{2,}/g, ' ');
         
 // Parse markdown (marked.js)
-container.innerHTML = marked.parse(text);
+text = marked.parse(text);
+
+       container.innerHTML = text.replace(/\n{2,}/g, '\n');
 
         // Save last read chapter
         setCookie("lastChapter", num);
