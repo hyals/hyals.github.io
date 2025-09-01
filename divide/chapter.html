@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
   <title>Novel Reader</title>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -279,7 +279,7 @@ function applyCharacterReplacements(text) {
   // Matches lines like: [character1] some dialogue
   return text.replace(/\[(\w+)\]\s*(.*)/g, (match, charKey, dialogue) => {
     if (characterNames[charKey]) {
-      return `<fieldset class="character-box character-left"><legend>${characterNames[charKey]}</legend><p>${dialogue}</p></fieldset>`;
+      return `<fieldset class="character-box character-left"><legend><i class="ti ti-bubble-text"></i> ${characterNames[charKey]}</legend><p>${dialogue}</p></fieldset>`;
     }
     return match; // leave unchanged if character not found
   });
