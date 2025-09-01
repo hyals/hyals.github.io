@@ -304,7 +304,7 @@ text = applyCharacterReplacements(text);
 // Parse markdown (marked.js)
 text = marked.parse(text);
 
-       container.innerHTML text.replace(/ {2,}/g, ' ');
+       container.innerHTML = text.replace(/ {2,}/g, ' ');
 
         // Save last read chapter
         setCookie("lastChapter", num);
