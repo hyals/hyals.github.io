@@ -187,7 +187,7 @@
   }
 
     #chapter-container p {
-  margin: 0.6rem 0;
+  margin: 0;
   text-align: justify;
   text-indent: 2em; /* classic first-line indent */
 }
@@ -304,9 +304,11 @@ text = applyCharacterReplacements(text);
 
         
 // Parse markdown (marked.js)
-container.innerHTML = marked.parse(text);
+$text = marked.parse(text);
 
-        text = text.replace(/\n{2,}/g, '\n'); //line breaks
+        text = text.replace(/\n{2,}/g, '\n');
+
+        container.innerHTML = text;
 
         // Save last read chapter
         setCookie("lastChapter", num);
