@@ -334,7 +334,7 @@ container.innerHTML = marked.parse(text);
     function handleHashChange() {
       const hash = window.location.hash.substring(1);
       if (hash && !isNaN(hash)) {
-        loadChapter(`chapters/chapter${hash}.txt`, hash);
+        loadChapter(`chapter${hash}.txt`, hash);
       }
     }
 
