@@ -47,7 +47,7 @@ body {
 }
 
 /** DARK OVERRIDE **/
-.card,.modal {
+.card,.modal-container {
   background: #263544;
   border: 0;
 }
