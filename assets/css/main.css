@@ -51,6 +51,7 @@ body {
   background: #263544;
   border: 0;
 }
+.modal-header{color:white}
 .neko-navbar,
 .filter-item.card {
   background: #161e27 !important;
