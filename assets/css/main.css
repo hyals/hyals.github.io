@@ -41,24 +41,24 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  background: #161e27;
+  background: #09101D;
   font-family: "Poppins";
   color: white;
 }
 
 /** DARK OVERRIDE **/
 .card,.modal-container {
-  background: #263544;
+  background: #202334;
   border: 0;
 }
 .modal-header,.modal-title{color:white !important}
 .neko-navbar,
 .filter-item.card {
-  background: #161e27 !important;
+  background: #09101D !important;
   color: white;
 }
 .off-canvas .off-canvas-sidebar {
-  background-image: linear-gradient(to right, black, #161e27) !important;
+  background-image: linear-gradient(to right, black, #09101D) !important;
   color: white;
 }
 .menu-item > a:hover,
