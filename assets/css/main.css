@@ -108,7 +108,7 @@ a:link{filter: hue-rotate(-20deg);}
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
-  filter: hue-rotate(0deg);
+  filter: hue-rotate(20deg);
 }
 .va-middle {
   vertical-align: middle;
@@ -142,7 +142,8 @@ a:link{filter: hue-rotate(-20deg);}
     height: 1.8rem;
     text-align: center;
     user-select: none;
-    vertical-align: middle;}
+    vertical-align: middle;
+              padding:8px}
 
 @media only screen and (max-width: 960px) {
   #content {
