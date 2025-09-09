@@ -93,13 +93,13 @@ body {
 }
 .filter-nav{
   color: black;
+  filter: hue-rotate(20deg);
   transition: all 0.5s ease;
 }
 .btn,
 .bg-primary,
 .text-primary,
 .filter-nav-container,
-.filter-nav-container:hover,
 a,
 a:visited,
 a:active,
