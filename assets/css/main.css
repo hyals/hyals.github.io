@@ -95,7 +95,6 @@ body {
 */
 .filter-nav{
   color: black;
-  filter: hue-rotate(-20deg);
 }
 .btn.btn-primary,
 .btn.btn-link,
