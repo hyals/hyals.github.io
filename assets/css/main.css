@@ -99,6 +99,7 @@ body {
 .bg-primary,
 .text-primary,
 .filter-nav-container,
+.filter-nav-container:hover,
 a,
 a:visited,
 a:active,
