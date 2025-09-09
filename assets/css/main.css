@@ -116,7 +116,7 @@ a:hover,
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
-  filter: hue-rotate(20deg);
+  filter: hue-rotate(40deg);
 }
 .va-middle {
   vertical-align: middle;
