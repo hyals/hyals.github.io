@@ -97,7 +97,7 @@ body {
   color: black;
   filter: hue-rotate(-20deg);
 }
-.btn,
+.btn.btn-primary,
 .btn.btn-link,
 .bg-primary,
 .text-primary,
@@ -105,7 +105,6 @@ a,
 a:visited,
 a:active,
 a:hover,
-a:link,
 .filter .filter-tag#tag-0:checked~.filter-nav .chip[for=tag-0], 
 .filter .filter-tag#tag-1:checked~.filter-nav .chip[for=tag-1], 
 .filter .filter-tag#tag-2:checked~.filter-nav .chip[for=tag-2]
