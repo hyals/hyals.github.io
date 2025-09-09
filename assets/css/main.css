@@ -91,7 +91,7 @@ body {
 .remove-color:hover {
   filter: grayscale(0%);
 }
-.filter-nav {
+.filter{
   color: black;
  filter: hue-rotate(-20deg);
   transition: all 0.5s ease;
