@@ -102,7 +102,7 @@ a,
 a:visited,
 a:active,
 a:hover,
-a:link{filter: hue-rotate(-20deg);}
+a:link{filter: hue-rotate(-10deg);}
 /** DARK OVERRIDE END **/
 
 .img-square{
