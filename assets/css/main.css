@@ -97,8 +97,8 @@ body {
   transition: all 0.5s ease;
 }
 .btn,
-.filter-tag,
-.filter-tag:hover,
+.bg-primary,
+.text-primary,
 a,
 a:visited,
 a:active,
