@@ -109,7 +109,7 @@ a:hover,
 .filter .filter-tag#tag-1:checked~.filter-nav .chip[for=tag-1], 
 .filter .filter-tag#tag-2:checked~.filter-nav .chip[for=tag-2]
 {
-  filter: hue-rotate(-90deg);
+  filter: hue-rotate(-40deg);
 }
 /** DARK OVERRIDE END **/
 
