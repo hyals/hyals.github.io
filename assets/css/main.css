@@ -91,12 +91,13 @@ body {
 .remove-color:hover {
   filter: grayscale(0%);
 }
-.filter{
+.filter-nav{
   color: black;
  filter: hue-rotate(-20deg);
   transition: all 0.5s ease;
 }
 .btn,
+.filter-tag,
 a,
 a:visited,
 a:active,
