@@ -63,7 +63,7 @@ body {
 }
 .menu-item > a:hover {
  /* background: #1e2936 !important; */
-  color: white !important;
+  color: black !important;
   transition: all 0.5s ease;
 }
 .menu-item > a {
