@@ -14,20 +14,14 @@
     <link rel="icon" type="image/svg+xml" href="/assets/img/writing.svg">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
     <link rel="stylesheet" href="/assets/css/main.css">
     <script src="/assets/js/main.js"></script>
     <link rel="canonical" href="https://hyals.ink">
   </head>
   <body>
     <div class="neko-container off-canvas off-canvas-sidebar-show">
-      <!--
-        #######################################
-        #######################################
-        this is the TOP navigation bar (mobile)
-        #######################################
-        #######################################
-        !-->
+      <!-- TOP navigation bar (mobile) -->
       <div class="neko-navbar">
         <header class="navbar">
           <section class="navbar-section">
@@ -48,13 +42,8 @@
           </section>
         </header>
       </div>
-      <!--
-        #######################################
-        #######################################
-        this is the sidebar 
-        #######################################
-        #######################################
-        !-->
+
+      <!-- Sidebar -->
       <div class="neko-sidebar off-canvas-sidebar" id="sidebar" ontouchmove="event.preventDefault()">
         <div class="neko-brand">
           <a class="neko-logo disable-select" href="/">
@@ -69,229 +58,58 @@
             <li class="divider" data-content="Home"></li>
             <li class="menu-item">
               <a href="">
-                <i class="ti ti-user-square text-large va-middle"></i> Portfolio</a>
+                <i class="ti ti-user-square text-large va-middle"></i> Portfolio
+              </a>
             </li>
             <li class="divider" data-content="Works"></li>
             <li class="menu-item">
               <a href="/divide">
-                <i class="ti ti-books text-large va-middle"></i> BEYOND THE DIVIDE </a>
+                <i class="ti ti-books text-large va-middle"></i> BEYOND THE DIVIDE
+              </a>
             </li>
           </ul>
         </div>
       </div>
+
       <a class="off-canvas-overlay" href="#close" ontouchstart="window.location.hash='#close';event.preventDefault()"></a>
+
       <div class="off-canvas-content">
         <div class="neko-content" id="content">
-          <!-- about me modal -->
-          <div class="modal" id="about-me">
-  <a href="#close" onclick="OpenCloseModal('about-me');" class="modal-overlay" aria-label="Close"></a>
-  <div class="modal-container">
-    <div class="modal-header">
-      <a href="#close" onclick="OpenCloseModal('about-me');" class="btn btn-clear float-right" aria-="Close"></a>
-      <div class="modal-title h5">About me</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">
-    <p>▼ Work Environment ▼<br>
-Android<br>
-CLIP STUDIO PAINT PRO</p>
 
-        <p>◆ For other inquiries, including work-related consultations,
-please contact at bkhz@pm.me</p>
-      </div>
-    </div>
-    <div class="modal-footer">
-      🦝✨
-    </div>
-  </div>
-</div>
+          <!-- About me modal -->
+          <div class="modal" id="about-me">
+            <a href="#close" onclick="OpenCloseModal('about-me');" class="modal-overlay" aria-label="Close"></a>
+            <div class="modal-container">
+              <div class="modal-header">
+                <a href="#close" onclick="OpenCloseModal('about-me');" class="btn btn-clear float-right" aria-label="Close"></a>
+                <div class="modal-title h5">About me</div>
+              </div>
+              <div class="modal-body">
+                <div class="content">
+                  <p>▼ Work Environment ▼<br>
+                  Android<br>
+                  CLIP STUDIO PAINT PRO</p>
+
+                  <p>◆ For other inquiries, including work-related consultations,
+                  please contact at bkhz@pm.me</p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                🦝✨
+              </div>
+            </div>
+          </div>
+
           <div class="columns">
             <div class="column col-3 col-md-4 col-sm-12 mb-2 remove-color">
               <!-- sidebar/profile -->
               <div class="p-relative">
                 <a href="https://ko-fi.com/hyals" target="_blank">
-                <img src="https://storage.ko-fi.com/cdn/kofi3.png" width="60%" class="p-absolute disable-select kofi-button">
+                  <img src="https://storage.ko-fi.com/cdn/kofi3.png" width="60%" class="p-absolute disable-select kofi-button" alt="Ko-fi">
                 </a>
               </div>
               <div class="editheader" id="uploadPreviewcover" style="background-image:url('assets/img/header.jpg');background-position: center center;background-size: cover;">
                 <div class="text-light text-center" id="user-header-shadow" style="min-height:150px"></div>
               </div>
               <span class="pfp-container">
-                <span class="avatar avatar-xl" style="background-image:url('assets/img/profile_picture.jpg');background-position: center center;background-size: cover;width: 80px; height: 80px;position:relative;top:-50px;border: medium solid white;"></span>
-              </span>
-              <div class="m-2">
-                <div class="columns col-gapless">
-                  <div class="column col-auto">
-                    <h3 class="pt-1 m-0">hyaL-s</h3>
-                  </div>
-                  <div class="column col">
-                    <span class="text-small pt-1 m-0" style="writing-mode: vertical-rl;text-orientation:sideways;">△□△</span>
-                  </div>
-                </div>
-                <div class="disable-select">
-                  <span class="label text-small">Illustrator</span>
-                  <span class="label text-small">Writer</span>
-                </div>
-                <div class="pt-2">
-                  <p>Latino illustrator 🎨 with a passion for raccoons 🦝 and a distaste for ruckus. <a onclick="OpenCloseModal('about-me');" class="btn btn-link text-tiny">Read more <i class="ti ti-chevron-right va-middle"></i></a></p>
-                  <p class="text-tiny">
-                    <span class="label">
-                      <i class="ti ti-language"></i>
-                    </span> English / Español
-                  </p>
-                </div>
-                <div class="pb-2 disable-select">
-                  <a href="https://x.com/hyxls" class="text-no-decoration" target="_blank">
-                    <btn class="btn text-large s-circle">
-                    <i class="ti ti-brand-x"></i>
-                    </btn>
-                  </a>
-                  <a href="https://bsky.app/profile/hyals.ink" class="text-no-decoration" target="_blank">
-                     <btn class="btn text-large s-circle">
-                    <i class="ti ti-brand-bluesky"></i>
-                     </btn>
-                  </a>
-                  <a href="mailto:bkhz@pm.me" class="text-no-decoration">
-                     <btn class="btn text-large s-circle">
-                    <i class="ti ti-mail"></i>
-                     </btn>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="column col-9 col-md-8 col-sm-12">
-              <!-- main content -->
-              <h3>Portfolio</h3>
-              <div class="filter">
-                  <div class="filter-nav-container remove-color">
-                <input type="radio" id="tag-0" class="filter-tag" name="filter-radio" hidden checked>
-                <input type="radio" id="tag-1" class="filter-tag" name="filter-radio" hidden>
-                <input type="radio" id="tag-2" class="filter-tag" name="filter-radio" hidden>
-                <div class="filter-nav disable-select">
-                  <label class="chip c-hand" for="tag-0">All</label>
-                  <label class="chip c-hand" for="tag-1">Original works</label>
-                  <label class="chip c-hand" for="tag-2">Fan works</label>
-                </div>
-                </div>
-                <div class="filter-body">
-                  <!-- OC -->
-                  <div class="filter-item card" data-tag="tag-1">
-                    <div class="card nobg">
-                      <div class="card-header">
-                        <div class="card-title h5">Illustrations</div>
-                      </div>
-                      <div class="card-body disable-select">
-                        <div class="columns col-gapless c-hand">
-                          <!-- original illustrations -->
-
-                         
-                          <div class="column col=3 col-md-4 col-sm-6 remove-color p-1">
-                             <a href="https://x.com/hyxls/status/1849258663413969200" class="text-no-decoration">
-                            <div class="p-relative">
-                              <i class="ti ti-photo p-absolute photo-icon"></i>
-                              <img src="assets/img/og_featured_1.jpg" alt="Original illustration 1" class="img-responsive img-square">
-                            </div>
-                              </a>
-                          </div>
-                           
-
-                         
-                          <div class="column col=3 col-md-4 col-sm-6 remove-color  p-1">
-                             <a href="https://x.com/hyxls/status/1890935961778864152" class="text-no-decoration">
-                            <div class="p-relative">
-                              <i class="ti ti-photo p-absolute photo-icon"></i>
-                              <img src="assets/img/og_featured_2.jpg" alt="Original illustration 2" class="img-responsive img-square">
-                            </div>
-                              </a>
-                          </div>
-                           
-                         
-                          
-                          <div class="column col=3 col-md-4 col-sm-6 remove-color  p-1">
-                            <a href="https://x.com/hyxls/status/1843752822833283424" class="text-no-decoration">
-                            <div class="p-relative">
-                              <i class="ti ti-photo p-absolute photo-icon"></i>
-                              <img src="assets/img/og_featured_3.jpg" alt="Original illustration 3" class="img-responsive img-square">
-                            </div>
-                                </a>
-                          </div>
-                        
-                        
-                          <div class="column col=3 col-md-4 col-sm-6 remove-color  p-1">
-                              <a href="https://x.com/hyxls/status/1843752822833283424" class="text-no-decoration">
-                            <div class="p-relative">
-                              <i class="ti ti-photo p-absolute photo-icon"></i>
-                              <img src="assets/img/og_featured_4.jpg" alt="Original illustration 4" class="img-responsive img-square">
-                            </div>
-                               </a>
-                          </div>
-                         
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card nobg">
-                      <div class="card-header">
-                        <div class="card-title h5">Written works</div>
-                      </div>
-                    </div>
-                    <div class="card remove-color mb-2">
-                      <div class="columns">
-                        <div class="column col-4">
-                          <div class="card-image">
-                            <img src="https://cdn.scribblehub.com/images/61/beyond-the-divide_1231858_1738625068.jpg" class="img-responsive disable-select">
-                          </div>
-                        </div>
-                        <div class="column col-8">
-                          <div class="card-header">
-                            <div class="card-title h5">BEYOND THE DIVIDE</div>
-                            <div class="card-subtitle text-gray">Novel</div>
-                          </div>
-                          <div class="card-body text-justify">
-                            <p>He is lost. He has nobody to trust. In this damned world where everyone forgets, the echoes of the past bring judgement even to those unaware of it.</p>
-                          </div>
-                          <div class="card-footer">
-                            <a href="/divide"><button class="btn btn-primary">More info</button></a> 
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="filter-item card" data-tag="tag-2">
-                    <div class="card nobg">
-                      <div class="card-header">
-                        <div class="card-title h5">Fan illustrations</div>
-                      </div>
-                      <div class="card-body disable-select">
-                        <div class="columns col-gapless c-hand">
-                          <!-- fan illustrations -->
-                          <div class="column col-3 col-md-4 col-sm-6 remove-color  p-1">
-                              <a href="https://x.com/hyxls/status/1959721206262956247" class="text-no-decoration">
-                                <div class="p-relative">
-                              <i class="ti ti-photo p-absolute photo-icon"></i>
-                              <img src="assets/img/fan_featured_1.jpg" alt="Fan illustration 1" class="img-responsive img-square">
-                              </a>
-                            </div>
-                          </div>
-                        
-                          <div class="column col-3 col-md-4 col-sm-6 remove-color  p-1">
-                            <a href="https://x.com/hyxls/status/1956736977849782703" class="text-no-decoration">
-                            <div class="p-relative">
-                              <i class="ti ti-photo p-absolute photo-icon"></i>
-                              <img src="assets/img/fan_featured_2.jpg" alt="Fan illustration 2" class="img-responsive img-square">
-                            </div>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="p-2">
-                  <p>hello</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-  </body>
-</html>
+                <span class="avatar avatar-xl" style="background-image:url('assets/img/profile_picture.jpg');background-position: center center;background-size: cover;width: 80px_
