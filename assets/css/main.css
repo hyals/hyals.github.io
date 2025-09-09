@@ -93,7 +93,7 @@ body {
 }
 .filter-nav{
   color: black;
-  filter: hue-rotate(20deg);
+  filter: inherit;
   transition: all 0.5s ease;
 }
 .btn,
