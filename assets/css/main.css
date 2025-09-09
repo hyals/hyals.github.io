@@ -105,7 +105,7 @@ a:hover,
 a:link{filter: hue-rotate(-20deg);}
 /** DARK OVERRIDE END **/
 
-.img-square > img{
+.img-square{
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
@@ -129,12 +129,14 @@ a:link{filter: hue-rotate(-20deg);}
   top: 0;
   right: 0;
   padding: 0.4em;
+  z-index:1;
 }
 .kofi-button {
   top: 0;
   right: 0;
   padding: 0.4em;
   max-width: 200px;
+  z-index:1;
 }
 .text-no-decoration {
   text-decoration: none !important;
