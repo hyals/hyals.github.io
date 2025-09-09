@@ -96,7 +96,12 @@ body {
  filter: hue-rotate(-20deg);
   transition: all 0.5s ease;
 }
-.btn,a{filter: hue-rotate(-20deg);}
+.btn,
+a,
+a:visited,
+a:active,
+a:hover,
+a:link{filter: hue-rotate(-20deg);}
 /** DARK OVERRIDE END **/
 
 .img-square {
