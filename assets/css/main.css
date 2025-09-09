@@ -137,6 +137,11 @@ a:link{filter: hue-rotate(-20deg);}
 .text-no-decoration {
   text-decoration: none !important;
 }
+.pfp-container{display: inline-block;
+    height: 1.8rem;
+    text-align: center;
+    user-select: none;
+    vertical-align: middle;}
 
 @media only screen and (max-width: 960px) {
   #content {
