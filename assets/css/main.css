@@ -96,6 +96,7 @@ body {
   filter: hue-rotate(-20deg);
 }
 .btn,
+.btn.btn-link,
 .bg-primary,
 .text-primary,
 a,
