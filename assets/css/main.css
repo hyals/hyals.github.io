@@ -61,9 +61,7 @@ body {
   background-image: linear-gradient(to right, black, #09101D) !important;
   color: white;
 }
-.menu-item > a:hover,
-a:active,
-a:visited {
+.menu-item > a:hover {
   background: #1e2936 !important;
   color: white !important;
   transition: all 0.5s ease;
@@ -71,6 +69,7 @@ a:visited {
 .menu-item > a {
   transition: all 0.5s ease;
 }
+
 .divider-vert[data-content]::after,
 .divider[data-content]::after {
   background-color: inherit !important;
@@ -97,7 +96,7 @@ a:visited {
  filter: hue-rotate(-20deg);
   transition: all 0.5s ease;
 }
-.btn{filter: hue-rotate(-20deg);}
+.btn,a{filter: hue-rotate(-20deg);}
 /** DARK OVERRIDE END **/
 
 .img-square {
