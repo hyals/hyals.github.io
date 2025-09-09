@@ -83,6 +83,7 @@ body {
 .neko-logo > h2 {
   color: white;
 }
+/*
 .remove-color
  {
   filter: grayscale(100%);
@@ -91,6 +92,7 @@ body {
 .remove-color:hover {
   filter: grayscale(0%);
 }
+*/
 .filter-nav{
   color: black;
   filter: hue-rotate(-20deg);
