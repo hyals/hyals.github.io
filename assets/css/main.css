@@ -98,13 +98,14 @@ body {
 }
 .btn,
 a,
+a > .kofi-button:not,
 a:visited,
 a:active,
 a:hover,
 a:link{filter: hue-rotate(-20deg);}
 /** DARK OVERRIDE END **/
 
-.img-square {
+.img-square > img{
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
