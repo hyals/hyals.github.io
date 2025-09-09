@@ -98,6 +98,7 @@ body {
 }
 .btn,
 .filter-tag,
+.filter-tag:hover,
 a,
 a:visited,
 a:active,
