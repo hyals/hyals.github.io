@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <title>Novel Reader</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body.light {
+      background: #fdfdfd;
+      color: #222;
+    }
+    body.dark {
+      background: #1c1c1c;
+      color: #eee;
+    }
+    #chapter-container {
+      width: 86%;
+      max-width:900px;
+      margin: auto;
+      padding: 1rem 20px;
+      border: 1px solid #gray;
+      border-radius: 10px;
+      background: inherit;
+      font-family: Georgia, serif;
+      font-size: var(--font-size, 18px);
+  line-height: 1.8;
+      min-height: 200px;
+      white-space: pre-wrap;
+      transition: all 0.3s;
+    }
+    #controls {
+      text-align: center;
+      margin: 1rem;
+    }
+    select, button {
+      margin: 0.3rem;
+      padding: 0.5rem 1rem;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    img.character {
+      max-width: 80px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 4px;
+    }
+    img.chapter-img {
+      max-width: 100%;
+      display: block;
+      margin: 1rem auto;
+    }
+
+  /* Headings */
+  #chapter-container h1 {
+    font-size: 1.5em;
+    margin: 1.5rem 0 0.8rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  #chapter-container h2 {
+    font-size: 1.2em;
+    margin: 1.3rem 0 0.7rem;
+  }
+  #chapter-container h3 {
+    font-size: 1em;
+    margin: 1rem 0 0.5rem;
+  }
+
+  /* Paragraphs */
+  #chapter-container p {
+    margin: 0.6rem 0;
+    text-align: justify;
+  }
+
+  /* Bold & italic */
+  #chapter-container strong {
+    font-weight: bold;
+  }
+  #chapter-container em {
+    font-style: italic;
+  }
+
+  /* Lists */
+  #chapter-container ul,
+  #chapter-container ol {
+    margin: 0.6rem 0 0.6rem 2rem;
+  }
+
+  /* Images inside markdown */
+  #chapter-container img {
+    max-width: 90%;
+    display: block;
+    margin: 1rem auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  /* Character images inline */
+  #chapter-container img.character {
+    max-width: 70px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.3rem;
+    box-shadow: none;
+  }
+
+  /* Links */
+  #chapter-container a {
+    color: #0077cc;
+    text-decoration: underline;
+    transition: color 0.3s;
+  }
+  #chapter-container a:hover {
+    color: #005fa3;
+  }
+
+  /* Blockquotes */
+  #chapter-container blockquote {
+    border-left: 4px solid #ccc;
+    margin: 0.6rem 0;
+    padding-left: 1rem;
+    color: #555;
+    font-style: italic;
+    background: rgba(0,0,0,0.02);
+    border-radius: 4px;
+  }
+
+  /* Code blocks */
+  #chapter-container pre {
+    background: #f4f4f4;
+    padding: 0.8rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 0.8rem 0;
+  }
+  #chapter-container code {
+    font-family: monospace;
+    background: #eee;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+  }
+
+  /* Dark theme adjustments */
+  body.dark #chapter-container {
+    color: #ddd;
+  }
+  body.dark #chapter-container h1,
+  body.dark #chapter-container h2,
+  body.dark #chapter-container h3 {
+    color: #fff;
+  }
+  body.dark #chapter-container p {
+    color: #ccc;
+  }
+  body.dark #chapter-container blockquote {
+    border-left-color: #888;
+    background: rgba(255,255,255,0.05);
+    color: #aaa;
+  }
+  body.dark #chapter-container pre {
+    background: #333;
+    color: #eee;
+  }
+  body.dark #chapter-container code {
+    background: #444;
+    color: #fff;
+  }
+  body.dark #chapter-container a {
+    color: #66aaff;
+  }
+
+    #chapter-container p {
+  margin: 0;
+  text-align: justify;
+  text-indent: 2em; /* classic first-line indent */
+}
+
+
+
+   /* Character dialogue box */
+    .character-box {
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      margin: 1rem 0;
+    }
+    .character-box.red {
+    background: rgba(204, 0, 100, 0.05);
+      border: 2px solid #cc0064;
+    }
+    .character-box.blue {
+    background: rgba(0, 119, 204, 0.05);
+      border: 2px solid #0077cc;
+    }
+    
+    .character-box legend {
+      font-weight: bold;
+      padding: 0 0.5rem;
+    }
+        .character-box.red legend {
+color:#cc0064;
+    }
+            .character-box.blue legend {
+color:#0077cc;
+    }
+
+    body.dark .character-box .red {
+      border-color: #ff66b8;
+      background: rgba(255, 102, 150, 0.1);
+    }
+   body.dark .character-box.red legend {
+      color: #ff66b8;
+    }
+
+
+        body.dark .character-box .red {
+ border-color: #66aaff;
+  background: rgba(102, 170, 255, 0.1);
+    }
+    body.dark .character-box.blue legend {
+       color: #66aaff;
+    }
+    
+    .character-box p {
+      margin: 0.3rem 0;
+    }
+  </style>
+</head>
+<body class="light">
+
+  <div id="controls">
+    <!-- Dropdown chapter selection -->
+    <label for="chapterSelect">Choose Chapter:</label>
+    <select id="chapterSelect" onchange="goToChapter(this.value)">
+      <option value="">-- Select --</option>
+      <option value="1">Chapter 1</option>
+      <option value="2">Chapter 2</option>
+      <option value="3">Chapter 3</option>
+      <!-- Add more as needed -->
+    </select>
+    <br><br>
+    <!-- Navigation -->
+    <button onclick="prevChapter()" style="font-size:2em"><i class="ti ti-circle-arrow-left-filled"></i></button>
+    <button id="next-button" onclick="nextChapter()" style="font-size:2em"><i class="ti ti-circle-arrow-right-filled"></i></button>
+    <br><br>
+    <!-- Reader settings -->
+    
+    <button onclick="changeFontSize(-2)"><i class="ti ti-text-decrease"></i> </button>
+    <button onclick="changeFontSize(2)"><i class="ti ti-text-increase"></i> </button>
+    <button onclick="toggleTheme()">Toggle Theme</button>
+  </div>
+
+  <div id="chapter-container">
+    <em>Select a chapter to begin reading...</em>
+  </div>
+
+  <script>
+    // ------------------ COOKIE HELPERS ------------------
+    function setCookie(name, value, days = 365) {
+      const d = new Date();
+      d.setTime(d.getTime() + (days*24*60*60*1000));
+      document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
+    }
+
+    function getCookie(name) {
+      const cookies = document.cookie.split(';').map(c => c.trim());
+      for (let c of cookies) {
+        if (c.startsWith(name + "=")) {
+          return decodeURIComponent(c.substring(name.length + 1));
+        }
+      }
+      return null;
+    }
+
+    // ------------------ CHAPTER LOADING ------------------
+const characterNames = {
+  "Hya": { label: "Hya", color: "red" },
+  "Lina": { label: "Lina", color: "blue" },
+  "Vita": { label: "VIta", color: "blue" },
+  "Gaukel": { label: "Gaukel", color: "blue" }
+};
+
+function applyCharacterReplacements(text) {
+  return text.replace(/\[(\w+)\]\s*(.*)/g, (match, charKey, dialogue) => {
+    const char = characterNames[charKey];
+    if (char) {
+      return `<fieldset class="character-box ${char.color}"><legend><i class="ti ti-bubble-text"></i> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
+    }
+    return match;
+  });
+}
+
+
+
+    async function loadChapter(filePath, num) {
+      const container = document.getElementById("chapter-container");
+      container.innerHTML = "<em>Loading...</em>";
+
+      try {
+        const response = await fetch(filePath);
+        if (!response.ok) throw new Error(`Error: ${response.status} ${response.statusText}`);
+
+        let text = await response.text();
+text = text.trim();
+
+// Apply character replacements
+text = applyCharacterReplacements(text);
+        
+// Parse markdown (marked.js)
+container.innerHTML = marked.parse(text);
+
+        // Save last read chapter
+        setCookie("lastChapter", num);
+
+        // Update dropdown
+        document.getElementById("chapterSelect").value = num;
+
+         // Smooth scroll to top
+    container.scrollIntoView({ behavior: "smooth" });
+
+      } catch (err) {
+        container.innerHTML = `<span style="color:red;">Failed to load chapter: ${err.message}</span>`;
+        
+      }
+    }
+
+    function goToChapter(num) {
+      if (!num) return;
+      window.location.hash = num;
+    }
+
+    function handleHashChange() {
+      const hash = window.location.hash.substring(1);
+      if (hash && !isNaN(hash)) {
+        loadChapter(`chapter${hash}.txt`, hash);
+      }
+    }
+
+    // ------------------ NAVIGATION ------------------
+function currentChapterNum() {
+      const hash = window.location.hash.substring(1);
+      return hash && !isNaN(hash) ? parseInt(hash) : null;
+    }
+
+    function nextChapter() {
+      const num = currentChapterNum();
+      if (num !== null) goToChapter(num + 1);
+    }
+
+    function prevChapter() {
+      const num = currentChapterNum();
+      if (num !== null && num > 1) goToChapter(num - 1);
+    }
+
+    // ------------------ FONT SIZE ------------------
+    function changeFontSize(delta) {
+      const container = document.getElementById("chapter-container");
+      let currentSize = parseInt(window.getComputedStyle(container).fontSize);
+      currentSize = Math.max(12, currentSize + delta);
+      container.style.fontSize = currentSize + "px";
+      setCookie("fontSize", currentSize);
+    }
+
+    // ------------------ THEME ------------------
+    function toggleTheme() {
+      const body = document.body;
+      body.classList.toggle("dark");
+      body.classList.toggle("light");
+      setCookie("theme", body.classList.contains("dark") ? "dark" : "light");
+    }
+
+    // ------------------ INIT ------------------
+    window.addEventListener("load", () => {
+      // Apply saved preferences
+      const savedTheme = getCookie("theme");
+      if (savedTheme) document.body.className = savedTheme;
+
+      const savedFontSize = getCookie("fontSize");
+      if (savedFontSize) {
+        document.getElementById("chapter-container").style.fontSize = savedFontSize + "px";
+      }
+
+      // Resume last chapter if no hash
+      if (!window.location.hash) {
+        const last = getCookie("lastChapter");
+        if (last) goToChapter(last);
+      }
+
+      handleHashChange();
+    });
+
+    window.addEventListener("hashchange", handleHashChange);
+  </script>
+
+</body>
+</html>
