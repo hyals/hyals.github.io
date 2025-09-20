@@ -364,7 +364,13 @@ function currentChapterNum() {
   setCookie("theme", isDark ? "dark" : "light");
 
   const toggle = document.getElementById("themeSwitch");
-  if (toggle) toggle.toggleAttribute("checked", isDark);
+  if (toggle) {
+    if (isDark) {
+      toggle.setAttribute("checked"); // Set checked when dark
+    } else {
+      toggle.removeAttribute("checked"); // Remove when light
+    }
+  }
 }
 
     // ------------------ INIT ------------------
