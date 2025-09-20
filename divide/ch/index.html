@@ -357,19 +357,21 @@ function currentChapterNum() {
     }
 
     // ------------------ THEME ------------------
-   function toggleTheme() {
+function toggleTheme() {
   const body = document.body;
-  const isDark = body.classList.toggle("dark");
-  body.classList.toggle("light", !isDark);
+  const toggle = document.getElementById("themeSwitch");
+
+  // Toggle classes
+  body.classList.toggle("dark");
+  body.classList.toggle("light");
+
+  // Update cookie
+  const isDark = body.classList.contains("dark");
   setCookie("theme", isDark ? "dark" : "light");
 
-  const toggle = document.getElementById("themeSwitch");
+  // Set the switch checked state
   if (toggle) {
-    if (isDark) {
-      toggle.setAttribute("checked"); // Set checked when dark
-    } else {
-      toggle.removeAttribute("checked"); // Remove when light
-    }
+    toggle.checked = isDark;
   }
 }
 
@@ -378,6 +380,7 @@ function currentChapterNum() {
       // Apply saved preferences
       const savedTheme = getCookie("theme");
       if (savedTheme) document.body.className = savedTheme;
+     if (savedTheme === "dark") {toggle.checked = true;}
 
       const savedFontSize = getCookie("fontSize");
       if (savedFontSize) {
