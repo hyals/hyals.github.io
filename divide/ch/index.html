@@ -226,17 +226,17 @@ color:#0077cc;
     <mdui-button id="nextChapter" onclick="nextChapter()">Next ▶</mdui-button><!-- Font controls -->
 <mdui-button id="fontDec" onclick="changeFontSize(-2)">A-</mdui-button>
 <mdui-button id="fontInc" onclick="changeFontSize(2)">A+</mdui-button>
-<mdui-button id="fontReset" onclick="toggleTheme()">Reset</mdui-button>
+<mdui-button id="fontReset">Reset</mdui-button>
 
 <!-- Theme toggle -->
 <span style="margin-left:auto;">Dark Mode</span>
-<mdui-switch id="themeSwitch" ></mdui-switch>
+<mdui-switch id="themeSwitch" onclick="toggleTheme()"></mdui-switch>
 
   </div>  
 
 
 
-  <div id="chapter-container">
+  <div class="chapter-container">
     <em>Select a chapter to begin reading...</em>
   </div>
 
