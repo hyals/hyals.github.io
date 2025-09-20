@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-   
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
   <title>Novel Reader</title>
@@ -10,7 +9,29 @@
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
 <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
   <style>
-    body{margin:0;padding:0}
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .reader-container {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      line-height: 1.6;
+      font-size: var(--reader-font-size, 18px);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.5rem;
+      border-bottom: 1px solid var(--mdui-color-outline);
+      flex-wrap: wrap;
+    }
     body.light {
       background: #fdfdfd;
       color: #222;
@@ -18,43 +39,6 @@
     body.dark {
       background: #1c1c1c;
       color: #eee;
-    }
-    #chapter-container {
-      width: 86%;
-      max-width:900px;
-      margin: auto;
-      padding: 1rem 20px;
-      border: 1px solid #gray;
-      border-radius: 10px;
-      background: inherit;
-      font-family: Georgia, serif;
-      font-size: var(--font-size, 18px);
-  line-height: 1.8;
-      min-height: 200px;
-      white-space: pre-wrap;
-      transition: all 0.3s;
-    }
-    #controls {
-      text-align: center;
-      margin: 1rem;
-    }
-    select, button {
-      margin: 0.3rem;
-      padding: 0.5rem 1rem;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius:2em;
-    }
-    img.character {
-      max-width: 80px;
-      display: inline-block;
-      vertical-align: middle;
-      margin: 0 4px;
-    }
-    img.chapter-img {
-      max-width: 100%;
-      display: block;
-      margin: 1rem auto;
     }
 
   /* Headings */
@@ -232,29 +216,25 @@ color:#0077cc;
     }
   </style>
 </head>
+  
 <body class="light">
 
-  <div id="controls">
-    <!-- Dropdown chapter selection -->
-    <label for="chapterSelect">Choose Chapter:</label>
-    <select id="chapterSelect" onchange="goToChapter(this.value)">
-      <option value="">-- Select --</option>
-      <option value="1">Chapter 1</option>
-      <option value="2">Chapter 2</option>
-      <option value="3">Chapter 3</option>
-      <!-- Add more as needed -->
-    </select>
-    <br><br>
-    <!-- Navigation -->
-    <button onclick="prevChapter()" style="font-size:2em"><i class="ti ti-circle-arrow-left-filled"></i></button>
-    <button id="next-button" onclick="nextChapter()" style="font-size:2em"><i class="ti ti-circle-arrow-right-filled"></i></button>
-    <br><br>
-    <!-- Reader settings -->
-    
-    <button onclick="changeFontSize(-2)"><i class="ti ti-text-decrease"></i> </button>
-    <button onclick="changeFontSize(2)"><i class="ti ti-text-increase"></i> </button>
-    <button onclick="toggleTheme()">Toggle Theme</button>
-  </div>
+  <div class="controls mdui-container-fluid">
+    <!-- Chapter navigation -->
+    <mdui-button id="prevChapter" onclick="prevChapter()">◀ Prev</mdui-button>
+    <mdui-select id="chapterSelect" label="Chapter" style="width:150px;" onchange="goToChapter(this.value)"></mdui-select>
+    <mdui-button id="nextChapter" onclick="nextChapter()">Next ▶</mdui-button><!-- Font controls -->
+<mdui-button id="fontDec" onclick="changeFontSize(-2)">A-</mdui-button>
+<mdui-button id="fontInc" onclick="changeFontSize(2)">A+</mdui-button>
+<mdui-button id="fontReset" onclick="toggleTheme()">Reset</mdui-button>
+
+<!-- Theme toggle -->
+<span style="margin-left:auto;">Dark Mode</span>
+<mdui-switch id="themeSwitch" ></mdui-switch>
+
+  </div>  
+
+
 
   <div id="chapter-container">
     <em>Select a chapter to begin reading...</em>
