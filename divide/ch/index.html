@@ -289,7 +289,7 @@ function applyCharacterReplacements(text) {
 
     async function loadChapter(filePath, num) {
       const container = document.getElementById("chapter-container");
-      container.innerHTML = "<em>Loading...</em>";
+      container.innerHTML = "<em><mdui-circular-progress></mdui-circular-progress></em>";
 
       try {
         const response = await fetch(filePath);
