@@ -348,12 +348,15 @@ function currentChapterNum() {
     }
 
     // ------------------ THEME ------------------
-    function toggleTheme() {
-      const body = document.body;
-      body.classList.toggle("dark");
-      body.classList.toggle("light");
-      setCookie("theme", body.classList.contains("dark") ? "dark" : "light");
-    }
+   function toggleTheme() {
+  const body = document.body;
+  const isDark = body.classList.toggle("dark");
+  body.classList.toggle("light", !isDark);
+  setCookie("theme", isDark ? "dark" : "light");
+
+  const toggle = document.getElementById("themeSwitch");
+  if (toggle) toggle.toggleAttribute("checked", isDark);
+}
 
     // ------------------ INIT ------------------
     window.addEventListener("load", () => {
