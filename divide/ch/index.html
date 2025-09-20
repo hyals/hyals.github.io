@@ -18,11 +18,20 @@
     }
     #chapter-container {
       flex: 1;
-      padding: 1rem;
       overflow-y: auto;
-      line-height: 1.6;
-      font-size: var(--reader-font-size, 18px);
-      transition: background-color 0.3s, color 0.3s;
+      width: 86%;
+      max-width:900px;
+      margin: auto;
+      padding: 1rem 20px;
+      border: 1px solid #gray;
+      border-radius: 10px;
+      background: inherit;
+      font-family: Georgia, serif;
+      font-size: var(--font-size, 18px);
+  line-height: 1.8;
+      min-height: 200px;
+      white-space: pre-wrap;
+      transition: all 0.3s;
     }
     .controls {
       display: flex;
