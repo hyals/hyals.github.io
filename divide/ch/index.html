@@ -308,8 +308,7 @@ function toggleTheme(){
     window.addEventListener("load", () => {
       // Apply saved preferences
       const savedTheme = getCookie("theme");
-      if (savedTheme) {document.html.className = savedTheme;
-            }
+      if (savedTheme) document.html.className = savedTheme;
 
       const savedFontSize = getCookie("fontSize");
       if (savedFontSize) {
