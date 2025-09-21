@@ -325,9 +325,6 @@ toggle.addEventListener("change", () => {
   // Sync the switch with the current theme
   toggle.checked = mdui.Theme.isDark();
 
-      // Apply saved preferences
-      const savedTheme = getCookie("theme");
-      if (savedTheme) document.html.className = savedTheme;
 
       const savedFontSize = getCookie("fontSize");
       if (savedFontSize) {
