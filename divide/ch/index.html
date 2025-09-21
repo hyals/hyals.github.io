@@ -20,6 +20,7 @@
       margin:0;
       padding:0;
       height:100vh;
+      overflow:auto;
         }
     #chapter-container {
       width: 86%;
@@ -162,7 +163,7 @@ color:#0077cc;
   </style>
 </head>
   
-<body>
+<body class="example-scroll-behavior-elevate">
 
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
@@ -178,7 +179,7 @@ color:#0077cc;
     <mdui-switch id="themeSwitch" onchange="toggleTheme()" unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined"></mdui-switch>
   </mdui-top-app-bar>
 
-  <div class="example-scroll-behavior-elevate" style="height:90vh;overflow:auto;margin:0;padding:0;">
+
 
    
     <!-- Chapter navigation -->
@@ -199,8 +200,6 @@ color:#0077cc;
     <em>Select a chapter to begin reading...</em>
   </div>
 
-    
-  </div>
   </div>
 
 
