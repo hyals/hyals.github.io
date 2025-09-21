@@ -354,28 +354,18 @@ function currentChapterNum() {
     // ------------------ THEME ------------------
 function toggleTheme() {
   const body = document.body;
-  const toggle = document.getElementById("themeSwitch");
-
-  // Toggle classes
   body.classList.toggle("dark");
   body.classList.toggle("light");
-
-  // Update cookie
-  const isDark = body.classList.contains("dark");
-  setCookie("theme", isDark ? "dark" : "light");
-
-  // Set the switch checked state
-  if (toggle) {
-    toggle.checked = isDark;
-  }
+  setCookie("theme", body.classList.contains("dark") ? "dark" : "light");
 }
+
 
     // ------------------ INIT ------------------
     window.addEventListener("load", () => {
       // Apply saved preferences
       const savedTheme = getCookie("theme");
       if (savedTheme) document.body.className = savedTheme;
-     if (savedTheme == "dark") toggle.checked = true;
+     if (savedTheme == "dark") document.getElementById("themeSwitch").checked = true;
 
       const savedFontSize = getCookie("fontSize");
       if (savedFontSize) {
