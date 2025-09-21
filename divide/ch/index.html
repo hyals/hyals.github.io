@@ -178,7 +178,7 @@ color:#0077cc;
 
 <!-- Theme toggle -->
 <span style="margin-left:auto;">Dark Mode</span>
-<mdui-switch id="themeSwitch" onchange="mdui.Theme.toggle()"></mdui-switch>
+<mdui-switch id="themeSwitch" onchange="toggleTheme()"></mdui-switch>
 
   </div>  
 
@@ -296,6 +296,11 @@ function currentChapterNum() {
     }
 
     // ------------------ THEME ------------------
+function toggleTheme(){
+
+  setCookie("theme", html.classList.contains("mdui-theme-dark") ? "mdui-theme-dark" : "mdui-theme-light");
+}
+
 
 
 
@@ -303,7 +308,8 @@ function currentChapterNum() {
     window.addEventListener("load", () => {
       // Apply saved preferences
       const savedTheme = getCookie("theme");
-      if (savedTheme) {document.body.className = savedTheme;}
+      if (savedTheme) {document.html.className = savedTheme;
+            }
 
       const savedFontSize = getCookie("fontSize");
       if (savedFontSize) {
@@ -317,13 +323,6 @@ function currentChapterNum() {
       }
 
       handleHashChange();
-
-      // Check if the theme is dark
-if (mdui.Theme.isDark()) {
- alert("Current theme is dark");
-} else {
- alert("Current theme is light");
-}
     });
 
     window.addEventListener("hashchange", handleHashChange);
