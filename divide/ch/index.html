@@ -316,6 +316,7 @@ toggle.addEventListener("change", () => {
         // Apply saved preferences
       const savedTheme = getCookie("theme");
       if (savedTheme) document.documentElement.className = savedTheme;
+      if (savedTheme == "mdui-theme-dark") document.getElementById("themeSwitch").setAttribute("checked");
 
 
       const savedFontSize = getCookie("fontSize");
