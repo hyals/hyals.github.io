@@ -9,10 +9,6 @@
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
 <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-    }
     #chapter-container {
       width: 86%;
       max-width:900px;
@@ -34,14 +30,6 @@
       padding: 0.5rem;
       border-bottom: 1px solid var(--mdui-color-outline);
       flex-wrap: wrap;
-    }
-    body.light {
-      background: #fdfdfd;
-      color: #222;
-    }
-    body.dark {
-      background: #1c1c1c;
-      color: #eee;
     }
 
   /* Headings */
@@ -134,35 +122,6 @@
     border-radius: 3px;
   }
 
-  /* Dark theme adjustments */
-  body.dark #chapter-container {
-    color: #ddd;
-  }
-  body.dark #chapter-container h1,
-  body.dark #chapter-container h2,
-  body.dark #chapter-container h3 {
-    color: #fff;
-  }
-  body.dark #chapter-container p {
-    color: #ccc;
-  }
-  body.dark #chapter-container blockquote {
-    border-left-color: #888;
-    background: rgba(255,255,255,0.05);
-    color: #aaa;
-  }
-  body.dark #chapter-container pre {
-    background: #333;
-    color: #eee;
-  }
-  body.dark #chapter-container code {
-    background: #444;
-    color: #fff;
-  }
-  body.dark #chapter-container a {
-    color: #66aaff;
-  }
-
     #chapter-container p {
   margin: 0;
   text-align: justify;
@@ -195,32 +154,14 @@ color:#cc0064;
     }
             .character-box.blue legend {
 color:#0077cc;
-    }
-
-    body.dark .character-box .red {
-      border-color: #ff66b8;
-      background: rgba(255, 102, 150, 0.1);
-    }
-   body.dark .character-box.red legend {
-      color: #ff66b8;
-    }
-
-
-        body.dark .character-box .red {
- border-color: #66aaff;
-  background: rgba(102, 170, 255, 0.1);
-    }
-    body.dark .character-box.blue legend {
-       color: #66aaff;
-    }
-    
+            }
     .character-box p {
       margin: 0.3rem 0;
     }
   </style>
 </head>
   
-<body class="light">
+<body>
 
   <div class="controls mdui-container-fluid">
     <!-- Chapter navigation -->
@@ -233,7 +174,7 @@ color:#0077cc;
 
 <!-- Theme toggle -->
 <span style="margin-left:auto;">Dark Mode</span>
-<mdui-switch id="themeSwitch" onchange="toggleTheme()"></mdui-switch>
+<mdui-switch id="themeSwitch" onchange="mdui.Theme.toggle()"></mdui-switch>
 
   </div>  
 
@@ -351,12 +292,7 @@ function currentChapterNum() {
     }
 
     // ------------------ THEME ------------------
-function toggleTheme() {
-  const body = document.body;
-  body.classList.toggle("dark");
-  body.classList.toggle("light");
-  setCookie("theme", body.classList.contains("dark") ? "dark" : "light");
-}
+
 
 
     // ------------------ INIT ------------------
