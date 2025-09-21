@@ -19,8 +19,6 @@
     html,body{
       margin:0;
       padding:0;
-      height:90vh;
-      overflow:hidden;
         }
     #chapter-container {
       width: 86%;
@@ -179,9 +177,9 @@ color:#0077cc;
     <mdui-switch id="themeSwitch" onchange="toggleTheme()" unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined"></mdui-switch>
   </mdui-top-app-bar>
 
- <div class="example-scroll-behavior-elevate" style="height:90vh;overflow: auto;">
+ <div class="example-scroll-behavior-elevate" style="height:160px;overflow: auto;">
 
-   
+   <div style="height:auto">
     <!-- Chapter navigation -->
     <mdui-button id="prevChapter" onclick="prevChapter()">◀ Prev</mdui-button>
     <mdui-select id="chapterSelect" label="Chapter" style="width:150px;" onchange="goToChapter(this.value)">
@@ -202,6 +200,7 @@ color:#0077cc;
 
   </div>
   </div>
+</div>
 
 
   
