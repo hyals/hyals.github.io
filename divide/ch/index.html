@@ -296,16 +296,35 @@ function currentChapterNum() {
     }
 
     // ------------------ THEME ------------------
-function toggleTheme(){
+const toggle = document.getElementById("themeSwitch");
 
-  setCookie("theme", html.classList.contains("mdui-theme-dark") ? "mdui-theme-dark" : "mdui-theme-light");
-}
+// Toggle theme when switch is changed
+toggle.addEventListener("change", () => {
+  mdui.Theme.toggle(); // MDUI handles class switching automatically i think
+  setCookie("theme", mdui.Theme.isDark() ? "mdui-theme-dark" : "mdui-theme-light");
+});
 
 
 
 
     // ------------------ INIT ------------------
     window.addEventListener("load", () => {
+
+      // try to do native mdui theme
+      const savedTheme = getCookie("theme");
+
+  if (savedTheme) {
+    const html = document.documentElement;
+    if (savedTheme === "mdui-theme-dark" && !mdui.Theme.isDark()) {
+      mdui.Theme.toggle();
+    } else if (savedTheme === "mdui-theme-light" && mdui.Theme.isDark()) {
+      mdui.Theme.toggle();
+    }
+  }
+
+  // Sync the switch with the current theme
+  toggle.checked = mdui.Theme.isDark();
+}
       // Apply saved preferences
       const savedTheme = getCookie("theme");
       if (savedTheme) document.html.className = savedTheme;
