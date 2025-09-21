@@ -303,7 +303,7 @@ toggle.addEventListener("change", () => {
   const body = document.documentElement;
       body.classList.toggle("mdui-theme-dark");
       body.classList.toggle("mdui-theme-light");
-  setCookie("theme", "mdui-theme-dark" ? "mdui-theme-dark" : "mdui-theme-light");
+  setCookie("theme", body.classList.contains("mdui-theme-dark") ? "mdui-theme-dark" : "mdui-theme-light");
 });
 
 
