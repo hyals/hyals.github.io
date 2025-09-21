@@ -17,11 +17,11 @@
 <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
   <style>
     body{
-      width: 86%;
-      max-width:900px;
       margin:auto;
         }
     #chapter-container {
+      width: 86%;
+      max-width:900px;
       margin: auto;
       padding: 1rem 20px;
       font-family: Georgia, serif;
@@ -162,7 +162,7 @@ color:#0077cc;
   
 <body>
 
- <div style="position: relative;overflow: hidden">
+
   <mdui-top-app-bar
     scroll-behavior="elevate"
     scroll-target=".example-scroll-behavior-elevate"
@@ -176,8 +176,7 @@ color:#0077cc;
     <mdui-button-icon icon="more_vert"></mdui-button-icon>
   </mdui-top-app-bar>
 
-  <div class="example-scroll-behavior-elevate" style="height:100%;overflow: auto;">
-<div></div>
+  <div class="example-scroll-behavior-elevate" style="height: 100vh;overflow: auto;">
 
    
     <!-- Chapter navigation -->
@@ -200,7 +199,7 @@ color:#0077cc;
 
     
   </div>
- </div>
+
 
   
 
@@ -282,7 +281,7 @@ container.innerHTML = marked.parse(text);
     function handleHashChange() {
       const hash = window.location.hash.substring(1);
       if (hash && !isNaN(hash)) {
-        loadChapter(`chapter${hash}.txt`, hash);
+        loadChapter(`https://hyals.ink/divide/ch/chapter${hash}.txt`, hash);
       }
     }
 
