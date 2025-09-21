@@ -166,11 +166,15 @@ color:#0077cc;
   <div class="controls mdui-container-fluid">
     <!-- Chapter navigation -->
     <mdui-button id="prevChapter" onclick="prevChapter()">◀ Prev</mdui-button>
-    <mdui-select id="chapterSelect" label="Chapter" style="width:150px;" onchange="goToChapter(this.value)"></mdui-select>
+    <mdui-select id="chapterSelect" label="Chapter" style="width:150px;" onchange="goToChapter(this.value)">
+      <mdui-menu-item value="">-- Select --</mdui-menu-item>
+      <mdui-menu-item value="1">Chapter 1</mdui-menu-item>
+      <mdui-menu-item value="2">Chapter 2</mdui-menu-item>
+      <mdui-menu-item value="3">Chapter 3</mdui-menu-item>
+    </mdui-select>
     <mdui-button id="nextChapter" onclick="nextChapter()">Next ▶</mdui-button><!-- Font controls -->
 <mdui-button id="fontDec" onclick="changeFontSize(-2)">A-</mdui-button>
 <mdui-button id="fontInc" onclick="changeFontSize(2)">A+</mdui-button>
-<mdui-button id="fontReset">Reset</mdui-button>
 
 <!-- Theme toggle -->
 <span style="margin-left:auto;">Dark Mode</span>
