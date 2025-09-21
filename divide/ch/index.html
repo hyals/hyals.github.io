@@ -171,7 +171,7 @@ color:#0077cc;
   
 <body>
 
-  <div style="position: relative;overflow: hidden">
+  <div style="overflow: hidden">
   <mdui-top-app-bar
     scroll-behavior="elevate"
     scroll-target=".example-scroll-behavior-elevate"
@@ -179,6 +179,7 @@ color:#0077cc;
     <mdui-button-icon icon="menu"></mdui-button-icon>
     <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
     <div style="flex-grow: 1"></div>
+    <mdui-switch id="themeSwitch" onchange="toggleTheme()" unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined"></mdui-switch>
     <mdui-button-icon icon="more_vert"></mdui-button-icon>
   </mdui-top-app-bar>
 
@@ -199,9 +200,7 @@ color:#0077cc;
 <mdui-button id="fontDec" onclick="changeFontSize(-2)">A-</mdui-button>
 <mdui-button id="fontInc" onclick="changeFontSize(2)">A+</mdui-button>
 
-<!-- Theme toggle -->
-<span style="margin-left:auto;">Dark Mode</span>
-<mdui-switch id="themeSwitch" onchange="toggleTheme()"></mdui-switch>
+
 
   </div>  
 
