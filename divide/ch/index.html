@@ -310,13 +310,24 @@ container.innerHTML = marked.parse(text);
 
     function handleHashChange() {
       const hash = window.location.hash.substring(1);
+     const final_chapter = document.getElementById("currentChapterValue").getAttribute("max");
       if (hash && !isNaN(hash)) {
         loadChapter(`https://hyals.ink/divide/ch/chapter${hash}.txt`, hash);
         document.getElementById("currentChapterValue").setAttribute("value",hash);
-      }
+       
+    if(hash > final_chapter){
+        document.getElementById("nextChapter").setAttribute("disabled","");
+    }else{
+       document.getElementById("nextChapter").removeAttribute("disabled","");
     }
+    }
+      }
+    
 
     // ------------------ NAVIGATION ------------------
+    
+   
+    
 function currentChapterNum() {
       const hash = window.location.hash.substring(1);
       return hash && !isNaN(hash) ? parseInt(hash) : null;
