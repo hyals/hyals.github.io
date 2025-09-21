@@ -190,23 +190,32 @@ color:#0077cc;
      
      
  
-  <mdui-bottom-app-bar
-    scroll-behavior="hide"
-    scroll-threshold="30"
-    style="
-    justify-content: center;
-    display: flex
-"
-  >
-    <mdui-button-icon id="prevChapter"  onclick="prevChapter()" icon="arrow_circle_left"></mdui-button-icon>
-    <mdui-select id="chapterSelect" label="Chapter" style="width:150px;" onchange="goToChapter(this.value)">
-      <mdui-menu-item value="">-- Select --</mdui-menu-item>
+ <mdui-bottom-app-bar
+  scroll-behavior="hide"
+  scroll-threshold="30"
+  style="
+    display: flex;
+    align-items: center;
+    gap: 8px; /* spacing between rows */
+    height:auto;
+  "
+>
+  <!-- Top row -->
+  
+    <mdui-button-icon id="prevChapter" onclick="prevChapter()" icon="arrow_circle_left"></mdui-button-icon>
+    
+    <mdui-select id="chapterSelect" label="Chapter" placeholder="-- Select --" onchange="goToChapter(this.value)">
       <mdui-menu-item value="1">1</mdui-menu-item>
       <mdui-menu-item value="2">2</mdui-menu-item>
       <mdui-menu-item value="3">3</mdui-menu-item>
     </mdui-select>
-     <mdui-button-icon id="nextChapter"  onclick="nextChapter()" icon="arrow_circle_right"></mdui-button-icon>
-    </mdui-bottom-app-bar>
+    
+    <mdui-button-icon id="nextChapter" onclick="nextChapter()" icon="arrow_circle_right"></mdui-button-icon>
+
+
+  <!-- Bottom row (slider) -->
+  <mdui-slider id="currentChapterValue" min="1" max="3"></mdui-slider>
+</mdui-bottom-app-bar>
 
 
     <!-- Chapter navigation -->
@@ -289,7 +298,7 @@ container.innerHTML = marked.parse(text);
 
 
       } catch (err) {
-        container.innerHTML = `<span style="color:red;">Failed to load chapter: ${err.message}</span>`;
+        container.innerHTML = `You have reached the latest available chapter.`;
         
       }
     }
@@ -303,6 +312,7 @@ container.innerHTML = marked.parse(text);
       const hash = window.location.hash.substring(1);
       if (hash && !isNaN(hash)) {
         loadChapter(`https://hyals.ink/divide/ch/chapter${hash}.txt`, hash);
+        document.getElementById("currentChapterValue").setAttribute("value",hash);
       }
     }
 
@@ -341,6 +351,12 @@ toggle.addEventListener("change", () => {
       body.classList.toggle("mdui-theme-light");
   setCookie("theme", body.classList.contains("mdui-theme-dark") ? "mdui-theme-dark" : "mdui-theme-light");
 });
+
+
+// Listen to the chapter number slider changes
+document.querySelector("mdui-slider").addEventListener("input", (e) => {
+ goToChapter(e.target.value);
+  });
 
 
 
