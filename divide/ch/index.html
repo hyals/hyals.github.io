@@ -376,10 +376,11 @@ document.querySelector("mdui-slider").addEventListener("input", (e) => {
         document.getElementById("chapter-container").style.fontSize = savedFontSize + "px";
       }
 
-      // Resume last chapter if no hash
+      // Resume last chapter if no hash, or start at chapter 1 if no cookie
       if (!window.location.hash) {
         const last = getCookie("lastChapter");
-        if (last) goToChapter(last);
+        if(last) goToChapter(last);
+        else goToChapter(1);
       }
 
       handleHashChange();
