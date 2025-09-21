@@ -304,7 +304,6 @@ function currentChapterNum() {
       // Apply saved preferences
       const savedTheme = getCookie("theme");
       if (savedTheme) {document.body.className = savedTheme;}
-      if (getTheme() == "dark") {document.getElementById("themeSwitch").setAttribute("checked");}
 
       const savedFontSize = getCookie("fontSize");
       if (savedFontSize) {
@@ -318,6 +317,16 @@ function currentChapterNum() {
       }
 
       handleHashChange();
+
+      // Check if the theme is dark
+if (mdui.Theme.isDark()) {
+ alert("Current theme is dark");
+} else {
+ alert("Current theme is light");
+}
+
+// Toggle theme
+mdui.Theme.toggle();
     });
 
     window.addEventListener("hashchange", handleHashChange);
