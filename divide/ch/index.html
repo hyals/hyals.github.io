@@ -365,7 +365,7 @@ function toggleTheme() {
       // Apply saved preferences
       const savedTheme = getCookie("theme");
       if (savedTheme) document.body.className = savedTheme;
-     if (savedTheme == "dark") document.getElementById("themeSwitch").checked = true;
+     if (savedTheme == "dark") document.getElementById("themeSwitch").setAttribute("checked");
 
       const savedFontSize = getCookie("fontSize");
       if (savedFontSize) {
