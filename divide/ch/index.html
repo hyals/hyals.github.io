@@ -177,7 +177,16 @@ color:#0077cc;
     scroll-behavior="elevate"
   >
     <mdui-button-icon icon="book"></mdui-button-icon>
-    <mdui-top-app-bar-title>BEYOND THE DIVIDE</mdui-top-app-bar-title>
+      
+  <table style="text-align:left;margin-top:-6px;">
+  <tr>
+    <th style="font-size:16pt;font-weight:400;">BEYOND THE DIVIDE</th>
+  </tr>
+  <tr>
+    <td style="font-size:10pt;font-weight:500;" id="chapter-title"></td>
+  </tr>
+</table>
+
     <div style="flex-grow: 1"></div>
     <mdui-button-icon id="fontDec" onclick="changeFontSize(-2)" icon="text_decrease"></mdui-button-icon>
 <mdui-button-icon id="fontInc" onclick="changeFontSize(2)" icon="text_increase"></mdui-button-icon>
@@ -188,7 +197,7 @@ color:#0077cc;
 
    <div style="height:auto;overflow:visible">
      
-     
+
  
  <mdui-bottom-app-bar
   scroll-behavior="hide"
@@ -273,35 +282,47 @@ function applyCharacterReplacements(text) {
 
 
 
-    async function loadChapter(filePath, num) {
-      const container = document.getElementById("chapter-container");
-      container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
+async function loadChapter(filePath, num) {
+  const container = document.getElementById("chapter-container");
+  const titleDiv = document.getElementById("chapter-title"); 
+  container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
 
-      try {
-        const response = await fetch(filePath);
-        if (!response.ok) throw new Error(`Error: ${response.status} ${response.statusText}`);
+  try {
+    const response = await fetch(filePath);
+    if (!response.ok) throw new Error(`Error: ${response.status} ${response.statusText}`);
 
-        let text = await response.text();
-text = text.trim();
+    let text = await response.text();
+    text = text.trim();
 
-// Apply character replacements
-text = applyCharacterReplacements(text);
-        
-// Parse markdown (marked.js)
-container.innerHTML = marked.parse(text);
+    // Apply character replacements
+    text = applyCharacterReplacements(text);
 
-        // Save last read chapter
-        setCookie("lastChapter", num);
+    // Parse markdown (marked.js)
+    const parsedHTML = marked.parse(text);
 
-        // Update dropdown
-        document.getElementById("chapterSelect").value = num;
+    // Put parsed HTML into container
+    container.innerHTML = parsedHTML;
 
-
-      } catch (err) {
-        container.innerHTML = `You have reached the latest available chapter.`;
-        
-      }
+    // --- Extract first <h1> and set as title ---
+    const temp = document.createElement("div");
+    temp.innerHTML = parsedHTML;
+    const h1 = temp.querySelector("h1");
+    if (h1) {
+      titleDiv.innerHTML = h1.innerHTML;
+    } else {
+      titleDiv.innerHTML = ""; // clear if none found
     }
+
+    // Save last read chapter
+    setCookie("lastChapter", num);
+
+    // Update dropdown
+    document.getElementById("chapterSelect").value = num;
+
+  } catch (err) {
+    container.innerHTML = `You have reached the latest available chapter.`;
+  }
+}
 
     function goToChapter(num) {
       if (!num) return;
