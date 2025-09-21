@@ -166,7 +166,7 @@ color:#0077cc;
 <div">
   <mdui-top-app-bar
     scroll-behavior="elevate"
-    scroll-target="body"
+    scroll-target=".example-scroll-behavior-elevate"
     style="position:fixed"
   >
     <mdui-button-icon icon="book"></mdui-button-icon>
@@ -179,7 +179,7 @@ color:#0077cc;
 
  <div class="example-scroll-behavior-elevate" style="height:160px;overflow: auto;">
 
-   <div style="height:auto">
+   <div style="height:auto;overflow:visible">
     <!-- Chapter navigation -->
     <mdui-button id="prevChapter" onclick="prevChapter()">◀ Prev</mdui-button>
     <mdui-select id="chapterSelect" label="Chapter" style="width:150px;" onchange="goToChapter(this.value)">
