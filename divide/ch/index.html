@@ -315,11 +315,10 @@ container.innerHTML = marked.parse(text);
         loadChapter(`https://hyals.ink/divide/ch/chapter${hash}.txt`, hash);
         document.getElementById("currentChapterValue").setAttribute("value",hash);
        
-    if(hash > final_chapter){
-        document.getElementById("nextChapter").setAttribute("disabled","");
-    }else{
-       document.getElementById("nextChapter").removeAttribute("disabled","");
-    }
+   const nextBtn = document.getElementById("nextChapter");
+   const prevBtn = document.getElementById("prevChapter");
+nextBtn.disabled = (hash === final_chapter || hash > final_chapter);
+prevBtn.disabled = (hash == 1);
     }
       }
     
