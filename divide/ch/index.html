@@ -179,23 +179,38 @@ color:#0077cc;
     <mdui-button-icon icon="book"></mdui-button-icon>
     <mdui-top-app-bar-title>BEYOND THE DIVIDE</mdui-top-app-bar-title>
     <div style="flex-grow: 1"></div>
-    <mdui-button-icon id="fontDec" onclick="changeFontSize(-2)" icon="text_decrease">A-</mdui-button-icon>
-<mdui-button-icon id="fontInc" onclick="changeFontSize(2)" icon="text_increase">A+</mdui-button-icon>
+    <mdui-button-icon id="fontDec" onclick="changeFontSize(-2)" icon="text_decrease"></mdui-button-icon>
+<mdui-button-icon id="fontInc" onclick="changeFontSize(2)" icon="text_increase"></mdui-button-icon>
     <mdui-switch id="themeSwitch" onchange="toggleTheme()" unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined"></mdui-switch>
   </mdui-top-app-bar>
 
  <div class="example-scroll-behavior-elevate">
 
    <div style="height:auto;overflow:visible">
-    <!-- Chapter navigation -->
-    <mdui-button id="prevChapter" onclick="prevChapter()">◀ Prev</mdui-button>
+     
+     
+ 
+  <mdui-bottom-app-bar
+    scroll-behavior="hide"
+    scroll-threshold="30"
+    style="
+    justify-content: center;
+    display: flex
+"
+  >
+    <mdui-button-icon id="prevChapter"  onclick="prevChapter()" icon="arrow_circle_left"></mdui-button-icon>
     <mdui-select id="chapterSelect" label="Chapter" style="width:150px;" onchange="goToChapter(this.value)">
       <mdui-menu-item value="">-- Select --</mdui-menu-item>
-      <mdui-menu-item value="1">Chapter 1</mdui-menu-item>
-      <mdui-menu-item value="2">Chapter 2</mdui-menu-item>
-      <mdui-menu-item value="3">Chapter 3</mdui-menu-item>
+      <mdui-menu-item value="1">1</mdui-menu-item>
+      <mdui-menu-item value="2">2</mdui-menu-item>
+      <mdui-menu-item value="3">3</mdui-menu-item>
     </mdui-select>
-    <mdui-button id="nextChapter" onclick="nextChapter()">Next ▶</mdui-button><!-- Font controls -->
+     <mdui-button-icon id="nextChapter"  onclick="nextChapter()" icon="arrow_circle_right"></mdui-button-icon>
+    </mdui-bottom-app-bar>
+
+
+    <!-- Chapter navigation -->
+
 
 
 
@@ -205,7 +220,6 @@ color:#0077cc;
     <em>Select a chapter to begin reading...</em>
   </div>
 
-  </div>
   </div>
 </div>
 
@@ -273,8 +287,6 @@ container.innerHTML = marked.parse(text);
         // Update dropdown
         document.getElementById("chapterSelect").value = num;
 
-         // Smooth scroll to top
-    container.scrollIntoView({ behavior: "smooth" });
 
       } catch (err) {
         container.innerHTML = `<span style="color:red;">Failed to load chapter: ${err.message}</span>`;
