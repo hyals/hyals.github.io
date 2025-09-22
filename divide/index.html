@@ -150,6 +150,14 @@
       grid-template-columns: 50% 50%;
       gap: 1rem;
     }
+    
+       .flex-2col {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      row-gap: 1rem;
+      column-gap: 1rem;
+    }
 
     .title-large {
       font-size: var(--mdui-typescale-title-large-size);
@@ -207,7 +215,7 @@
           </div>
         </div>
 
-        <div class="grid-2col mt-2">
+        <div class="flex-2col mt-2">
           <mdui-button variant="filled" icon="menu_book" href="ch" full-width>Read on hyals.ink</mdui-button>
           <mdui-button variant="outlined" icon="open_in_new"
             href="https://www.scribblehub.com/series/1231858/beyond-the-divide/"
