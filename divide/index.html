@@ -137,6 +137,29 @@
       right: 0;
       height: 4rem;
     }
+    
+      .svg-icon {
+    width: 16px;
+    height: 16px;
+    background-color:rgb(var(--mdui-color-on-surface));
+    -webkit-mask: url("https://hyals.ink/assets/img/writing.svg") no-repeat center;
+    -webkit-mask-size: contain;
+    mask: url("https://hyals.ink/assets/img/writing.svg") no-repeat center;
+    mask-size: contain;
+    display:inline-block;
+    vertical-align:middle;
+  }
+  mdui-top-app-bar-title{
+    font-size: 1rem;
+  font-weight: 700;
+  }
+  
+  mdui-top-app-bar-title mdui-chip{
+     font-size: 0.8rem;
+     color:rgb(var(--mdui-color-on-secondary));
+     background-color:rgb(var(--mdui-color-on-surface));
+     height:auto;
+     }
 
     /* Layout helpers */
     .grid-book {
@@ -188,10 +211,13 @@
       <mdui-top-app-bar class="appbar"
         scroll-behavior="elevate"
         scroll-target="#scrollContainer">
-        <mdui-button-icon icon="border_color"></mdui-button-icon>
+       
 
         <mdui-top-app-bar-title>
-          <span style="font-weight:400">hyals.ink</span><br>
+          
+          <div class="svg-icon"></div>
+              hyals
+            <mdui-chip style="vertical-align:middle" disabled>.ink</mdui-chip>
         </mdui-top-app-bar-title>
 
         <div style="flex-grow:1"></div>
