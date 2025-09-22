@@ -6,55 +6,129 @@
   <title>BEYOND THE DIVIDE</title>
 
   <!-- Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" />
 
   <!-- MDUI -->
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
-  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  <script src="https://unpkg.com/mdui@2/mdui.global.js" defer></script>
 
   <!-- Markdown parser -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
 
-<style>
-:root{
-  --thumb-size:48px;
-  --thumb-edge-gap:12px;
-  --accent:#6750A4;
-  --surface:rgba(255,255,255,0.82);
-  --elevation:0 8px 28px rgba(16,16,16,0.18);
-}
-html,body{height:100%;margin:auto;overflow:hidden;font-family:"Roboto", sans-serif;}
-main{max-width:640px;margin:auto;padding:4rem 2rem 12rem 2rem;}
-#scrollContainer{height:100vh;overflow-y:scroll;
-  margin: 0;
-  padding: 0;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-}
+  <style>
+    :root {
+      --thumb-size: 48px;
+      --thumb-edge-gap: 12px;
+      --accent: #6750A4;
+      --surface: rgba(255, 255, 255, 0.82);
+      --elevation: 0 8px 28px rgba(16, 16, 16, 0.18);
+    }
 
-#scrollContainer::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
-}
-.scroll-track{
-  position:fixed;right:-1em;top:0rem;height:100vh;width:48px;z-index:1;
-  transition:opacity 0.4s ease;opacity:1;
-  // background:red
-}
-.scroll-track.hidden{opacity:0;pointer-events:none;}
-.scroll-thumb-wrap{position:absolute;right:0;width:var(--thumb-size);height:var(--thumb-size);}
-.scroll-thumb{
-  width:var(--thumb-size);height:var(--thumb-size);border-radius:50%;
-  background:var(--surface);box-shadow:var(--elevation);display:grid;place-items:center;
-  backdrop-filter:blur(6px);border:none;cursor:grab;touch-action:none;
-  transition:transform 0.15s cubic-bezier(.2,.9,.3,1);
-}
-.scroll-thumb:active{cursor:grabbing}
-.scroll-thumb svg{width:100%;height:100%}
-.ring-bg{stroke:rgba(0,0,0,0.08);stroke-width:3;fill:none}
-.ring{stroke:var(--accent);stroke-width:3;stroke-linecap:round;fill:none;transform-origin:center;transform:rotate(-90deg);}
-/* Appbar */
-    .appbar{
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      font-family: "Roboto", sans-serif;
+    }
+
+    main {
+      max-width: 640px;
+      margin: auto;
+      padding: 4rem 2rem 8rem;
+    }
+    
+    section,mdui-divider,mdui-card,mdui-list,.mt-1 {
+      margin-top:1rem;
+    }
+    
+    .mt-2 {
+      margin-top:2rem;
+    }
+    
+    mdui-card{
+      width:100%;
+      padding:1rem;
+    }
+
+    /* Scroll container */
+    #scrollContainer {
+      height: 100vh;
+      overflow-y: scroll;
+      margin: 0;
+      padding: 0;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE 10+ */
+    }
+
+    #scrollContainer::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Edge */
+    }
+
+    /* Custom scrollbar */
+    .scroll-track {
+      position: fixed;
+      right: -1em;
+      top: 0;
+      height: 100vh;
+      width: var(--thumb-size);
+      z-index: 1;
+      transition: opacity 0.4s ease;
+      opacity: 1;
+    }
+
+    .scroll-track.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .scroll-thumb-wrap {
+      position: absolute;
+      right: 0;
+      width: var(--thumb-size);
+      height: var(--thumb-size);
+    }
+
+    .scroll-thumb {
+      width: var(--thumb-size);
+      height: var(--thumb-size);
+      border-radius: 50%;
+      background: var(--surface);
+      box-shadow: var(--elevation);
+      display: grid;
+      place-items: center;
+      backdrop-filter: blur(6px);
+      border: none;
+      cursor: grab;
+      touch-action: none;
+      transition: transform 0.15s cubic-bezier(.2, .9, .3, 1);
+    }
+
+    .scroll-thumb:active {
+      cursor: grabbing;
+    }
+
+    .scroll-thumb svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .ring-bg {
+      stroke: rgba(0, 0, 0, 0.08);
+      stroke-width: 3;
+      fill: none;
+    }
+
+    .ring {
+      stroke: var(--accent);
+      stroke-width: 3;
+      stroke-linecap: round;
+      fill: none;
+      transform-origin: center;
+      transform: rotate(-90deg);
+    }
+
+    /* Appbar */
+    .appbar {
       display: flex;
       justify-content: center;
       position: fixed !important;
@@ -63,16 +137,43 @@ main{max-width:640px;margin:auto;padding:4rem 2rem 12rem 2rem;}
       right: 0;
       height: 4rem;
     }
-</style>
+
+    /* Layout helpers */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 25% 75%;
+      gap: 1rem;
+    }
+
+    .title-large {
+      font-size: var(--mdui-typescale-title-large-size);
+      display: block;
+    }
+
+    .title-medium {
+      font-size: var(--mdui-typescale-title-medium-size);
+      display: block;
+    }
+
+    .title-small {
+      font-size: var(--mdui-typescale-title-small-size);
+      display: block;
+    }
+
+    .character-avatar {
+      border-radius: var(--mdui-shape-corner-large);
+      width: 8rem;
+      height: 8rem;
+    }
+  </style>
 </head>
 <body>
-
-<div id="scrollContainer">
-  <main>
-  <!-- Top App Bar -->
-      <mdui-top-app-bar class="appbar" 
-    scroll-behavior="elevate"
-    scroll-target="#scrollContainer">
+  <div id="scrollContainer">
+    <main>
+      <!-- Top App Bar -->
+      <mdui-top-app-bar class="appbar"
+        scroll-behavior="elevate"
+        scroll-target="#scrollContainer">
         <mdui-button-icon icon="border_color"></mdui-button-icon>
 
         <mdui-top-app-bar-title>
@@ -81,122 +182,121 @@ main{max-width:640px;margin:auto;padding:4rem 2rem 12rem 2rem;}
 
         <div style="flex-grow:1"></div>
 
-        <mdui-switch id="themeSwitch" unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined" title="Toggle theme"></mdui-switch>
+        <mdui-switch id="themeSwitch"
+          unchecked-icon="wb_sunny--outlined"
+          checked-icon="nightlight--outlined"
+          title="Toggle theme"></mdui-switch>
       </mdui-top-app-bar>
 
       <div class="mdui-prose">
-        <div style="display: grid; grid-template-columns:25% 75%; grid-gap:1rem">
+        <!-- Cover & Info -->
+        <div class="grid-2col">
           <div>
-            <img src="img/book_cover.webp" />
+            <img src="img/book_cover.webp" alt="BEYOND THE DIVIDE cover" />
           </div>
           <div>
-            <span style="font-size:var(--mdui-typescale-title-large-size);display:block">BEYOND THE DIVIDE</span>
-            <span style="font-size:var(--mdui-typescale-title-medium-size);display:block">even in a colorless world, children must go on.</span>
-            <span style="font-size:var(--mdui-typescale-title-small-size);display:block">by <a href="https://hyals.ink">hyaL-s</a> · 2025</span>
+            <span class="title-large">BEYOND THE DIVIDE</span>
+            <span class="title-medium">even in a colorless world, children must go on.</span>
+            <span class="title-small">by <a href="https://hyals.ink">hyaL-s</a> · 2025</span>
           </div>
         </div>
 
-        <p></p>
-
-        <mdui-segmented-button-group style="width:100%">
+        <mdui-segmented-button-group style="width:100%" class="mt-2">
           <mdui-segmented-button icon="menu_book" href="ch">Read on hyals.ink</mdui-segmented-button>
-          <mdui-segmented-button icon="open_in_new" href="https://www.scribblehub.com/series/1231858/beyond-the-divide/" target="_blank">Read on ScribbleHub</mdui-segmented-button>
+          <mdui-segmented-button icon="open_in_new"
+            href="https://www.scribblehub.com/series/1231858/beyond-the-divide/"
+            target="_blank">Read on ScribbleHub</mdui-segmented-button>
         </mdui-segmented-button-group>
 
-        
-        <p></p>
-        <mdui-divider></mdui-divider>
+        <mdui-divider class="mt-2"></mdui-divider>
 
-        <p><b>About this work</b></p>
+        <!-- Synopsis -->
+        <section>
+          <span class="title-large">About this work</span>
+          <mdui-card variant="elevated">
+            <p><strong>Synopsis</strong></p>
+            <p>He is lost. He has nobody to trust. In this damned world where everyone forgets, the echoes of the past bring judgement even to those unaware of it.</p>
 
-        <!-- Chapter container -->
-        <mdui-card variant="elevated" style="width:100%; padding:1rem">
-          <p>Synopsis</p>
-          <p>He is lost. He has nobody to trust. In this damned world where everyone forgets, the echoes of the past bring judgement even to those unaware of it.</p>
+            <mdui-divider></mdui-divider>
 
-          <mdui-divider></mdui-divider>
+            <p><strong>Genre</strong></p>
+            <p>
+              <mdui-chip>Fantasy</mdui-chip>
+              <mdui-chip>Psychological</mdui-chip>
+              <mdui-chip>Tragedy</mdui-chip>
+            </p>
 
-          <p>Genre</p>
-          <p>
-            <mdui-chip>Fantasy</mdui-chip>
-            <mdui-chip>Psychological</mdui-chip>
-            <mdui-chip>Tragedy</mdui-chip>
-          </p>
+            <mdui-divider></mdui-divider>
 
-          <mdui-divider></mdui-divider>
+            <table>
+              <tbody>
+                <tr><td>Format: Web Novel</td><td>Status: Ongoing</td></tr>
+                <tr><td>Publisher: hyals.ink</td><td>Language: English</td></tr>
+                <tr><td>Author: <a href="https://hyals.ink">hyaL-s</a></td><td></td></tr>
+              </tbody>
+            </table>
+          </mdui-card>
+        </section>
 
-          <table>
-            <tbody>
-              <tr>
-                <td>Format: Web Novel</td>
-                <td>Status: Ongoing</td>
-              </tr>
-              <tr>
-                <td>Publisher: hyals.ink</td>
-                <td>Language: English</td>
-              </tr>
-              <tr>
-                <td>Author: <a href="https://hyals.ink">hyaL-s</a></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </mdui-card>
+        <!-- Characters -->
+        <section>
+          <span class="title-large">Characters</span>
+          <mdui-list>
+            <mdui-list-item>
+              Cien
+              <mdui-avatar slot="icon" src="img/character/cien.webp" alt="Cien" class="character-avatar"></mdui-avatar>
+              <span slot="description">A man of denial. He is the current vessel for God's Soul Fragment and the head of the Royal Family.</span>
+            </mdui-list-item>
 
-        <p><b>Characters</b></p>
+            <mdui-list-item>
+              Balint
+              <mdui-avatar slot="icon" src="img/character/balint.webp" alt="Balint" class="character-avatar"></mdui-avatar>
+              <span slot="description">A man with a dream. He is the head of the Defense Forces and the founder of the Angel-Human Alliance Council.</span>
+            </mdui-list-item>
 
-        <mdui-list>
-          <mdui-list-item>
-            Cien
-            <mdui-avatar slot="icon" src="img/character/cien.webp" style="border-radius:var(--mdui-shape-corner-large); width:8rem; height:8rem"></mdui-avatar>
-            <p slot="description">A man of denial. He is the current vessel for God's Soul Fragment and the head of the Royal Family.</p>
-          </mdui-list-item>
+            <mdui-list-item>
+              Hya
+              <mdui-avatar slot="icon" src="img/character/hya.webp" alt="Hya" class="character-avatar"></mdui-avatar>
+              <span slot="description">A boy bound to the past. He is discriminated against due to sharing traits similar to that of demons.</span>
+            </mdui-list-item>
 
-          <mdui-list-item>
-            Balint
-            <mdui-avatar slot="icon" src="img/character/balint.webp" style="border-radius:var(--mdui-shape-corner-large); width:8rem; height:8rem"></mdui-avatar>
-            <p slot="description">A man with a dream. He is the head of the Defense Forces and the founder of the Angel-Human Alliance Council.</p>
-          </mdui-list-item>
+            <mdui-list-item>
+              Lina
+              <mdui-avatar slot="icon" src="img/character/lina.webp" alt="Lina" class="character-avatar"></mdui-avatar>
+              <p slot="description">A boy with resolve. He is next in line to inherit God's Soul Fragment.</p>
+            </mdui-list-item>
 
-          <mdui-list-item>
-            Hya
-            <mdui-avatar slot="icon" src="img/character/hya.webp" style="border-radius:var(--mdui-shape-corner-large); width:8rem; height:8rem"></mdui-avatar>
-            <p slot="description">A boy bound to the past. He is discriminated against due to sharing traits similar to that of demons.</p>
-          </mdui-list-item>
+            <mdui-list-item>
+              Vita
+              <mdui-avatar slot="icon" src="img/character/vita.webp" alt="Vita" class="character-avatar"></mdui-avatar>
+              <span slot="description">A girl of yearning. She is an orphan taken in by the Royal Family after losing her parents during the Second Impact.</span>
+            </mdui-list-item>
 
-          <mdui-list-item>
-            Lina
-            <mdui-avatar slot="icon" src="img/character/lina.webp" style="border-radius:var(--mdui-shape-corner-large); width:8rem; height:8rem"></mdui-avatar>
-            <p slot="description">A boy with resolve. He is next in line to inherit God's Soul Fragment.</p>
-          </mdui-list-item>
-
-          <mdui-list-item>
-            Vita
-            <mdui-avatar slot="icon" src="img/character/vita.webp" style="border-radius:var(--mdui-shape-corner-large); width:8rem; height:8rem"></mdui-avatar>
-            <p slot="description">A girl of yearning. She is an orphan took by the Royal Family after losing her parents during the Second Impact.</p>
-          </mdui-list-item>
-
-          <mdui-list-item>
-            Gaukel
-            <mdui-avatar slot="icon" src="img/character/gaukel.webp" style="border-radius:var(--mdui-shape-corner-large); width:8rem; height:8rem"></mdui-avatar>
-            <p slot="description">A boy with innocence. Lost in thought.</p>
-          </mdui-list-item>
-        </mdui-list>
-  </main>
-</div>
-
-<div id="scrollTrack" class="scroll-track">
-  <div id="thumbWrap" class="scroll-thumb-wrap">
-    <button id="thumb" class="scroll-thumb">
-      <svg viewBox="0 0 40 40">
-        <circle class="ring-bg" cx="20" cy="20" r="14"></circle>
-        <circle id="ring" class="ring" cx="20" cy="20" r="14"></circle>
-      </svg>
-    </button>
+            <mdui-list-item>
+              Gaukel
+              <mdui-avatar slot="icon" src="img/character/gaukel.webp" alt="Gaukel" class="character-avatar"></mdui-avatar>
+              <span slot="description">A boy with innocence. Lost in thought.</span>
+            </mdui-list-item>
+          </mdui-list>
+        </section>
+      </div>
+    </main>
   </div>
-</div>
 
-  <script>
+  <!-- Custom Scrollbar -->
+  <div id="scrollTrack" class="scroll-track">
+    <div id="thumbWrap" class="scroll-thumb-wrap">
+      <button id="thumb" class="scroll-thumb">
+        <svg viewBox="0 0 40 40">
+          <circle class="ring-bg" cx="20" cy="20" r="14"></circle>
+          <circle id="ring" class="ring" cx="20" cy="20" r="14"></circle>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Custom scrollbar logic -->
+  <script defer>
     (() => {
       const wrap = document.getElementById('thumbWrap'),
             thumb = document.getElementById('thumb'),
@@ -234,7 +334,7 @@ main{max-width:640px;margin:auto;padding:4rem 2rem 12rem 2rem;}
           animating = false;
           return;
         }
-        container.scrollTop = scrollHeight * (currentRatio + delta * 0.3); // smooth lerp
+        container.scrollTop = scrollHeight * (currentRatio + delta * 0.3);
         updateThumb();
         requestAnimationFrame(animateThumb);
       };
@@ -258,10 +358,9 @@ main{max-width:640px;margin:auto;padding:4rem 2rem 12rem 2rem;}
       const dragEnd = e => {
         isDragging = false;
         thumb.releasePointerCapture?.(e?.pointerId);
-        thumb.style.transition = 'transform 0.15s cubic-bezier(.2,.9,.3,1)';
+        thumb.style.transition = 'transform 0.15s cubic-bezier(.2, .9, .3, 1)';
       };
 
-      // Event listeners
       container.addEventListener('scroll', () => { if(!isDragging) updateThumb(); showThumb(); });
       window.addEventListener('resize', () => { updateThumb(); showThumb(); });
 
@@ -286,27 +385,24 @@ main{max-width:640px;margin:auto;padding:4rem 2rem 12rem 2rem;}
 
       ['pointermove','pointerdown','keydown','touchmove','touchstart'].forEach(evt => document.addEventListener(evt, showThumb));
 
-      // Initial
       setTargetRatio(0);
       showThumb();
     })();
   </script>
 
-  <script>
-    /* ------------------ Utilities: Cookie helpers ------------------ */
+  <!-- Theme handling -->
+  <script defer>
     function setCookie(name, value, days = 365) {
       const d = new Date();
-      d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+      d.setTime(d.getTime() + days * 864e5);
       document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
     }
 
     function getCookie(name) {
-      const cookies = document.cookie.split(';').map(c => c.trim());
-      const found = cookies.find(c => c.startsWith(name + '='));
-      return found ? decodeURIComponent(found.split('=').slice(1).join('=')) : null;
+      return document.cookie.split(';').map(c => c.trim())
+        .find(c => c.startsWith(name + '='))?.split('=').slice(1).join('=') || null;
     }
 
-    /* ------------------ Theme toggle ------------------ */
     function toggleThemeBySwitch(isChecked) {
       const doc = document.documentElement;
       if (isChecked) {
@@ -320,18 +416,15 @@ main{max-width:640px;margin:auto;padding:4rem 2rem 12rem 2rem;}
       }
     }
 
-    /* ------------------ Init: wiring events and restoring prefs ------------------ */
     window.addEventListener('load', () => {
       const themeSwitch = document.getElementById('themeSwitch');
-
-      themeSwitch.addEventListener('change', (e) => toggleThemeBySwitch(e.target.checked));
+      themeSwitch.addEventListener('change', e => toggleThemeBySwitch(e.target.checked));
 
       const savedTheme = getCookie('theme');
       if (savedTheme === 'mdui-theme-dark') {
         document.documentElement.classList.add('mdui-theme-dark');
-        document.documentElement.classList.remove('mdui-theme-light');
         themeSwitch.checked = true;
-      } else if (savedTheme === 'mdui-theme-light') {
+      } else {
         document.documentElement.classList.add('mdui-theme-light');
         themeSwitch.checked = false;
       }
