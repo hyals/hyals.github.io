@@ -1,26 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" class="mdui-theme-light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Novel Reader</title>
 
-  <!-- Fonts & Icons -->
+  <!-- Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   <!-- MDUI -->
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
   <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
 
-  <!-- Markdown Parser -->
+  <!-- Markdown parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <style>
-    body {
-       font-family: "Roboto", sans-serif;
-    }
     /* Appbar */
     .appbar {
       display: flex;
@@ -30,13 +26,17 @@
       left: 0;
       right: 0;
       height: 4rem;
+      z-index: 10;
     }
+
+    /* Page layout spacing to avoid top app bar overlap */
+    body { padding-top: 4.5rem; }
 
     /* Chapter container */
     #chapter-container {
       width: 86%;
       max-width: 900px;
-      margin: auto;
+      margin: 1rem auto 4.5rem;
       padding: 1rem 20px;
       font-family: Georgia, serif;
       font-size: var(--font-size, 18px);
@@ -46,211 +46,185 @@
     }
 
     /* Headings */
-    #chapter-container h1 {
-      font-size: 1.5em;
-      margin: 1.5rem 0 0.8rem;
-      font-weight: bold;
-      text-align: center;
-    }
-    #chapter-container h2 {
-      font-size: 1.2em;
-      margin: 1.3rem 0 0.7rem;
-    }
-    #chapter-container h3 {
-      font-size: 1em;
-      margin: 1rem 0 0.5rem;
-    }
+    #chapter-container h1 { font-size: 1.5em; margin: 1.5rem 0 0.8rem; font-weight: bold; text-align: center; }
+    #chapter-container h2 { font-size: 1.2em; margin: 1.3rem 0 0.7rem; }
+    #chapter-container h3 { font-size: 1em; margin: 1rem 0 0.5rem; }
 
     /* Paragraphs */
-    #chapter-container p {
-      margin: 0;
-      text-align: justify;
-      text-indent: 2em;
-    }
+    #chapter-container p { margin: 0; text-align: justify; text-indent: 2em; }
 
-    /* Text styling */
+    /* Bold & italic */
     #chapter-container strong { font-weight: bold; }
     #chapter-container em { font-style: italic; }
 
     /* Lists */
     #chapter-container ul,
-    #chapter-container ol {
-      margin: 0.6rem 0 0.6rem 2rem;
-    }
+    #chapter-container ol { margin: 0.6rem 0 0.6rem 2rem; }
 
     /* Images */
-    #chapter-container img {
-      max-width: 90%;
-      display: block;
-      margin: 1rem auto;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    #chapter-container img.character {
-      max-width: 70px;
-      display: inline-block;
-      vertical-align: middle;
-      margin: 0 0.3rem;
-      box-shadow: none;
-    }
+    #chapter-container img { max-width: 90%; display: block; margin: 1rem auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    #chapter-container img.character { max-width: 70px; display: inline-block; vertical-align: middle; margin: 0 0.3rem; box-shadow: none; }
 
     /* Links */
-    #chapter-container a {
-      color: #0077cc;
-      text-decoration: underline;
-      transition: color 0.3s;
-    }
-    #chapter-container a:hover {
-      color: #005fa3;
-    }
+    #chapter-container a { color: #0077cc; text-decoration: underline; transition: color 0.3s; }
+    #chapter-container a:hover { color: #005fa3; }
 
     /* Blockquotes */
-    #chapter-container blockquote {
-      border-left: 4px solid #ccc;
-      margin: 0.6rem 0;
-      padding-left: 1rem;
-      color: #555;
-      font-style: italic;
-      background: rgba(0,0,0,0.02);
-      border-radius: 4px;
-    }
+    #chapter-container blockquote { border-left: 4px solid #ccc; margin: 0.6rem 0; padding-left: 1rem; color: #555; font-style: italic; background: rgba(0,0,0,0.02); border-radius: 4px; }
 
     /* Code blocks */
-    #chapter-container pre {
-      background: #f4f4f4;
-      padding: 0.8rem;
-      border-radius: 6px;
-      overflow-x: auto;
-      margin: 0.8rem 0;
-    }
-    #chapter-container code {
-      font-family: monospace;
-      background: #eee;
-      padding: 0.2rem 0.4rem;
-      border-radius: 3px;
-    }
+    #chapter-container pre { background: #f4f4f4; padding: 0.8rem; border-radius: 6px; overflow-x: auto; margin: 0.8rem 0; }
+    #chapter-container code { font-family: monospace; background: #eee; padding: 0.2rem 0.4rem; border-radius: 3px; }
 
     /* Character dialogue */
-    .character-box {
-      border-radius: 8px;
-      padding: 0.7rem 1rem;
-      margin: 1rem 0;
-    }
-    .character-box.red {
-      background: rgba(204, 0, 100, 0.05);
-      border: 2px solid #cc0064;
-    }
-    .character-box.blue {
-      background: rgba(0, 119, 204, 0.05);
-      border: 2px solid #0077cc;
-    }
-    .character-box legend {
-      font-weight: bold;
-      padding: 0 0.5rem;
-    }
+    .character-box { border-radius: 8px; padding: 0.7rem 1rem; margin: 1rem 0; }
+    .character-box.red { background: rgba(204, 0, 100, 0.05); border: 2px solid #cc0064; }
+    .character-box.blue { background: rgba(0, 119, 204, 0.05); border: 2px solid #0077cc; }
+    .character-box legend { font-weight: bold; padding: 0 0.5rem; }
     .character-box.red legend { color: #cc0064; }
     .character-box.blue legend { color: #0077cc; }
     .character-box p { margin: 0.3rem 0; }
   </style>
 </head>
-  
 <body>
 
   <!-- Top App Bar -->
   <mdui-top-app-bar class="appbar" scroll-behavior="elevate">
     <mdui-button-icon icon="book"></mdui-button-icon>
+
     <mdui-top-app-bar-title style="line-height:1">
       <span style="font-size:16pt;font-weight:400">BEYOND THE DIVIDE</span><br>
       <span style="font-size:10pt;font-weight:500" id="chapter-title"></span>
     </mdui-top-app-bar-title>
+
     <div style="flex-grow:1"></div>
-    <mdui-button-icon id="fontDec" onclick="changeFontSize(-2)" icon="text_decrease"></mdui-button-icon>
-    <mdui-button-icon id="fontInc" onclick="changeFontSize(2)" icon="text_increase"></mdui-button-icon>
-    <mdui-switch id="themeSwitch" onchange="toggleTheme()" 
-      unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined">
-    </mdui-switch>
+
+    <mdui-button-icon id="fontDec" icon="text_decrease" title="Decrease font"></mdui-button-icon>
+    <mdui-button-icon id="fontInc" icon="text_increase" title="Increase font"></mdui-button-icon>
+
+    <mdui-switch id="themeSwitch" unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined" title="Toggle theme"></mdui-switch>
   </mdui-top-app-bar>
 
-  <!-- Bottom App Bar -->
-  <mdui-bottom-app-bar scroll-behavior="hide" scroll-threshold="30"
-    style="display: grid; grid-template-columns: 20% 80%;">
-    
-    <!-- Chapter select -->
-    <mdui-select id="chapterSelect" label="Chapter" placeholder="-- Select --" onchange="goToChapter(this.value)">
-      <mdui-menu-item value="1">1</mdui-menu-item>
-      <mdui-menu-item value="2">2</mdui-menu-item>
-      <mdui-menu-item value="3">3</mdui-menu-item>
-    </mdui-select>
-
-    <!-- Chapter navigation -->
-    <div style="display:flex;flex-direction:row;align-items:center">
-      <mdui-button-icon id="prevChapter" onclick="prevChapter()" icon="arrow_circle_left"></mdui-button-icon>
-      <mdui-slider id="currentChapterValue" min="1" max="3"></mdui-slider>
-      <mdui-button-icon id="nextChapter" onclick="nextChapter()" icon="arrow_circle_right"></mdui-button-icon>
-    </div>
-  </mdui-bottom-app-bar>
-
-  <!-- Chapter content -->
+  <!-- Chapter container -->
   <div id="chapter-container">
     <em>Select a chapter to begin reading...</em>
   </div>
+  
+  
+<mdui-dialog close-on-overlay-click class="example-header">
+  <mdui-top-app-bar slot="header">
+    <mdui-button-icon icon="menu_book"></mdui-button-icon>
+    <mdui-top-app-bar-title>Chapters</mdui-top-app-bar-title>
+     <mdui-button-icon icon="close" id="close_chapter_list"></mdui-button-icon>
+  </mdui-top-app-bar>
+  <div style="">
+    <mdui-list id="chapterList">
+  
+</mdui-list>
+  </div>
+</mdui-dialog>
+
+
+
+
+  <!-- Bottom App Bar (grid) -->
+  <mdui-bottom-app-bar style="display:flex;flex-direction:row" scroll-behavior="hide" scroll-threshold="30">
+    <!-- left column: select -->
+
+      <!-- mdui-select acts as wrapper; we will programmatically insert <mdui-menu-item> children -->
+      <mdui-button-icon icon="format_list_bulleted" id="chapter_list_icon" title="Chapter list"></mdui-button-icon>
+
+    <!-- right column: nav row -->
+    
+      
+        <mdui-button-icon id="prevChapter" icon="arrow_circle_left" title="Previous"></mdui-button-icon>
+
+        <!-- slider's max is our single source-of-truth for number of chapters -->
+        <!-- CHANGE THIS max value when you add/remove chapters — the dropdown will regenerate automatically -->
+        <mdui-slider id="currentChapterValue" min="1" max="36" value="1" step="1"></mdui-slider>
+
+        <mdui-button-icon id="nextChapter" icon="arrow_circle_right" title="Next"></mdui-button-icon>
+      
+   
+  </mdui-bottom-app-bar>
 
   <script>
-    /* ---------- COOKIE HELPERS ---------- */
+    /* ------------------ Utilities: Cookie helpers ------------------ */
     function setCookie(name, value, days = 365) {
       const d = new Date();
       d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
       document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
     }
     function getCookie(name) {
-      return document.cookie.split(';').map(c => c.trim())
-        .find(c => c.startsWith(name + "="))?.substring(name.length + 1) || null;
+      const cookies = document.cookie.split(';').map(c => c.trim());
+      const found = cookies.find(c => c.startsWith(name + '='));
+      return found ? decodeURIComponent(found.split('=').slice(1).join('=')) : null;
     }
 
-    /* ---------- CHARACTER BOXES ---------- */
+    /* ------------------ Character replacements (markdown preprocessing) ------------------ */
     const characterNames = {
       "Hya": { label: "Hya", color: "red" },
       "Lina": { label: "Lina", color: "blue" },
       "Vita": { label: "Vita", color: "blue" },
       "Gaukel": { label: "Gaukel", color: "blue" }
     };
+
     function applyCharacterReplacements(text) {
+      // Format: [Name] Dialogue text...
       return text.replace(/\[(\w+)\]\s*(.*)/g, (match, key, dialogue) => {
         const char = characterNames[key];
-        return char ? `<fieldset class="character-box ${char.color}"><legend><i class="ti ti-bubble-text"></i> ${char.label}</legend><p>${dialogue}</p></fieldset>` : match;
+        if (!char) return match;
+        return `<fieldset class="character-box ${char.color}">
+                  <legend><i class="mdui-icon material-icons" style="vertical-align:middle">person</i> ${char.label}</legend>
+                  <p>${dialogue}</p>
+                </fieldset>`;
       });
     }
 
-    /* ---------- CHAPTER LOADING ---------- */
+    /* ------------------ Chapter loading ------------------ */
     async function loadChapter(filePath, num) {
-      const container = document.getElementById("chapter-container");
-      const titleDiv = document.getElementById("chapter-title");
+      const container = document.getElementById('chapter-container');
+      const titleDiv = document.getElementById('chapter-title');
       container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
+
       try {
-        const response = await fetch(filePath);
-        if (!response.ok) throw new Error(`Error: ${response.status}`);
-        let text = applyCharacterReplacements((await response.text()).trim());
-        const parsedHTML = marked.parse(text);
-        container.innerHTML = parsedHTML;
+        const res = await fetch(filePath);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        let text = (await res.text()).trim();
+        text = applyCharacterReplacements(text);
+        const html = marked.parse(text);
+        container.innerHTML = html;
 
-        // Set title
-        const h1 = new DOMParser().parseFromString(parsedHTML, "text/html").querySelector("h1");
-        titleDiv.innerHTML = h1 ? h1.innerHTML : "";
+        // Extract first H1 for title
+        const parsed = new DOMParser().parseFromString(html, 'text/html');
+        const h1 = parsed.querySelector('h1');
+        titleDiv.textContent = h1 ? h1.textContent : '';
 
-        // Save last read chapter
-        setCookie("lastChapter", num);
-        document.getElementById("chapterSelect").value = num;
-      } catch {
-        container.innerHTML = "You have reached the latest available chapter.";
+        // Persist last read
+        setCookie('lastChapter', num);
+
+        // Optionally update slider value attribute (visual)
+        document.getElementById('currentChapterValue').value = num;
+      } catch (err) {
+        container.innerHTML = "<em>Could not load chapter — you may have reached the latest available chapter.</em>";
+        titleDiv.textContent = "";
       }
     }
 
-    /* ---------- NAVIGATION ---------- */
-    function goToChapter(num) { if (num) window.location.hash = num; }
-    function currentChapterNum() {
-      const hash = window.location.hash.substring(1);
-      return hash && !isNaN(hash) ? parseInt(hash) : null;
+    /* ------------------ Navigation helpers ------------------ */
+    function goToChapter(num) {
+      if (!num) return;
+      // normalize to integer
+      const n = parseInt(num, 10);
+      if (isNaN(n)) return;
+      window.location.hash = n;
     }
+
+    function currentChapterNum() {
+      const h = window.location.hash.substring(1);
+      return h && !isNaN(h) ? parseInt(h, 10) : null;
+    }
+
     function nextChapter() {
       const num = currentChapterNum();
       if (num !== null) goToChapter(num + 1);
@@ -259,55 +233,138 @@
       const num = currentChapterNum();
       if (num !== null && num > 1) goToChapter(num - 1);
     }
+
     function handleHashChange() {
       const hash = window.location.hash.substring(1);
-      const final_chapter = document.getElementById("currentChapterValue").max;
+      const slider = document.getElementById('currentChapterValue');
+      const final_chapter = parseInt(slider.max, 10);
+
       if (hash && !isNaN(hash)) {
-        loadChapter(`https://hyals.ink/divide/ch/chapter${hash}.txt`, hash);
-        document.getElementById("currentChapterValue").value = hash;
-        document.getElementById("nextChapter").disabled = (hash >= final_chapter);
-        document.getElementById("prevChapter").disabled = (hash <= 1);
+        const n = parseInt(hash, 10);
+        // load from your server (adjust path as needed)
+        loadChapter(`https://hyals.ink/divide/ch/chapter${n}.txt`, n);
+
+        // update slider & buttons
+        slider.value = n;
+        document.getElementById('nextChapter').disabled = (n >= final_chapter);
+        document.getElementById('prevChapter').disabled = (n <= 1);
       }
     }
 
-    /* ---------- FONT SIZE ---------- */
+    /* ------------------ Generate dropdown options from slider.max ------------------ */
+    function generateChapterOptions() {
+      // <mdui-list-item headline="Headline"></mdui-list-item>
+      const list = document.getElementById('chapterList');
+      const slider = document.getElementById('currentChapterValue');
+      const max = parseInt(slider.max, 10) || 1;
+
+      // Clear existing menu items
+      // (mdui-select expects <mdui-menu-item> children)
+      list.innerHTML = '';
+      
+      for (let i = 1; i <= max; i++) {
+        const item = document.createElement('mdui-list-item');
+        item.setAttribute('headline', String(i));
+        item.textContent = String(i);
+        // Each menu-item should be clickable and set window.location.hash
+        // mdui-select handles selecting, but we'll also attach a click to be safe
+        item.addEventListener('click', () => goToChapter(i));
+        list.appendChild(item);
+      }
+    }
+
+    /* ------------------ Font size controls ------------------ */
     function changeFontSize(delta) {
-      const container = document.getElementById("chapter-container");
-      let currentSize = parseInt(getComputedStyle(container).fontSize);
-      currentSize = Math.max(12, currentSize + delta);
-      container.style.fontSize = currentSize + "px";
-      setCookie("fontSize", currentSize);
+      const c = document.getElementById('chapter-container');
+      const cur = parseInt(getComputedStyle(c).fontSize, 10) || 18;
+      const next = Math.max(12, cur + delta);
+      c.style.fontSize = next + 'px';
+      setCookie('fontSize', String(next));
     }
 
-    /* ---------- THEME ---------- */
-    const toggle = document.getElementById("themeSwitch");
-    toggle.addEventListener("change", () => {
-      const body = document.documentElement;
-      body.classList.toggle("mdui-theme-dark");
-      body.classList.toggle("mdui-theme-light");
-      setCookie("theme", body.classList.contains("mdui-theme-dark") 
-        ? "mdui-theme-dark" : "mdui-theme-light");
-    });
-
-    /* ---------- INIT ---------- */
-    window.addEventListener("load", () => {
-      // Apply saved preferences
-      const savedTheme = getCookie("theme");
-      if (savedTheme) document.documentElement.className = savedTheme;
-      if (savedTheme === "mdui-theme-dark") toggle.checked = true;
-
-      const savedFontSize = getCookie("fontSize");
-      if (savedFontSize) document.getElementById("chapter-container").style.fontSize = savedFontSize + "px";
-
-      if (!window.location.hash) {
-        goToChapter(getCookie("lastChapter") || 1);
+    /* ------------------ Theme toggle ------------------ */
+    // We'll use an event listener rather than inline attribute
+    function toggleThemeBySwitch(isChecked) {
+      const doc = document.documentElement;
+      if (isChecked) {
+        doc.classList.add('mdui-theme-dark');
+        doc.classList.remove('mdui-theme-light');
+        setCookie('theme', 'mdui-theme-dark');
+      } else {
+        doc.classList.remove('mdui-theme-dark');
+        doc.classList.add('mdui-theme-light');
+        setCookie('theme', 'mdui-theme-light');
       }
+    }
+
+    /* ------------------ Init: wiring events and restoring prefs ------------------ */
+    window.addEventListener('load', () => {
+      // Elements
+      const slider = document.getElementById('currentChapterValue');
+      const prevBtn = document.getElementById('prevChapter');
+      const nextBtn = document.getElementById('nextChapter');
+      const fontInc = document.getElementById('fontInc');
+      const fontDec = document.getElementById('fontDec');
+      const themeSwitch = document.getElementById('themeSwitch');
+      const dialog = document.querySelector(".example-header");
+      const openButton = document.getElementById("chapter_list_icon")
+      const closeButton = document.getElementById("close_chapter_list")
+
+  openButton.addEventListener("click", () => dialog.open = true);
+  closeButton.addEventListener("click", () => dialog.open = false);
+
+      // Generate drop-down from slider.max (single source of truth)
+      generateChapterOptions();
+
+      // Slider interaction
+      slider.addEventListener('input', (e) => {
+        const v = e.target.value;
+        goToChapter(v);
+      });
+
+      // Arrow buttons
+      prevBtn.addEventListener('click', prevChapter);
+      nextBtn.addEventListener('click', nextChapter);
+
+      // Font buttons
+      fontInc.addEventListener('click', () => changeFontSize(2));
+      fontDec.addEventListener('click', () => changeFontSize(-2));
+
+      // Theme switch
+      themeSwitch.addEventListener('change', (e) => toggleThemeBySwitch(e.target.checked));
+
+      // Restore saved theme
+      const savedTheme = getCookie('theme');
+      if (savedTheme === 'mdui-theme-dark') {
+        document.documentElement.classList.add('mdui-theme-dark');
+        document.documentElement.classList.remove('mdui-theme-light');
+        themeSwitch.checked = true;
+      } else if (savedTheme === 'mdui-theme-light') {
+        document.documentElement.classList.add('mdui-theme-light');
+        themeSwitch.checked = false;
+      }
+
+      // Restore font size
+      const savedFont = getCookie('fontSize');
+      if (savedFont) {
+        document.getElementById('chapter-container').style.fontSize = parseInt(savedFont, 10) + 'px';
+      }
+
+      // Resume last chapter (if no hash)
+      if (!window.location.hash) {
+        const last = getCookie('lastChapter');
+        if (last) goToChapter(last);
+        else goToChapter(1);
+      }
+
+      // Apply initial hash (if present)
       handleHashChange();
     });
-    window.addEventListener("hashchange", handleHashChange);
 
-    /* Slider listener */
-    document.querySelector("mdui-slider").addEventListener("input", e => goToChapter(e.target.value));
+    window.addEventListener('hashchange', handleHashChange);
+
+    /* If you dynamically change slider.max in the DOM later and want to regenerate the list,
+       call generateChapterOptions() again (it reads the current slider.max). */
   </script>
 </body>
 </html>
