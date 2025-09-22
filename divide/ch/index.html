@@ -217,9 +217,7 @@
     function applyCharacterReplacements(text) {
       return text.replace(/\[(\w+)\]\s*(.*)/g, (match, key, dialogue) => {
         const char = characterNames[key];
-        return char 
-          ? `<fieldset class="character-box ${char.color}"><legend><i class="ti ti-bubble-text"></i> ${char.label}</legend><p>${dialogue}</p></fieldset>` 
-          : match;
+        return char ? `<fieldset class="character-box ${char.color}"><legend><i class="ti ti-bubble-text"></i> ${char.label}</legend><p>${dialogue}</p></fieldset>` : match;
       });
     }
 
