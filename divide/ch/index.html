@@ -1,418 +1,314 @@
 <!DOCTYPE html>
-<html class="mdui-theme-light" lang="en">
+<html lang="en" class="mdui-theme-light">
 <head>
-  <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Filled -->
-<link
-  href="https://fonts.googleapis.com/icon?family=Material+Icons"
-  rel="stylesheet"
-/>
-<link
-  href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
-  rel="stylesheet"
-/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Novel Reader</title>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+
+  <!-- MDUI -->
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
-<script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+
+  <!-- Markdown Parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   <style>
-  .appbar {
-    justify-content: center;
-    display: flex
-;
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4rem;
-}
+    /* Appbar */
+    .appbar {
+      display: flex;
+      justify-content: center;
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4rem;
+    }
 
-
+    /* Chapter container */
     #chapter-container {
       width: 86%;
-      max-width:900px;
+      max-width: 900px;
       margin: auto;
       padding: 1rem 20px;
       font-family: Georgia, serif;
       font-size: var(--font-size, 18px);
-  line-height: 1.8;
-      height: auto;
+      line-height: 1.8;
       white-space: pre-wrap;
       transition: all 0.3s;
     }
-  /* Headings */
-  #chapter-container h1 {
-    font-size: 1.5em;
-    margin: 1.5rem 0 0.8rem;
-    font-weight: bold;
-    text-align: center;
-  }
-  #chapter-container h2 {
-    font-size: 1.2em;
-    margin: 1.3rem 0 0.7rem;
-  }
-  #chapter-container h3 {
-    font-size: 1em;
-    margin: 1rem 0 0.5rem;
-  }
 
-  /* Paragraphs */
-  #chapter-container p {
-    margin: 0.6rem 0;
-    text-align: justify;
-  }
+    /* Headings */
+    #chapter-container h1 {
+      font-size: 1.5em;
+      margin: 1.5rem 0 0.8rem;
+      font-weight: bold;
+      text-align: center;
+    }
+    #chapter-container h2 {
+      font-size: 1.2em;
+      margin: 1.3rem 0 0.7rem;
+    }
+    #chapter-container h3 {
+      font-size: 1em;
+      margin: 1rem 0 0.5rem;
+    }
 
-  /* Bold & italic */
-  #chapter-container strong {
-    font-weight: bold;
-  }
-  #chapter-container em {
-    font-style: italic;
-  }
-
-  /* Lists */
-  #chapter-container ul,
-  #chapter-container ol {
-    margin: 0.6rem 0 0.6rem 2rem;
-  }
-
-  /* Images inside markdown */
-  #chapter-container img {
-    max-width: 90%;
-    display: block;
-    margin: 1rem auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
-
-  /* Character images inline */
-  #chapter-container img.character {
-    max-width: 70px;
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0 0.3rem;
-    box-shadow: none;
-  }
-
-  /* Links */
-  #chapter-container a {
-    color: #0077cc;
-    text-decoration: underline;
-    transition: color 0.3s;
-  }
-  #chapter-container a:hover {
-    color: #005fa3;
-  }
-
-  /* Blockquotes */
-  #chapter-container blockquote {
-    border-left: 4px solid #ccc;
-    margin: 0.6rem 0;
-    padding-left: 1rem;
-    color: #555;
-    font-style: italic;
-    background: rgba(0,0,0,0.02);
-    border-radius: 4px;
-  }
-
-  /* Code blocks */
-  #chapter-container pre {
-    background: #f4f4f4;
-    padding: 0.8rem;
-    border-radius: 6px;
-    overflow-x: auto;
-    margin: 0.8rem 0;
-  }
-  #chapter-container code {
-    font-family: monospace;
-    background: #eee;
-    padding: 0.2rem 0.4rem;
-    border-radius: 3px;
-  }
-
+    /* Paragraphs */
     #chapter-container p {
-  margin: 0;
-  text-align: justify;
-  text-indent: 2em; /* classic first-line indent */
-}
+      margin: 0;
+      text-align: justify;
+      text-indent: 2em;
+    }
 
+    /* Text styling */
+    #chapter-container strong { font-weight: bold; }
+    #chapter-container em { font-style: italic; }
 
+    /* Lists */
+    #chapter-container ul,
+    #chapter-container ol {
+      margin: 0.6rem 0 0.6rem 2rem;
+    }
 
-   /* Character dialogue box */
+    /* Images */
+    #chapter-container img {
+      max-width: 90%;
+      display: block;
+      margin: 1rem auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    #chapter-container img.character {
+      max-width: 70px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 0.3rem;
+      box-shadow: none;
+    }
+
+    /* Links */
+    #chapter-container a {
+      color: #0077cc;
+      text-decoration: underline;
+      transition: color 0.3s;
+    }
+    #chapter-container a:hover {
+      color: #005fa3;
+    }
+
+    /* Blockquotes */
+    #chapter-container blockquote {
+      border-left: 4px solid #ccc;
+      margin: 0.6rem 0;
+      padding-left: 1rem;
+      color: #555;
+      font-style: italic;
+      background: rgba(0,0,0,0.02);
+      border-radius: 4px;
+    }
+
+    /* Code blocks */
+    #chapter-container pre {
+      background: #f4f4f4;
+      padding: 0.8rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 0.8rem 0;
+    }
+    #chapter-container code {
+      font-family: monospace;
+      background: #eee;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+    }
+
+    /* Character dialogue */
     .character-box {
       border-radius: 8px;
       padding: 0.7rem 1rem;
       margin: 1rem 0;
     }
     .character-box.red {
-    background: rgba(204, 0, 100, 0.05);
+      background: rgba(204, 0, 100, 0.05);
       border: 2px solid #cc0064;
     }
     .character-box.blue {
-    background: rgba(0, 119, 204, 0.05);
+      background: rgba(0, 119, 204, 0.05);
       border: 2px solid #0077cc;
     }
-    
     .character-box legend {
       font-weight: bold;
       padding: 0 0.5rem;
     }
-        .character-box.red legend {
-color:#cc0064;
-    }
-            .character-box.blue legend {
-color:#0077cc;
-            }
-    .character-box p {
-      margin: 0.3rem 0;
-    }
+    .character-box.red legend { color: #cc0064; }
+    .character-box.blue legend { color: #0077cc; }
+    .character-box p { margin: 0.3rem 0; }
   </style>
 </head>
   
 <body>
 
-<div>
-  <mdui-top-app-bar
-  class="appbar"
-    scroll-behavior="elevate"
-  >
+  <!-- Top App Bar -->
+  <mdui-top-app-bar class="appbar" scroll-behavior="elevate">
     <mdui-button-icon icon="book"></mdui-button-icon>
-      
-<mdui-top-app-bar-title style="line-height:1.0">
-<span style="font-size:16pt;font-weight:400">BEYOND THE DIVIDE</span><br>
-    <span style="font-size:10pt;font-weight:500" id="chapter-title"></span>
-</mdui-top-app-bar-title>
-
-    <div style="flex-grow: 1"></div>
+    <mdui-top-app-bar-title style="line-height:1">
+      <span style="font-size:16pt;font-weight:400">BEYOND THE DIVIDE</span><br>
+      <span style="font-size:10pt;font-weight:500" id="chapter-title"></span>
+    </mdui-top-app-bar-title>
+    <div style="flex-grow:1"></div>
     <mdui-button-icon id="fontDec" onclick="changeFontSize(-2)" icon="text_decrease"></mdui-button-icon>
-<mdui-button-icon id="fontInc" onclick="changeFontSize(2)" icon="text_increase"></mdui-button-icon>
-    <mdui-switch id="themeSwitch" onchange="toggleTheme()" unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined"></mdui-switch>
+    <mdui-button-icon id="fontInc" onclick="changeFontSize(2)" icon="text_increase"></mdui-button-icon>
+    <mdui-switch id="themeSwitch" onchange="toggleTheme()" 
+      unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined">
+    </mdui-switch>
   </mdui-top-app-bar>
 
- <div class="example-scroll-behavior-elevate">
-
-   <div style="height:auto;overflow:visible">
-     
-
- 
- <mdui-bottom-app-bar scroll-behavior="hide" scroll-threshold="30"
-  style="display: grid;
-grid-template-columns: 20% 80%;
-grid-column-gap: 0px;
-grid-row-gap: 0px;"
->
-   <div style="grid-area: 1 / 1">
-    <mdui-select id="chapterSelect" label="Chapter"  placeholder="-- Select --" onchange="goToChapter(this.value)">
+  <!-- Bottom App Bar -->
+  <mdui-bottom-app-bar scroll-behavior="hide" scroll-threshold="30"
+    style="display: grid; grid-template-columns: 20% 80%;">
+    
+    <!-- Chapter select -->
+    <mdui-select id="chapterSelect" label="Chapter" placeholder="-- Select --" onchange="goToChapter(this.value)">
       <mdui-menu-item value="1">1</mdui-menu-item>
       <mdui-menu-item value="2">2</mdui-menu-item>
       <mdui-menu-item value="3">3</mdui-menu-item>
     </mdui-select>
-    </div>
-    
-    <div style="grid-area: 1 / 2;">
-      <div style="display:flex;flex-direction:row">
-<mdui-button-icon id="prevChapter" onclick="prevChapter()" icon="arrow_circle_left"></mdui-button-icon>
-
-  <!-- Bottom row (slider) -->
-  <mdui-slider id="currentChapterValue"  min="1" max="3"></mdui-slider>
-  
-<mdui-button-icon id="nextChapter" onclick="nextChapter()" icon="arrow_circle_right" ></mdui-button-icon>
-</div>
-</div>
-</mdui-bottom-app-bar>
 
     <!-- Chapter navigation -->
+    <div style="display:flex;flex-direction:row;align-items:center">
+      <mdui-button-icon id="prevChapter" onclick="prevChapter()" icon="arrow_circle_left"></mdui-button-icon>
+      <mdui-slider id="currentChapterValue" min="1" max="3"></mdui-slider>
+      <mdui-button-icon id="nextChapter" onclick="nextChapter()" icon="arrow_circle_right"></mdui-button-icon>
+    </div>
+  </mdui-bottom-app-bar>
 
-
-
-
-
-
+  <!-- Chapter content -->
   <div id="chapter-container">
     <em>Select a chapter to begin reading...</em>
   </div>
 
-  </div>
-</div>
-
-
-  
-
   <script>
-    // ------------------ COOKIE HELPERS ------------------
+    /* ---------- COOKIE HELPERS ---------- */
     function setCookie(name, value, days = 365) {
       const d = new Date();
-      d.setTime(d.getTime() + (days*24*60*60*1000));
+      d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
       document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
     }
-
     function getCookie(name) {
-      const cookies = document.cookie.split(';').map(c => c.trim());
-      for (let c of cookies) {
-        if (c.startsWith(name + "=")) {
-          return decodeURIComponent(c.substring(name.length + 1));
-        }
+      return document.cookie.split(';').map(c => c.trim())
+        .find(c => c.startsWith(name + "="))?.substring(name.length + 1) || null;
+    }
+
+    /* ---------- CHARACTER BOXES ---------- */
+    const characterNames = {
+      "Hya": { label: "Hya", color: "red" },
+      "Lina": { label: "Lina", color: "blue" },
+      "Vita": { label: "Vita", color: "blue" },
+      "Gaukel": { label: "Gaukel", color: "blue" }
+    };
+    function applyCharacterReplacements(text) {
+      return text.replace(/\[(\w+)\]\s*(.*)/g, (match, key, dialogue) => {
+        const char = characterNames[key];
+        return char 
+          ? `<fieldset class="character-box ${char.color}">
+               <legend><i class="ti ti-bubble-text"></i> ${char.label}</legend>
+               <p>${dialogue}</p>
+             </fieldset>` 
+          : match;
+      });
+    }
+
+    /* ---------- CHAPTER LOADING ---------- */
+    async function loadChapter(filePath, num) {
+      const container = document.getElementById("chapter-container");
+      const titleDiv = document.getElementById("chapter-title");
+      container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
+      try {
+        const response = await fetch(filePath);
+        if (!response.ok) throw new Error(`Error: ${response.status}`);
+        let text = applyCharacterReplacements((await response.text()).trim());
+        const parsedHTML = marked.parse(text);
+        container.innerHTML = parsedHTML;
+
+        // Set title
+        const h1 = new DOMParser().parseFromString(parsedHTML, "text/html").querySelector("h1");
+        titleDiv.innerHTML = h1 ? h1.innerHTML : "";
+
+        // Save last read chapter
+        setCookie("lastChapter", num);
+        document.getElementById("chapterSelect").value = num;
+      } catch {
+        container.innerHTML = "You have reached the latest available chapter.";
       }
-      return null;
     }
 
-    // ------------------ CHAPTER LOADING ------------------
-const characterNames = {
-  "Hya": { label: "Hya", color: "red" },
-  "Lina": { label: "Lina", color: "blue" },
-  "Vita": { label: "VIta", color: "blue" },
-  "Gaukel": { label: "Gaukel", color: "blue" }
-};
-
-function applyCharacterReplacements(text) {
-  return text.replace(/\[(\w+)\]\s*(.*)/g, (match, charKey, dialogue) => {
-    const char = characterNames[charKey];
-    if (char) {
-      return `<fieldset class="character-box ${char.color}"><legend><i class="ti ti-bubble-text"></i> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
-    }
-    return match;
-  });
-}
-
-
-
-async function loadChapter(filePath, num) {
-  const container = document.getElementById("chapter-container");
-  const titleDiv = document.getElementById("chapter-title"); 
-  container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
-
-  try {
-    const response = await fetch(filePath);
-    if (!response.ok) throw new Error(`Error: ${response.status} ${response.statusText}`);
-
-    let text = await response.text();
-    text = text.trim();
-
-    // Apply character replacements
-    text = applyCharacterReplacements(text);
-
-    // Parse markdown (marked.js)
-    const parsedHTML = marked.parse(text);
-
-    // Put parsed HTML into container
-    container.innerHTML = parsedHTML;
-
-    // --- Extract first <h1> and set as title ---
-    const temp = document.createElement("div");
-    temp.innerHTML = parsedHTML;
-    const h1 = temp.querySelector("h1");
-    if (h1) {
-      titleDiv.innerHTML = h1.innerHTML;
-    } else {
-      titleDiv.innerHTML = ""; // clear if none found
-    }
-
-    // Save last read chapter
-    setCookie("lastChapter", num);
-
-    // Update dropdown
-    document.getElementById("chapterSelect").value = num;
-
-  } catch (err) {
-    container.innerHTML = `You have reached the latest available chapter.`;
-  }
-}
-
-    function goToChapter(num) {
-      if (!num) return;
-      window.location.hash = num;
-    }
-
-    function handleHashChange() {
-      const hash = window.location.hash.substring(1);
-     const final_chapter = document.getElementById("currentChapterValue").getAttribute("max");
-      if (hash && !isNaN(hash)) {
-        loadChapter(`https://hyals.ink/divide/ch/chapter${hash}.txt`, hash);
-        document.getElementById("currentChapterValue").setAttribute("value",hash);
-       
-   const nextBtn = document.getElementById("nextChapter");
-   const prevBtn = document.getElementById("prevChapter");
-nextBtn.disabled = (hash === final_chapter || hash > final_chapter);
-prevBtn.disabled = (hash == 1);
-    }
-      }
-    
-
-    // ------------------ NAVIGATION ------------------
-    
-   
-    
-function currentChapterNum() {
+    /* ---------- NAVIGATION ---------- */
+    function goToChapter(num) { if (num) window.location.hash = num; }
+    function currentChapterNum() {
       const hash = window.location.hash.substring(1);
       return hash && !isNaN(hash) ? parseInt(hash) : null;
     }
-
     function nextChapter() {
       const num = currentChapterNum();
       if (num !== null) goToChapter(num + 1);
     }
-
     function prevChapter() {
       const num = currentChapterNum();
       if (num !== null && num > 1) goToChapter(num - 1);
     }
+    function handleHashChange() {
+      const hash = window.location.hash.substring(1);
+      const final_chapter = document.getElementById("currentChapterValue").max;
+      if (hash && !isNaN(hash)) {
+        loadChapter(`https://hyals.ink/divide/ch/chapter${hash}.txt`, hash);
+        document.getElementById("currentChapterValue").value = hash;
+        document.getElementById("nextChapter").disabled = (hash >= final_chapter);
+        document.getElementById("prevChapter").disabled = (hash <= 1);
+      }
+    }
 
-    // ------------------ FONT SIZE ------------------
+    /* ---------- FONT SIZE ---------- */
     function changeFontSize(delta) {
       const container = document.getElementById("chapter-container");
-      let currentSize = parseInt(window.getComputedStyle(container).fontSize);
+      let currentSize = parseInt(getComputedStyle(container).fontSize);
       currentSize = Math.max(12, currentSize + delta);
       container.style.fontSize = currentSize + "px";
       setCookie("fontSize", currentSize);
     }
 
-    // ------------------ THEME ------------------
-const toggle = document.getElementById("themeSwitch");
-
-// Toggle theme when switch is changed
-toggle.addEventListener("change", () => {
-  const body = document.documentElement;
+    /* ---------- THEME ---------- */
+    const toggle = document.getElementById("themeSwitch");
+    toggle.addEventListener("change", () => {
+      const body = document.documentElement;
       body.classList.toggle("mdui-theme-dark");
       body.classList.toggle("mdui-theme-light");
-  setCookie("theme", body.classList.contains("mdui-theme-dark") ? "mdui-theme-dark" : "mdui-theme-light");
-});
-
-
-// Listen to the chapter number slider changes
-document.querySelector("mdui-slider").addEventListener("input", (e) => {
- goToChapter(e.target.value);
-  });
-
-
-
-
-    // ------------------ INIT ------------------
-    window.addEventListener("load", () => {
-
-
-        // Apply saved preferences
-      const savedTheme = getCookie("theme");
-      if (savedTheme) document.documentElement.className = savedTheme;
-      if (savedTheme == "mdui-theme-dark") document.getElementById("themeSwitch").checked=true;
-
-
-      const savedFontSize = getCookie("fontSize");
-      if (savedFontSize) {
-        document.getElementById("chapter-container").style.fontSize = savedFontSize + "px";
-      }
-
-      // Resume last chapter if no hash, or start at chapter 1 if no cookie
-      if (!window.location.hash) {
-        const last = getCookie("lastChapter");
-        if(last) goToChapter(last);
-        else goToChapter(1);
-      }
-
-      handleHashChange();
+      setCookie("theme", body.classList.contains("mdui-theme-dark") 
+        ? "mdui-theme-dark" : "mdui-theme-light");
     });
 
-    window.addEventListener("hashchange", handleHashChange);
-  </script>
+    /* ---------- INIT ---------- */
+    window.addEventListener("load", () => {
+      // Apply saved preferences
+      const savedTheme = getCookie("theme");
+      if (savedTheme) document.documentElement.className = savedTheme;
+      if (savedTheme === "mdui-theme-dark") toggle.checked = true;
 
+      const savedFontSize = getCookie("fontSize");
+      if (savedFontSize) document.getElementById("chapter-container").style.fontSize = savedFontSize + "px";
+
+      if (!window.location.hash) {
+        goToChapter(getCookie("lastChapter") || 1);
+      }
+      handleHashChange();
+    });
+    window.addEventListener("hashchange", handleHashChange);
+
+    /* Slider listener */
+    document.querySelector("mdui-slider").addEventListener("input", e => goToChapter(e.target.value));
+  </script>
 </body>
 </html>
