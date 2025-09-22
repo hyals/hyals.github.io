@@ -139,9 +139,15 @@
     }
 
     /* Layout helpers */
-    .grid-2col {
+    .grid-book {
       display: grid;
       grid-template-columns: 25% 75%;
+      gap: 1rem;
+    }
+    
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 50% 50%;
       gap: 1rem;
     }
 
@@ -190,7 +196,7 @@
 
       <div class="mdui-prose">
         <!-- Cover & Info -->
-        <div class="grid-2col">
+        <div class="grid-book">
           <div>
             <img src="img/book_cover.webp" alt="BEYOND THE DIVIDE cover" />
           </div>
@@ -201,12 +207,12 @@
           </div>
         </div>
 
-        <mdui-segmented-button-group style="width:100%" class="mt-2">
-          <mdui-segmented-button icon="menu_book" href="ch">Read on hyals.ink</mdui-segmented-button>
-          <mdui-segmented-button icon="open_in_new"
+        <div class="grid-2col mt-2">
+          <mdui-button variant="filled" icon="menu_book" href="ch" full-width>Read on hyals.ink</mdui-button>
+          <mdui-button variant="outlined" icon="open_in_new"
             href="https://www.scribblehub.com/series/1231858/beyond-the-divide/"
-            target="_blank">Read on ScribbleHub</mdui-segmented-button>
-        </mdui-segmented-button-group>
+            target="_blank" full-width>Read on ScribbleHub</mdui-button>
+        </div>
 
         <mdui-divider class="mt-2"></mdui-divider>
 
