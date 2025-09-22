@@ -7,88 +7,23 @@
 
   <!-- Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" />
 
   <!-- MDUI -->
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
-  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  <script src="https://unpkg.com/mdui@2/mdui.global.js" defer></script>
+
+   <!-- main.css -->
+  <link rel="stylesheet" href="https://hyals.ink/divide/main.css" />
 
   <!-- Markdown parser -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-  <style>
-    body {
-       font-family: "Roboto", sans-serif;
-    }
-    /* Appbar */
-    .appbar {
-      display: flex;
-      justify-content: center;
-      position: fixed !important;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4rem;
-    }
-
-    /* Chapter container */
-    #chapter-container {
-      width: 86%;
-      max-width: 900px;
-      margin: auto;
-      padding: 4rem 1rem 0rem 1rem;
-      font-family: Georgia, serif;
-      font-size: var(--font-size, 18px);
-      line-height: 1.8;
-      white-space: pre-wrap;
-      transition: all 0.3s;
-    }
-
-    /* Headings */
-    #chapter-container h1 { font-size: 1.5em; margin: 1.5rem 0 0.8rem; font-weight: bold; text-align: center; }
-    #chapter-container h2 { font-size: 1.2em; margin: 1.3rem 0 0.7rem; }
-    #chapter-container h3 { font-size: 1em; margin: 1rem 0 0.5rem; }
-
-    /* Paragraphs */
-    #chapter-container p { margin: 0; text-align: justify; text-indent: 2em; }
-
-    /* Bold & italic */
-    #chapter-container strong { font-weight: bold; }
-    #chapter-container em { font-style: italic; }
-
-    /* Lists */
-    #chapter-container ul,
-    #chapter-container ol { margin: 0.6rem 0 0.6rem 2rem; }
-
-    /* Images */
-    #chapter-container img { max-width: 90%; display: block; margin: 1rem auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-    #chapter-container img.character { max-width: 70px; display: inline-block; vertical-align: middle; margin: 0 0.3rem; box-shadow: none; }
-
-    /* Links */
-    #chapter-container a { color: #0077cc; text-decoration: underline; transition: color 0.3s; }
-    #chapter-container a:hover { color: #005fa3; }
-
-    /* Blockquotes */
-    #chapter-container blockquote { border-left: 4px solid #ccc; margin: 0.6rem 0; padding-left: 1rem; color: #555; font-style: italic; background: rgba(0,0,0,0.02); border-radius: 4px; }
-
-    /* Code blocks */
-    #chapter-container pre { background: #f4f4f4; padding: 0.8rem; border-radius: 6px; overflow-x: auto; margin: 0.8rem 0; }
-    #chapter-container code { font-family: monospace; background: #eee; padding: 0.2rem 0.4rem; border-radius: 3px; }
-
-    /* Character dialogue */
-    .character-box { border-radius: 8px; padding: 0.7rem 1rem; margin: 1rem 0; }
-    .character-box.red { background: rgba(204, 0, 100, 0.05); border: 2px solid #cc0064; }
-    .character-box.blue { background: rgba(0, 119, 204, 0.05); border: 2px solid #0077cc; }
-    .character-box legend { font-weight: bold; padding: 0 0.5rem; }
-    .character-box.red legend { color: #cc0064; }
-    .character-box.blue legend { color: #0077cc; }
-    .character-box p { margin: 0.3rem 0; }
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
 </head>
 <body>
-
-  <!-- Top App Bar -->
-  <mdui-top-app-bar class="appbar" scroll-behavior="elevate">
+  <div id="scrollContainer">
+    <main style="max-width: 900px;">
+      <!-- Top App Bar -->
+  <mdui-top-app-bar class="appbar" scroll-behavior="elevate" scroll-target="#scrollContainer">
     <mdui-button-icon icon="book"></mdui-button-icon>
 
     <mdui-top-app-bar-title style="line-height:1">
@@ -100,7 +35,6 @@
 
     <mdui-button-icon id="fontDec" icon="text_decrease" title="Decrease font"></mdui-button-icon>
     <mdui-button-icon id="fontInc" icon="text_increase" title="Increase font"></mdui-button-icon>
-
     <mdui-switch id="themeSwitch" unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined" title="Toggle theme"></mdui-switch>
   </mdui-top-app-bar>
 
@@ -108,77 +42,72 @@
   <div id="chapter-container">
     <em>Select a chapter to begin reading...</em>
   </div>
-  
-  
-<mdui-dialog close-on-overlay-click class="example-header">
-  <mdui-top-app-bar slot="header">
-    <mdui-button-icon icon="menu_book"></mdui-button-icon>
-    <mdui-top-app-bar-title>Chapters</mdui-top-app-bar-title>
-     <mdui-button-icon icon="close" id="close_chapter_list"></mdui-button-icon>
-  </mdui-top-app-bar>
-  <div style="">
-    <mdui-list id="chapterList">
-  
-</mdui-list>
-  </div>
-</mdui-dialog>
 
-
-
+  <!-- Dialog for Chapters -->
+  <mdui-dialog close-on-overlay-click class="example-header">
+    <mdui-top-app-bar slot="header">
+      <mdui-button-icon icon="menu_book"></mdui-button-icon>
+      <mdui-top-app-bar-title>Chapters</mdui-top-app-bar-title>
+      <mdui-button-icon icon="close" id="close_chapter_list"></mdui-button-icon>
+    </mdui-top-app-bar>
+    <mdui-list id="chapterList"></mdui-list>
+  </mdui-dialog>
 
   <!-- Bottom App Bar -->
-  <mdui-bottom-app-bar style="display:flex;flex-direction:row" scroll-behavior="hide" scroll-threshold="30">
-   
-      
-        <mdui-button-icon id="prevChapter" icon="arrow_circle_left" title="Previous"></mdui-button-icon>
-
-        <!-- slider's max is our single source-of-truth for number of chapters -->
-        <mdui-slider id="currentChapterValue" min="1" max="2" value="1" step="1"></mdui-slider>
-
-        <mdui-button-icon id="nextChapter" icon="arrow_circle_right" title="Next"></mdui-button-icon>
-
-    <!-- book contents button -->
-     <mdui-button-icon icon="format_list_bulleted" id="chapter_list_icon" title="Chapter list"></mdui-button-icon>
-      
-   
+  <mdui-bottom-app-bar scroll-behavior="hide" scroll-threshold="30">
+    <mdui-button-icon id="prevChapter" icon="arrow_circle_left" title="Previous"></mdui-button-icon>
+    <mdui-slider id="currentChapterValue" min="1" max="2" value="1" step="1"></mdui-slider>
+    <mdui-button-icon id="nextChapter" icon="arrow_circle_right" title="Next"></mdui-button-icon>
+    <mdui-button-icon icon="format_list_bulleted" id="chapter_list_icon" title="Chapter list"></mdui-button-icon>
   </mdui-bottom-app-bar>
+</main>
+</div>
+<!-- Custom Scrollbar -->
+  <div id="scrollTrack" class="scroll-track">
+    <div id="thumbWrap" class="scroll-thumb-wrap">
+      <button id="thumb" class="scroll-thumb">
+        <svg viewBox="0 0 40 40">
+          <circle class="ring-bg" cx="20" cy="20" r="14"></circle>
+          <circle id="ring" class="ring" cx="20" cy="20" r="14"></circle>
+        </svg>
+      </button>
+    </div>
+  </div>
 
-  <script>
-    /* ------------------ Utilities: Cookie helpers ------------------ */
+  <script defer>
+    /* Cookie helpers */
     function setCookie(name, value, days = 365) {
       const d = new Date();
-      d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+      d.setTime(d.getTime() + days * 864e5);
       document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
     }
     function getCookie(name) {
-      const cookies = document.cookie.split(';').map(c => c.trim());
-      const found = cookies.find(c => c.startsWith(name + '='));
-      return found ? decodeURIComponent(found.split('=').slice(1).join('=')) : null;
+      return document.cookie.split('; ').reduce((r, v) => {
+        const [k, val] = v.split('=');
+        return k === name ? decodeURIComponent(val) : r;
+      }, null);
     }
 
-    /* ------------------ Character replacements (markdown preprocessing) ------------------ */
+    /* Character replacements */
     const characterNames = {
       "Hya": { label: "Hya", color: "red" },
       "Lina": { label: "Lina", color: "blue" },
       "Vita": { label: "Vita", color: "blue" },
       "Gaukel": { label: "Gaukel", color: "blue" }
     };
-
     function applyCharacterReplacements(text) {
-      // Format: [Name] Dialogue text...
-      return text.replace(/\[(\w+)\]\s*(.*)/g, (match, key, dialogue) => {
+      return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
         const char = characterNames[key];
-        if (!char) return match;
+        if (!char) return m;
         return `<fieldset class="character-box ${char.color}"><legend><i class="mdui-icon material-icons" style="vertical-align:middle">person</i> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
       });
     }
 
-    /* ------------------ Chapter loading ------------------ */
+    /* Chapter loading */
     async function loadChapter(filePath, num) {
       const container = document.getElementById('chapter-container');
       const titleDiv = document.getElementById('chapter-title');
       container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
-
       try {
         const res = await fetch(filePath);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -187,85 +116,63 @@
         const html = marked.parse(text);
         container.innerHTML = html;
 
-        // Extract first H1 for title
         const parsed = new DOMParser().parseFromString(html, 'text/html');
         const h1 = parsed.querySelector('h1');
         titleDiv.textContent = h1 ? h1.textContent : '';
-
-        // Persist last read
         setCookie('lastChapter', num);
-
-        // Optionally update slider value attribute (visual)
         document.getElementById('currentChapterValue').value = num;
-      } catch (err) {
-        container.innerHTML = "<em>Could not load chapter — you may have reached the latest available chapter.</em>";
+      } catch {
+        container.innerHTML = "<em>Could not load chapter.</em>";
         titleDiv.textContent = "";
       }
     }
 
-    /* ------------------ Navigation helpers ------------------ */
+    /* Navigation */
     function goToChapter(num) {
-      if (!num) return;
-      // normalize to integer
       const n = parseInt(num, 10);
-      if (isNaN(n)) return;
-      window.location.hash = n;
+      if (!isNaN(n)) window.location.hash = n;
     }
-
     function currentChapterNum() {
       const h = window.location.hash.substring(1);
       return h && !isNaN(h) ? parseInt(h, 10) : null;
     }
-
     function nextChapter() {
-      const num = currentChapterNum();
-      if (num !== null) goToChapter(num + 1);
+      const n = currentChapterNum();
+      if (n !== null) goToChapter(n + 1);
     }
     function prevChapter() {
-      const num = currentChapterNum();
-      if (num !== null && num > 1) goToChapter(num - 1);
+      const n = currentChapterNum();
+      if (n !== null && n > 1) goToChapter(n - 1);
     }
-
     function handleHashChange() {
       const hash = window.location.hash.substring(1);
       const slider = document.getElementById('currentChapterValue');
       const final_chapter = parseInt(slider.max, 10);
-
       if (hash && !isNaN(hash)) {
         const n = parseInt(hash, 10);
-        // load from your server (adjust path as needed)
         loadChapter(`https://hyals.ink/divide/ch/chapter${n}.txt`, n);
-
-        // update slider & buttons
         slider.value = n;
         document.getElementById('nextChapter').disabled = (n >= final_chapter);
         document.getElementById('prevChapter').disabled = (n <= 1);
       }
     }
 
-    /* ------------------ Generate dropdown options from slider.max ------------------ */
+    /* Chapter options */
     function generateChapterOptions() {
-      // <mdui-list-item headline="Headline"></mdui-list-item>
       const list = document.getElementById('chapterList');
       const slider = document.getElementById('currentChapterValue');
       const max = parseInt(slider.max, 10) || 1;
-
-      // Clear existing menu items
-      // (mdui-select expects <mdui-menu-item> children)
       list.innerHTML = '';
-      
       for (let i = 1; i <= max; i++) {
         const item = document.createElement('mdui-list-item');
-        item.setAttribute('headline', String(i));
-        item.textContent = String(i);
-        // Each menu-item should be clickable and set window.location.hash
-        // mdui-select handles selecting, but we'll also attach a click to be safe
+        item.setAttribute('headline', i);
+        item.textContent = i;
         item.addEventListener('click', () => goToChapter(i));
         list.appendChild(item);
       }
     }
 
-    /* ------------------ Font size controls ------------------ */
+    /* Font size */
     function changeFontSize(delta) {
       const c = document.getElementById('chapter-container');
       const cur = parseInt(getComputedStyle(c).fontSize, 10) || 18;
@@ -274,8 +181,7 @@
       setCookie('fontSize', String(next));
     }
 
-    /* ------------------ Theme toggle ------------------ */
-    // We'll use an event listener rather than inline attribute
+    /* Theme toggle */
     function toggleThemeBySwitch(isChecked) {
       const doc = document.documentElement;
       if (isChecked) {
@@ -289,9 +195,8 @@
       }
     }
 
-    /* ------------------ Init: wiring events and restoring prefs ------------------ */
+    /* Init */
     window.addEventListener('load', () => {
-      // Elements
       const slider = document.getElementById('currentChapterValue');
       const prevBtn = document.getElementById('prevChapter');
       const nextBtn = document.getElementById('nextChapter');
@@ -299,64 +204,132 @@
       const fontDec = document.getElementById('fontDec');
       const themeSwitch = document.getElementById('themeSwitch');
       const dialog = document.querySelector(".example-header");
-      const openButton = document.getElementById("chapter_list_icon")
-      const closeButton = document.getElementById("close_chapter_list")
+      const openButton = document.getElementById("chapter_list_icon");
+      const closeButton = document.getElementById("close_chapter_list");
+      const container = document.getElementById('chapter-container');
 
-  openButton.addEventListener("click", () => dialog.open = true);
-  closeButton.addEventListener("click", () => dialog.open = false);
+      openButton.addEventListener("click", () => dialog.open = true);
+      closeButton.addEventListener("click", () => dialog.open = false);
 
-      // Generate drop-down from slider.max (single source of truth)
       generateChapterOptions();
-
-      // Slider interaction
-      slider.addEventListener('input', (e) => {
-        const v = e.target.value;
-        goToChapter(v);
-      });
-
-      // Arrow buttons
+      slider.addEventListener('input', e => goToChapter(e.target.value));
       prevBtn.addEventListener('click', prevChapter);
       nextBtn.addEventListener('click', nextChapter);
-
-      // Font buttons
       fontInc.addEventListener('click', () => changeFontSize(2));
       fontDec.addEventListener('click', () => changeFontSize(-2));
+      themeSwitch.addEventListener('change', e => toggleThemeBySwitch(e.target.checked));
 
-      // Theme switch
-      themeSwitch.addEventListener('change', (e) => toggleThemeBySwitch(e.target.checked));
-
-      // Restore saved theme
+      /* Restore prefs */
       const savedTheme = getCookie('theme');
       if (savedTheme === 'mdui-theme-dark') {
         document.documentElement.classList.add('mdui-theme-dark');
-        document.documentElement.classList.remove('mdui-theme-light');
         themeSwitch.checked = true;
-      } else if (savedTheme === 'mdui-theme-light') {
-        document.documentElement.classList.add('mdui-theme-light');
-        themeSwitch.checked = false;
       }
-
-      // Restore font size
       const savedFont = getCookie('fontSize');
-      if (savedFont) {
-        document.getElementById('chapter-container').style.fontSize = parseInt(savedFont, 10) + 'px';
-      }
+      if (savedFont) container.style.fontSize = parseInt(savedFont, 10) + 'px';
 
-      // Resume last chapter (if no hash)
       if (!window.location.hash) {
         const last = getCookie('lastChapter');
-        if (last) goToChapter(last);
-        else goToChapter(1);
+        goToChapter(last || 1);
       }
-
-      // Apply initial hash (if present)
       handleHashChange();
+
     });
-
     window.addEventListener('hashchange', handleHashChange);
+  </script>
+   <!-- Custom scrollbar logic -->
+  <script defer>
+    (() => {
+      const wrap = document.getElementById('thumbWrap'),
+            thumb = document.getElementById('thumb'),
+            track = document.getElementById('scrollTrack'),
+            ring = document.getElementById('ring'),
+            container = document.getElementById('scrollContainer');
 
-    /* If you dynamically change slider.max in the DOM later and want to regenerate the list,
-       call generateChapterOptions() again (it reads the current slider.max). */
+      const R = 14, circumference = 2 * Math.PI * R;
+      ring.style.strokeDasharray = circumference;
+
+      let isDragging = false, hideTimeout, targetRatio = 0, animating = false;
+
+      const available = () => window.innerHeight - 48 - 24;
+
+      const showThumb = () => {
+        track.classList.remove('hidden');
+        clearTimeout(hideTimeout);
+        hideTimeout = setTimeout(() => track.classList.add('hidden'), 3000);
+      };
+
+      const pointerToRatio = y => Math.min(1, Math.max(0, (y - 12) / available()));
+
+      const setTargetRatio = ratio => {
+        targetRatio = Math.min(1, Math.max(0, ratio));
+        if (!animating) requestAnimationFrame(animateThumb);
+      };
+
+      const animateThumb = () => {
+        animating = true;
+        const scrollHeight = container.scrollHeight - container.clientHeight;
+        const currentRatio = scrollHeight ? container.scrollTop / scrollHeight : 0;
+        const delta = targetRatio - currentRatio;
+        if (Math.abs(delta) < 0.001) {
+          container.scrollTop = scrollHeight * targetRatio;
+          animating = false;
+          return;
+        }
+        container.scrollTop = scrollHeight * (currentRatio + delta * 0.3);
+        updateThumb();
+        requestAnimationFrame(animateThumb);
+      };
+
+      const updateThumb = () => {
+        const scrollTop = container.scrollTop;
+        const scrollHeight = container.scrollHeight - container.clientHeight;
+        const ratio = scrollHeight ? scrollTop / scrollHeight : 0;
+        wrap.style.transform = `translateY(${12 + available() * ratio}px)`;
+        ring.style.strokeDashoffset = circumference * (1 - ratio);
+      };
+
+      const dragMove = y => setTargetRatio(pointerToRatio(y));
+
+      const dragStart = e => {
+        isDragging = true;
+        thumb.setPointerCapture?.(e.pointerId);
+        thumb.style.transition = 'none';
+      };
+
+      const dragEnd = e => {
+        isDragging = false;
+        thumb.releasePointerCapture?.(e?.pointerId);
+        thumb.style.transition = 'transform 0.15s cubic-bezier(.2, .9, .3, 1)';
+      };
+
+      container.addEventListener('scroll', () => { if(!isDragging) updateThumb(); showThumb(); });
+      window.addEventListener('resize', () => { updateThumb(); showThumb(); });
+
+      thumb.addEventListener('pointerdown', dragStart);
+      document.addEventListener('pointermove', e => isDragging && dragMove(e.clientY));
+      document.addEventListener('pointerup', dragEnd);
+
+      thumb.addEventListener('touchstart', e => { if(e.touches.length===1){ isDragging=true; thumb.style.transition='none'; } }, {passive:true});
+      document.addEventListener('touchmove', e => { if(isDragging && e.touches.length===1) dragMove(e.touches[0].clientY); }, {passive:false});
+      document.addEventListener('touchend', dragEnd);
+
+      track.addEventListener('pointerdown', e => { if(e.target!==thumb){ dragMove(e.clientY); isDragging=true; thumb.setPointerCapture?.(e.pointerId); } });
+
+      document.addEventListener('wheel', e => {
+        if(!container.contains(e.target)){
+          container.scrollTop += e.deltaY;
+          setTargetRatio(container.scrollTop / (container.scrollHeight - container.clientHeight));
+          showThumb();
+          e.preventDefault();
+        }
+      }, {passive:false});
+
+      ['pointermove','pointerdown','keydown','touchmove','touchstart'].forEach(evt => document.addEventListener(evt, showThumb));
+
+      setTargetRatio(0);
+      showThumb();
+    })();
   </script>
 </body>
 </html>
