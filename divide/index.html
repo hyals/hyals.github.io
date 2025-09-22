@@ -1,288 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>hyaL-s／△□△</title>
-    <meta charset="utf-8">
-    <meta name="robots" content="index, follow">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <meta name="theme-color" content="#263544">
-    <meta name="description" content="hyaL-s Portfolio">
-    <meta name="author" content="hyaL-s">
-    <meta property="og:url" content="https://hyals.ink">
-    <meta property="og:title" content="hyaL-s Portfolio">
-    <meta property="og:description" content="hyals.ink: artwork and written works">
-    <link rel="icon" type="image/svg+xml" href="/assets/img/writing.svg">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <script src="/assets/js/main.js"></script>
-    <link rel="canonical" href="https://hyals.ink">
-  </head>
-  <body>
-    <div class="neko-container off-canvas off-canvas-sidebar-show">
-      <!--
-        #######################################
-        #######################################
-        this is the TOP navigation bar (mobile)
-        #######################################
-        #######################################
-        !-->
-      <div class="neko-navbar">
-        <header class="navbar">
-          <section class="navbar-section">
-            <a href="#sidebar" class="btn btn-link">
-              <i class="ti ti-menu-2"></i>
-            </a>
-          </section>
-          <section class="navbar-center">
-            <a href="/" class="btn btn-link">
-              <i class="ti ti-writing-sign"></i>
-            </a>
-          </section>
-          <section class="navbar-section">
-            <span style="margin-right:20px"></span>
-            <a href="mailto:bkhz@pm.me" class="btn btn-link">
-              <i class="ti ti-mail"></i>
-            </a>
-          </section>
-        </header>
-      </div>
-      <!--
-        #######################################
-        #######################################
-        this is the sidebar 
-        #######################################
-        #######################################
-        !-->
-      <div class="neko-sidebar off-canvas-sidebar" id="sidebar" ontouchmove="event.preventDefault()">
-        <div class="neko-brand">
-          <a class="neko-logo disable-select" href="/">
-            <h2>
-              <i class="ti ti-writing-sign va-middle"></i> hyals
-            </h2>
-            <small class="label label-secondary text-bold text-dark">.ink</small>
-          </a>
-        </div>
-        <div class="neko-nav disable-select">
-          <ul class="menu">
-            <li class="divider" data-content="Home"></li>
-            <li class="menu-item">
-              <a href="/">
-                <i class="ti ti-user-square text-large va-middle"></i> Portfolio </a>
-            </li>
-            <li class="divider" data-content="Works"></li>
-            <li class="menu-item">
-              <a href="/divide">
-                <i class="ti ti-books text-large va-middle"></i> BEYOND THE DIVIDE </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <a class="off-canvas-overlay" href="#close" ontouchstart="window.location.hash='#close';event.preventDefault()"></a>
-      <div class="off-canvas-content">
-        <div class="neko-content" id="content">
-          <div class="card nobg">
-            <div class="card-header">
-              <div class="card-title h5">BEYOND THE DIVIDE</div>
-            </div>
-          </div>
-          <div class="card mb-2">
-            <div class="columns">
-              <div class="column col-4">
-                <div class="card-image">
-                  <img src="https://cdn.scribblehub.com/images/61/beyond-the-divide_1231858_1738625068.jpg" class="img-responsive disable-select">
-                </div>
-              </div>
-              <div class="column col-8">
-                <div class="card-header">
-                  <div class="card-title h5">BEYOND THE DIVIDE</div>
-                  <div class="card-subtitle text-gray">Web Novel</div>
-                </div>
-                <div class="card-body text-justify">
-                  <p>He is lost. He has nobody to trust. In this damned world where everyone forgets, the echoes of the past bring judgement even to those unaware of it.</p>
-                  <p>
-                    <span class="label text-small">Fantasy</span>
-                    <span class="label text-small">Psychological</span>
-                    <span class="label text-small">Tragedy</span>
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <a href="ch" class="btn btn-primary">Read on <i class="ti ti-writing-sign va-middle"></i> hyals.ink </a>
-                  <a href="https://www.scribblehub.com/series/1231858/" class="btn" target="_blank">Read on ScribbleHub <i class="ti ti-external-link va-middle"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- quote hero text -->
-          <div class="card p-2">
-            <div class="card-body p-0 m-0 text-large text-center"> 『By reiterating an error-laden response, we gradually illuminate the future...』 </div>
-          </div>
-          <!-- flexbox character test -->
-          <div class="card nobg mt-2">
-            <h5>
-              <i class="ti ti-user"></i> Characters
-            </h5>
-            <h6>
-              <i class="ti ti-square-filled"></i> Heaventia
-            </h6>
-            <div class="columns text-justify">
-              <style>
-                .character table {
-                  font-size: 80%;
-                  margin-bottom: 8px
-                }
+<html lang="en" class="mdui-theme-light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BEYOND THE DIVIDE</title>
 
-                .character table td {
-                  padding: 4px;
-                  margin: 0
-                }
+  <!-- Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
 
-                .character-name {
-                  margin-top: 8px;
-                  text-align: center;
-                  width: 100%
-                }
-              </style>
-              <div class="character column col-6 col-xs-12 p-2">
-                <div class="column col-3 float-left">
-                  <img src="img/character/cien.webp" class="img-responsive">
-                  <div class="character-name label">Cien</div>
-                </div>
-                <div class="column col-9 float-right">
-                  <table class="table">
-                    <tr>
-                      <td>Race</td>
-                      <td>Angel</td>
-                    </tr>
-                    <tr>
-                      <td>Age</td>
-                      <td>38</td>
-                    </tr>
-                  </table> A man of denial. He is the current vessel for God's Soul Fragment and the head of the Royal Family.
-                </div>
-              </div>
-              <div class="character column col-6 col-xs-12 p-2">
-                <div class="column col-3 float-left">
-                  <img src="img/character/balint.webp" class="img-responsive">
-                  <div class="character-name label">Balint</div>
-                </div>
-                <div class="column col-9 float-right">
-                  <table class="table">
-                    <tr>
-                      <td>Race</td>
-                      <td>Angel</td>
-                    </tr>
-                    <tr>
-                      <td>Age</td>
-                      <td>36</td>
-                    </tr>
-                  </table> A man with a dream. He is the head of the Defense Forces and the founder of the Angel-Human Alliance Council.
-                </div>
-              </div>
-              <div class="character column col-6 col-xs-12 p-2">
-                <div class="column col-3 float-left">
-                  <img src="img/character/hya.webp" class="img-responsive">
-                  <div class="character-name label">Hya</div>
-                </div>
-                <div class="column col-9 float-right">
-                  <table class="table">
-                    <tr>
-                      <td>Race</td>
-                      <td>Demon</td>
-                    </tr>
-                    <tr>
-                      <td>Age</td>
-                      <td>16</td>
-                    </tr>
-                  </table> A boy bound to the past. He is discriminated against due to sharing traits similar to that of demons.
-                </div>
-              </div>
-              <div class="character column col-6 col-xs-12 p-2">
-                <div class="column col-3 float-left">
-                  <img src="img/character/lina.webp" class="img-responsive">
-                  <div class="character-name label">Lina</div>
-                </div>
-                <div class="column col-9 float-right">
-                  <table class="table">
-                    <tr>
-                      <td>Race</td>
-                      <td>Angel</td>
-                    </tr>
-                    <tr>
-                      <td>Age</td>
-                      <td>16</td>
-                    </tr>
-                  </table> A boy with resolve. He is next in line to inherit God's Soul Fragment.
-                </div>
-              </div>
-              <div class="character column col-6 col-xs-12 p-2">
-                <div class="column col-3 float-left">
-                  <img src="img/character/vita.webp" class="img-responsive">
-                  <div class="character-name label">Vita</div>
-                </div>
-                <div class="column col-9 float-right">
-                  <table class="table">
-                    <tr>
-                      <td>Race</td>
-                      <td>Angel</td>
-                    </tr>
-                    <tr>
-                      <td>Age</td>
-                      <td>16</td>
-                    </tr>
-                  </table> A girl of yearning. She is an orphan took by the Royal Family after losing her parents during the Second Impact.
-                </div>
-              </div>
-              <div class="character column col-6 col-xs-12 p-2">
-                <div class="column col-3 float-left">
-                  <img src="img/character/gaukel.webp" class="img-responsive">
-                  <div class="character-name label">Gaukel</div>
-                </div>
-                <div class="column col-9 float-right">
-                  <table class="table">
-                    <tr>
-                      <td>Race</td>
-                      <td>Angel</td>
-                    </tr>
-                    <tr>
-                      <td>Age</td>
-                      <td>16</td>
-                    </tr>
-                  </table> A boy with innocence. Lost in thought.
-                </div>
-              </div>
-            </div>
-            <h6 class="mt-2">
-              <i class="ti ti-square-filled"></i> Helltia
-            </h6>
-            <div class="columns text-justify">
-              <div class="character column col-6 col-xs-12 p-2">
-                <div class="column col-3 float-left">
-                  <img src="img/character/arcis.webp" class="img-responsive">
-                  <div class="character-name label">Arcis</div>
-                </div>
-                <div class="column col-9 float-right">
-                  <table class="table">
-                    <tr>
-                      <td>Race</td>
-                      <td>Demon</td>
-                    </tr>
-                    <tr>
-                      <td>Age</td>
-                      <td>36</td>
-                    </tr>
-                  </table> A man of broken promises. He was behind the Second Impact—a mass-murder incident that took the lives of ~2,400.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="p-2">
-            <p>hello</p>
-          </div>
-        </div>
-      </div>
+  <!-- MDUI -->
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
+  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+
+  <!-- Markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    html {
+       font-family: "Roboto", sans-serif;
+       padding: 4rem 1rem 4rem 1rem;
+    }
+    body{
+      max-width:600px;
+      margin:auto;
+    }
+    /* Appbar */
+    .appbar{
+      display: flex;
+      justify-content: center;
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top App Bar -->
+  <mdui-top-app-bar class="appbar" scroll-behavior="elevate">
+    <mdui-button-icon icon="border_color"></mdui-button-icon>
+
+    <mdui-top-app-bar-title>
+      <span style="font-weight:400">hyals.ink</span><br>
+    </mdui-top-app-bar-title>
+
+    <div style="flex-grow:1"></div>
+
+    <mdui-switch id="themeSwitch" unchecked-icon="wb_sunny--outlined" checked-icon="nightlight--outlined" title="Toggle theme"></mdui-switch>
+  </mdui-top-app-bar>
+
+<div class="mdui-prose">
+  <div style="display: grid;grid-template-columns:25% 75%;grid-gap:1rem">
+    <div>
+      <img src="https://cdn.discordapp.com/attachments/1182691088402755677/1418068781384732792/Illustration10_2_1.webp?ex=68d20cf7&is=68d0bb77&hm=2c18f22454ce57d949bde19eacd4d0284cc66be358b494842318ee8d23c04ac7&"/>
     </div>
-  </body>
+    <div>
+<span style="font-size:var(--mdui-typescale-title-large-size);display:block">BEYOND THE DIVIDE</span>
+<span style="font-size:var(--mdui-typescale-title-medium-size);display:block">even in a colorless world, children must go on.</span>
+<span style="font-size:var(--mdui-typescale-title-small-size);display:block">by <a href="https://hyals.ink">hyaL-s</a> · 2025</span>
+</div>
+</div>
+<p></p>
+<mdui-segmented-button-group style="width:100%">
+<mdui-segmented-button icon="menu_book" href="ch"> Read on hyals.ink</mdui-segmented-button>
+
+<mdui-segmented-button icon="open_in_new" href="https://www.scribblehub.com/series/1231858/beyond-the-divide/" target="_blank"> Read on ScribbleHub</dui-segmented-button>
+</mdui-segmented-button-group>
+
+<mdui-divider></mdui-divider>
+<p></p>
+<mdui-divider></mdui-divider>
+<p><b>About this work</b></p>
+  <!-- Chapter container -->
+<mdui-card variant="elevated" style="width:100%;padding:1rem">
+  <p>Synopsis</p>
+  <p>He is lost. He has nobody to trust. In this damned world where everyone forgets, the echoes of the past bring judgement even to those unaware of it.</p>
+
+  <mdui-divider></mdui-divider>
+  
+  
+
+  <p>Genre</p>
+  <p><mdui-chip>Fantasy</mdui-chip>
+  <mdui-chip>Psychological</mdui-chip>
+  <mdui-chip>Tragedy</mdui-chip>
+  </p>
+  
+    <mdui-divider></mdui-divider>
+    
+ <table>
+    <tbody>
+        <tr>
+            <td>Format: Web Novel</td>
+            <td>Status: Ongoing</td>
+        </tr>
+        <tr>
+            <td>Publisher: hyals.ink</td>
+            <td>Language: English</td>
+        </tr>
+        <tr>
+            <td>Author: <a href="https://hyals.ink">hyaL-s</a></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+</mdui-card>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <p><b>Characters</b></p>
+    
+              <mdui-list>
+<mdui-list-item>
+  Cien
+  <mdui-avatar slot="icon" src="img/character/cien.webp" style="border-radius:var(--mdui-shape-corner-large);width:8rem;height:8rem"></mdui-avatar>
+  <p slot="description">A man of denial. He is the current vessel for God's Soul Fragment and the head of the Royal Family.</p>
+  <p slot="description">Age: 38 · Race: Angel</p>
+</mdui-list-item>
+
+<mdui-list-item>
+  Balint
+  <mdui-avatar slot="icon" src="img/character/balint.webp" style="border-radius:var(--mdui-shape-corner-large);width:8rem;height:8rem"></mdui-avatar>
+  <p slot="description">A man with a dream. He is the head of the Defense Forces and the founder of the Angel-Human Alliance Council.</p>
+  <p slot="description">Age: 36 · Race: Angel</p>
+</mdui-list-item>
+
+<mdui-list-item>
+  Hya
+  <mdui-avatar slot="icon" src="img/character/hya.webp" style="border-radius:var(--mdui-shape-corner-large);width:8rem;height:8rem"></mdui-avatar>
+  <p slot="description">A boy bound to the past. He is discriminated against due to sharing traits similar to that of demons.</p>
+  <p slot="description">Age: 16 · Race: Demon</p>
+</mdui-list-item>
+
+<mdui-list-item>
+  Lina
+  <mdui-avatar slot="icon" src="img/character/lina.webp" style="border-radius:var(--mdui-shape-corner-large);width:8rem;height:8rem"></mdui-avatar>
+  <p slot="description">A boy with resolve. He is next in line to inherit God's Soul Fragment.</p>
+  <p slot="description">Age: 16 · Race: Angel</p>
+</mdui-list-item>
+
+<mdui-list-item>
+  Vita
+  <mdui-avatar slot="icon" src="img/character/vita.webp" style="border-radius:var(--mdui-shape-corner-large);width:8rem;height:8rem"></mdui-avatar>
+  <p slot="description">A girl of yearning. She is an orphan took by the Royal Family after losing her parents during the Second Impact.</p>
+  <p slot="description">Age: 16 · Race: Angel</p>
+</mdui-list-item>
+
+<mdui-list-item>
+  Gaukel
+  <mdui-avatar slot="icon" src="img/character/gaukel.webp" style="border-radius:var(--mdui-shape-corner-large);width:8rem;height:8rem"></mdui-avatar>
+  <p slot="description">A boy with innocence. Lost in thought.</p>
+  <p slot="description">Age: 16 · Race: Angel</p>
+</mdui-list-item>
+</mdui-list>
+              
+            
+            
+            </div>
+            
+            
+  <script>
+    /* ------------------ Utilities: Cookie helpers ------------------ */
+    function setCookie(name, value, days = 365) {
+      const d = new Date();
+      d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+      document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
+    }
+    function getCookie(name) {
+      const cookies = document.cookie.split(';').map(c => c.trim());
+      const found = cookies.find(c => c.startsWith(name + '='));
+      return found ? decodeURIComponent(found.split('=').slice(1).join('=')) : null;
+    }
+
+    /* ------------------ Theme toggle ------------------ */
+    // We'll use an event listener rather than inline attribute
+    function toggleThemeBySwitch(isChecked) {
+      const doc = document.documentElement;
+      if (isChecked) {
+        doc.classList.add('mdui-theme-dark');
+        doc.classList.remove('mdui-theme-light');
+        setCookie('theme', 'mdui-theme-dark');
+      } else {
+        doc.classList.remove('mdui-theme-dark');
+        doc.classList.add('mdui-theme-light');
+        setCookie('theme', 'mdui-theme-light');
+      }
+    }
+
+    /* ------------------ Init: wiring events and restoring prefs ------------------ */
+    window.addEventListener('load', () => {
+      // Elements
+      const themeSwitch = document.getElementById('themeSwitch');
+      // Theme switch
+      themeSwitch.addEventListener('change', (e) => toggleThemeBySwitch(e.target.checked));
+
+      // Restore saved theme
+      const savedTheme = getCookie('theme');
+      if (savedTheme === 'mdui-theme-dark') {
+        document.documentElement.classList.add('mdui-theme-dark');
+        document.documentElement.classList.remove('mdui-theme-light');
+        themeSwitch.checked = true;
+      } else if (savedTheme === 'mdui-theme-light') {
+        document.documentElement.classList.add('mdui-theme-light');
+        themeSwitch.checked = false;
+      }
+
+    });
+  </script>
+</body>
 </html>
