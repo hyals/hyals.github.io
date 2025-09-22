@@ -130,23 +130,19 @@
 
 
 
-  <!-- Bottom App Bar (grid) -->
+  <!-- Bottom App Bar -->
   <mdui-bottom-app-bar style="display:flex;flex-direction:row" scroll-behavior="hide" scroll-threshold="30">
-    <!-- left column: select -->
-
-      <!-- mdui-select acts as wrapper; we will programmatically insert <mdui-menu-item> children -->
-      <mdui-button-icon icon="format_list_bulleted" id="chapter_list_icon" title="Chapter list"></mdui-button-icon>
-
-    <!-- right column: nav row -->
-    
+   
       
         <mdui-button-icon id="prevChapter" icon="arrow_circle_left" title="Previous"></mdui-button-icon>
 
         <!-- slider's max is our single source-of-truth for number of chapters -->
-        <!-- CHANGE THIS max value when you add/remove chapters — the dropdown will regenerate automatically -->
         <mdui-slider id="currentChapterValue" min="1" max="2" value="1" step="1"></mdui-slider>
 
         <mdui-button-icon id="nextChapter" icon="arrow_circle_right" title="Next"></mdui-button-icon>
+
+    <!-- book contents button -->
+     <mdui-button-icon icon="format_list_bulleted" id="chapter_list_icon" title="Chapter list"></mdui-button-icon>
       
    
   </mdui-bottom-app-bar>
