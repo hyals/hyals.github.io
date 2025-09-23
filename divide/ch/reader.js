@@ -23,7 +23,10 @@
       return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
         const char = characterNames[key];
         if (!char) return m;
-        return `<fieldset class="character-box ${char.color}"><legend><i class="mdui-icon material-icons" style="vertical-align:middle">person</i> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
+        return `<fieldset class="character-box ${char.color}">
+                  <legend><i class="mdui-icon material-icons" style="vertical-align:middle">person</i> ${char.label}</legend>
+                  <p>${dialogue}</p>
+                </fieldset>`;
       });
     }
 
@@ -31,7 +34,17 @@
     async function loadChapter(filePath, num) {
       const container = document.getElementById('chapter-container');
       const titleDiv = document.getElementById('chapter-title');
+      const progressBar = document.getElementById('scroll-progress');
+
+      // Animate progress line back to 0 when switching chapters
+      progressBar.style.transition = 'width 300ms ease';
+      // force the animation even if width is already 0 -> set to 0%
+      progressBar.style.width = '0%';
+
+      // show linear loading indicator in content area (MDUI component)
       container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
+      container.scrollTop = 0;
+
       try {
         const res = await fetch(filePath);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -45,9 +58,18 @@
         titleDiv.textContent = h1 ? h1.textContent : '';
         setCookie('lastChapter', num);
         document.getElementById('currentChapterValue').value = num;
+
+        // Wait a tick so layout/scrollHeight is updated, then update progress
+        requestAnimationFrame(() => {
+          updateScrollProgress(); // fill according to new content
+        });
       } catch {
         container.innerHTML = "<em>Could not load chapter.</em>";
         titleDiv.textContent = "";
+        // ensure the progress bar reflects no content
+        requestAnimationFrame(() => {
+          updateScrollProgress();
+        });
       }
     }
 
@@ -103,6 +125,8 @@
       const next = Math.max(12, cur + delta);
       c.style.fontSize = next + 'px';
       setCookie('fontSize', String(next));
+      // Recompute progress when font size changes (scrollable height may change)
+      requestAnimationFrame(updateScrollProgress);
     }
 
     /* Theme toggle */
@@ -117,7 +141,28 @@
         doc.classList.add('mdui-theme-light');
         setCookie('theme', 'mdui-theme-light');
       }
+      // Recompute progress when theme changes in case metrics change slightly
+      requestAnimationFrame(updateScrollProgress);
     }
+
+    /* Progress line update */
+ function updateScrollProgress() {
+  const bar = document.getElementById('scroll-progress');
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+  let progress = 0;
+  if (scrollHeight > 0) {
+    progress = scrollTop / scrollHeight;
+  } else {
+    // If content fits without scrolling, treat as 100%
+    progress = 1;
+  }
+
+  // Clamp and set width
+  progress = Math.max(0, Math.min(1, progress));
+  bar.style.width = (progress * 100) + '%';
+}
 
     /* Init */
     window.addEventListener('load', () => {
@@ -158,5 +203,8 @@
       }
       handleHashChange();
 
+window.addEventListener('scroll', updateScrollProgress);
+window.addEventListener('resize', updateScrollProgress); // keeps it accurate on resize
+document.addEventListener('DOMContentLoaded', updateScrollProgress);
     });
     window.addEventListener('hashchange', handleHashChange);
