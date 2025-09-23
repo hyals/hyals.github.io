@@ -2,7 +2,8 @@ body {
       font-family: "Roboto", sans-serif;
       margin:auto;
       max-width: 800px;
-      padding: 2rem 1rem 2rem 1rem !important;
+      padding: 2rem 1rem 2rem 1rem;
+      margin-top: 2rem;
     }
 
     section,mdui-divider,mdui-card,mdui-list,.mt-1 {
