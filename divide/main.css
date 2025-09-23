@@ -121,6 +121,7 @@ padding-left:1rem;
 
     /* Chapter container */
     #chapter-container {
+      margin-top:6rem;
       font-family: Georgia, serif;
       font-size: var(--font-size, 18px);
       line-height: 1.8;
@@ -129,7 +130,7 @@ padding-left:1rem;
     }
 
     /* Typography */
-    #chapter-container h1 { font-size: 1.5em; margin: 4rem 0 0.8rem; font-weight: bold; text-align: center; }
+    #chapter-container h1 { font-size: 1.5em; margin: 1.5rem 0 0.8rem; font-weight: bold; text-align: center; }
     #chapter-container h2 { font-size: 1.2em; margin: 1.3rem 0 0.7rem; }
     #chapter-container h3 { font-size: 1em; margin: 1rem 0 0.5rem; }
     #chapter-container p { margin: 0; text-align: justify; text-indent: 2em; }
