@@ -69,8 +69,12 @@ body {
     .grid-book {
       display: grid;
       grid-template-columns: 25% 75%;
-      gap: 1rem;
+      gap: 0;
     }
+
+.grid-book  div:nth-child(2){
+padding-left:1rem;
+}
     
     .grid-2col {
       display: grid;
