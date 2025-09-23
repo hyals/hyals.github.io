@@ -23,10 +23,9 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
 </head>
 <body>
-  <div id="scrollContainer">
     <main style="max-width: 900px;">
       <!-- Top App Bar -->
-  <mdui-top-app-bar class="appbar" scroll-behavior="elevate" scroll-target="#scrollContainer">
+  <mdui-top-app-bar class="appbar" scroll-behavior="elevate">
     <mdui-button-icon icon="arrow_back" href="../"></mdui-button-icon>
 
     <mdui-top-app-bar-title style="line-height:1.2;user-select:none">
@@ -61,7 +60,7 @@
   </mdui-dialog>
 
   <!-- Bottom App Bar -->
-  <mdui-bottom-app-bar scroll-behavior="hide" scroll-threshold="30" scroll-target="#scrollContainer">
+  <mdui-bottom-app-bar scroll-behavior="hide" scroll-threshold="30">
     <mdui-button-icon id="prevChapter" icon="arrow_circle_left" title="Previous"></mdui-button-icon>
     <mdui-slider id="currentChapterValue" min="1" max="2" value="1" step="1"></mdui-slider>
     <mdui-button-icon id="nextChapter" icon="arrow_circle_right" title="Next"></mdui-button-icon>
