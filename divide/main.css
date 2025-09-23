@@ -121,7 +121,7 @@ padding-left:1rem;
 
     /* Chapter container */
     #chapter-container {
-      margin-top:6rem;
+      padding: 2rem 20px 0;
       font-family: Georgia, serif;
       font-size: var(--font-size, 18px);
       line-height: 1.8;
