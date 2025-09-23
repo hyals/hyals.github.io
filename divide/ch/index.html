@@ -22,8 +22,7 @@
   <!-- Markdown parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
 </head>
-<body>
-    <main style="max-width: 900px;">
+<body style="max-width: 900px;">
       <!-- Top App Bar -->
   <mdui-top-app-bar class="appbar" scroll-behavior="elevate">
     <mdui-button-icon icon="arrow_back" href="../"></mdui-button-icon>
@@ -43,11 +42,13 @@
       
   <!-- Progress Line -->
   <div id="scroll-progress" aria-hidden="true"></div>
-
+  
+<main>
   <!-- Chapter container -->
   <div id="chapter-container">
     <em>Select a chapter to begin reading...</em>
   </div>
+</main>
 
   <!-- Dialog for Chapters -->
   <mdui-dialog close-on-overlay-click class="example-header">
@@ -66,6 +67,6 @@
     <mdui-button-icon id="nextChapter" icon="arrow_circle_right" title="Next"></mdui-button-icon>
     <mdui-button-icon icon="format_list_bulleted" id="chapter_list_icon" title="Chapter list"></mdui-button-icon>
   </mdui-bottom-app-bar>
-    </main>
+  
 </body>
 </html>
