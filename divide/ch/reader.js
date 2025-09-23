@@ -1,5 +1,4 @@
-
-    /* Cookie helpers */
+/* Cookie helpers */
     function setCookie(name, value, days = 365) {
       const d = new Date();
       d.setTime(d.getTime() + days * 864e5);
@@ -23,10 +22,7 @@
       return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
         const char = characterNames[key];
         if (!char) return m;
-        return `<fieldset class="character-box ${char.color}">
-                  <legend><i class="mdui-icon material-icons" style="vertical-align:middle">person</i> ${char.label}</legend>
-                  <p>${dialogue}</p>
-                </fieldset>`;
+        return `<fieldset class="character-box ${char.color}"><legend><i class="mdui-icon material-icons" style="vertical-align:middle">person</i> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
       });
     }
 
