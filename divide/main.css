@@ -1,19 +1,11 @@
-    :root {
-      --thumb-size: 48px;
-      --thumb-edge-gap: 12px;
-      --accent: rgb(var(--mdui-color-primary));
-      --surface: rgb(var(--mdui-color-surface-container));
-      --elevation: 0 8px 28px rgba(16, 16, 16, 0.18);
-    }
-
-    html, body {
+html, body {
       font-family: "Roboto", sans-serif;
     }
 
     main {
       max-width: 640px;
       margin: auto;
-      padding: 2rem 1rem 4rem 2rem;
+      padding: 4rem 1rem 2rem 1rem;
     }
     
     section,mdui-divider,mdui-card,mdui-list,.mt-1 {
