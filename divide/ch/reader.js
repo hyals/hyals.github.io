@@ -90,14 +90,14 @@ function generateChapterOptions() {
 }
 
 /* Font size */
-function changeFontSize(delta) {
+const changeFontSize = delta => {
   const c = $('chapter-container');
-  const cur = parseInt(getComputedStyle(c).fontSize, 10) || 18;
-  const next = Math.max(12, cur + delta);
+  const next = Math.min(32, Math.max(12, parseInt(getComputedStyle(c).fontSize) + delta || 18));
   c.style.fontSize = next + 'px';
-  store.set('fontSize', String(next));
+  store.set('fontSize', next);
   rafUpdate();
-}
+};
+
 
 /* Theme toggle */
 function toggleThemeBySwitch(isChecked) {
