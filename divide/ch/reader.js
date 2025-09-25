@@ -80,11 +80,9 @@ function handleHashChange() {
 
   loadChapter(`https://hyals.ink/divide/ch/chapter${n}.txt`, n);
 
-  requestAnimationFrame(() => {
     slider.value = n;
     $('nextChapter').disabled = n >= max;
     $('prevChapter').disabled = n <= 1;
-  });
 }
 
 /* ---------------- Chapter list ---------------- */
