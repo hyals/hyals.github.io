@@ -140,6 +140,9 @@ const store = {
   get: key => localStorage.getItem(key)
 };
 
+/* DOM helpers */
+const $ = id => document.getElementById(id);
+
 /* Theme toggle */
 function toggleThemeBySwitch(isChecked) {
   const doc = document.documentElement;
