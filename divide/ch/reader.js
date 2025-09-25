@@ -15,14 +15,14 @@ const characterNames = {
   Vita:  { label: "Vita",  color: "blue" },
   Gaukel:{ label: "Gaukel",color: "blue" }
 };
-    function applyCharacterReplacements(text) {
-      return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
-        const char = characterNames[key];
-        if (!char) return m;
-        return `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person"></mdui-icon> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
-        return `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person" style="vertical-align:middle"></mdui-icon> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
-      });
-    }
+function applyCharacterReplacements(text) {
+  return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
+    const char = characterNames[key];
+    return char
+      ? `<fieldset class="character-box ${char.color}"><legend><i class="mdui-icon material-icons" style="vertical-align:middle">person</i>${char.label}</legend><p>${dialogue}</p></fieldset>`
+      : m;
+  });
+}
 
 /* Chapter loading */
 async function loadChapter(filePath, num) {
@@ -91,14 +91,14 @@ function generateChapterOptions() {
 }
 
 /* Font size */
-const changeFontSize = delta => {
+function changeFontSize(delta) {
   const c = $('chapter-container');
-  const next = Math.min(32, Math.max(12, parseInt(getComputedStyle(c).fontSize) + delta || 18));
+  const cur = parseInt(getComputedStyle(c).fontSize, 10) || 18;
+  const next = Math.max(12, cur + delta);
   c.style.fontSize = next + 'px';
-  store.set('fontSize', next);
+  store.set('fontSize', String(next));
   rafUpdate();
-};
-
+}
 
 /* Theme toggle */
 function toggleThemeBySwitch(isChecked) {
