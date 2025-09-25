@@ -1,206 +1,151 @@
-/* Cookie helpers */
-    function setCookie(name, value, days = 365) {
-      const d = new Date();
-      d.setTime(d.getTime() + days * 864e5);
-      document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
-    }
-    function getCookie(name) {
-      return document.cookie.split('; ').reduce((r, v) => {
-        const [k, val] = v.split('=');
-        return k === name ? decodeURIComponent(val) : r;
-      }, null);
-    }
+/* Storage helpers */
+const store = {
+  set: (key, value) => localStorage.setItem(key, value),
+  get: key => localStorage.getItem(key)
+};
 
-    /* Character replacements */
-    const characterNames = {
-      "Hya": { label: "Hya", color: "red" },
-      "Lina": { label: "Lina", color: "blue" },
-      "Vita": { label: "Vita", color: "blue" },
-      "Gaukel": { label: "Gaukel", color: "blue" }
-    };
+/* DOM helpers */
+const $ = id => document.getElementById(id);
+const rafUpdate = () => requestAnimationFrame(updateScrollProgress);
+
+/* Character replacements */
+const characterNames = {
+  Hya:   { label: "Hya",   color: "red"  },
+  Lina:  { label: "Lina",  color: "blue" },
+  Vita:  { label: "Vita",  color: "blue" },
+  Gaukel:{ label: "Gaukel",color: "blue" }
+};
     function applyCharacterReplacements(text) {
       return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
         const char = characterNames[key];
         if (!char) return m;
-        return `<fieldset class="character-box ${char.color}"><legend><i class="mdui-icon material-icons" style="vertical-align:middle">person</i> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
+        return `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person" style="vertical-align:middle"></mdui-icon> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
       });
     }
 
-    /* Chapter loading */
-    async function loadChapter(filePath, num) {
-      const container = document.getElementById('chapter-container');
-      const titleDiv = document.getElementById('chapter-title');
-      const progressBar = document.getElementById('scroll-progress');
+/* Chapter loading */
+async function loadChapter(filePath, num) {
+  const container = $('chapter-container');
+  const titleDiv  = $('chapter-title');
+  const progressBar = $('scroll-progress');
 
-      // Animate progress line back to 0 when switching chapters
-      progressBar.style.transition = 'width 300ms ease';
-      // force the animation even if width is already 0 -> set to 0%
-      progressBar.style.width = '0%';
+  progressBar.style.transition = 'width 300ms ease';
+  progressBar.style.width = '0%';
 
-      // show linear loading indicator in content area (MDUI component)
-      container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
-      container.scrollTop = 0;
+  container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
+  container.scrollTop = 0;
 
-      try {
-        const res = await fetch(filePath);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        let text = (await res.text()).trim();
-        text = applyCharacterReplacements(text);
-        const html = marked.parse(text);
-        container.innerHTML = html;
+  try {
+    const res = await fetch(filePath);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    let text = applyCharacterReplacements((await res.text()).trim());
+    const html = marked.parse(text);
+    container.innerHTML = html;
 
-        const parsed = new DOMParser().parseFromString(html, 'text/html');
-        const h1 = parsed.querySelector('h1');
-        titleDiv.textContent = h1 ? h1.textContent : '';
-        setCookie('lastChapter', num);
-        document.getElementById('currentChapterValue').value = num;
-
-        // Wait a tick so layout/scrollHeight is updated, then update progress
-        requestAnimationFrame(() => {
-          updateScrollProgress(); // fill according to new content
-        });
-      } catch {
-        container.innerHTML = "<em>Could not load chapter.</em>";
-        titleDiv.textContent = "";
-        // ensure the progress bar reflects no content
-        requestAnimationFrame(() => {
-          updateScrollProgress();
-        });
-      }
-    }
-
-    /* Navigation */
-    function goToChapter(num) {
-      const n = parseInt(num, 10);
-      if (!isNaN(n)) window.location.hash = n;
-    }
-    function currentChapterNum() {
-      const h = window.location.hash.substring(1);
-      return h && !isNaN(h) ? parseInt(h, 10) : null;
-    }
-    function nextChapter() {
-      const n = currentChapterNum();
-      if (n !== null) goToChapter(n + 1);
-    }
-    function prevChapter() {
-      const n = currentChapterNum();
-      if (n !== null && n > 1) goToChapter(n - 1);
-    }
-    function handleHashChange() {
-      const hash = window.location.hash.substring(1);
-      const slider = document.getElementById('currentChapterValue');
-      const final_chapter = parseInt(slider.max, 10);
-      if (hash && !isNaN(hash)) {
-        const n = parseInt(hash, 10);
-        loadChapter(`https://hyals.ink/divide/ch/chapter${n}.txt`, n);
-        slider.value = n;
-        document.getElementById('nextChapter').disabled = (n >= final_chapter);
-        document.getElementById('prevChapter').disabled = (n <= 1);
-      }
-    }
-
-    /* Chapter options */
-    function generateChapterOptions() {
-      const list = document.getElementById('chapterList');
-      const slider = document.getElementById('currentChapterValue');
-      const max = parseInt(slider.max, 10) || 1;
-      list.innerHTML = '';
-      for (let i = 1; i <= max; i++) {
-        const item = document.createElement('mdui-list-item');
-        item.setAttribute('headline', i);
-        item.textContent = i;
-        item.addEventListener('click', () => goToChapter(i));
-        list.appendChild(item);
-      }
-    }
-
-    /* Font size */
-    function changeFontSize(delta) {
-      const c = document.getElementById('chapter-container');
-      const cur = parseInt(getComputedStyle(c).fontSize, 10) || 18;
-      const next = Math.max(12, cur + delta);
-      c.style.fontSize = next + 'px';
-      setCookie('fontSize', String(next));
-      // Recompute progress when font size changes (scrollable height may change)
-      requestAnimationFrame(updateScrollProgress);
-    }
-
-    /* Theme toggle */
-    function toggleThemeBySwitch(isChecked) {
-      const doc = document.documentElement;
-      if (isChecked) {
-        doc.classList.add('mdui-theme-dark');
-        doc.classList.remove('mdui-theme-light');
-        setCookie('theme', 'mdui-theme-dark');
-      } else {
-        doc.classList.remove('mdui-theme-dark');
-        doc.classList.add('mdui-theme-light');
-        setCookie('theme', 'mdui-theme-light');
-      }
-      // Recompute progress when theme changes in case metrics change slightly
-      requestAnimationFrame(updateScrollProgress);
-    }
-
-    /* Progress line update */
- function updateScrollProgress() {
-  const bar = document.getElementById('scroll-progress');
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-  let progress = 0;
-  if (scrollHeight > 0) {
-    progress = scrollTop / scrollHeight;
-  } else {
-    // If content fits without scrolling, treat as 100%
-    progress = 1;
+    const h1 = new DOMParser().parseFromString(html, 'text/html').querySelector('h1');
+    titleDiv.textContent = h1 ? h1.textContent : '';
+    store.set('lastChapter', num);
+    $('currentChapterValue').value = num;
+    rafUpdate();
+  } catch {
+    container.innerHTML = "<em>Could not load chapter.</em>";
+    titleDiv.textContent = "";
+    rafUpdate();
   }
-
-  // Clamp and set width
-  progress = Math.max(0, Math.min(1, progress));
-  bar.style.width = (progress * 100) + '%';
 }
 
-    /* Init */
-    window.addEventListener('load', () => {
-      const slider = document.getElementById('currentChapterValue');
-      const prevBtn = document.getElementById('prevChapter');
-      const nextBtn = document.getElementById('nextChapter');
-      const fontInc = document.getElementById('fontInc');
-      const fontDec = document.getElementById('fontDec');
-      const themeSwitch = document.getElementById('themeSwitch');
-      const dialog = document.querySelector(".example-header");
-      const openButton = document.getElementById("chapter_list_icon");
-      const closeButton = document.getElementById("close_chapter_list");
-      const container = document.getElementById('chapter-container');
+/* Navigation */
+const currentChapterNum = () => {
+  const h = window.location.hash.substring(1);
+  return h && !isNaN(h) ? parseInt(h, 10) : null;
+};
+const goToChapter = n => !isNaN(n = parseInt(n,10)) && (window.location.hash = n);
+const nextChapter = () => { const n = currentChapterNum(); if (n !== null) goToChapter(n + 1); };
+const prevChapter = () => { const n = currentChapterNum(); if (n > 1) goToChapter(n - 1); };
 
-      openButton.addEventListener("click", () => dialog.open = true);
-      closeButton.addEventListener("click", () => dialog.open = false);
+function handleHashChange() {
+  const n = parseInt(window.location.hash.substring(1), 10);
+  const slider = $('currentChapterValue');
+  const final = parseInt(slider.max, 10);
+  if (!isNaN(n)) {
+    loadChapter(`https://hyals.ink/divide/ch/chapter${n}.txt`, n);
+    slider.value = n;
+    $('nextChapter').disabled = n >= final;
+    $('prevChapter').disabled = n <= 1;
+  }
+}
 
-      generateChapterOptions();
-      slider.addEventListener('input', e => goToChapter(e.target.value));
-      prevBtn.addEventListener('click', prevChapter);
-      nextBtn.addEventListener('click', nextChapter);
-      fontInc.addEventListener('click', () => changeFontSize(2));
-      fontDec.addEventListener('click', () => changeFontSize(-2));
-      themeSwitch.addEventListener('change', e => toggleThemeBySwitch(e.target.checked));
+/* Chapter options */
+function generateChapterOptions() {
+  const list = $('chapterList');
+  const max  = parseInt($('currentChapterValue').max, 10) || 1;
+  list.innerHTML = '';
+  for (let i = 1; i <= max; i++) {
+    const item = document.createElement('mdui-list-item');
+    item.setAttribute('headline', i);
+    item.textContent = i;
+    item.addEventListener('click', () => goToChapter(i));
+    list.appendChild(item);
+  }
+}
 
-      /* Restore prefs */
-      const savedTheme = getCookie('theme');
-      if (savedTheme === 'mdui-theme-dark') {
-        document.documentElement.classList.add('mdui-theme-dark');
-        themeSwitch.checked = true;
-      }
-      const savedFont = getCookie('fontSize');
-      if (savedFont) container.style.fontSize = parseInt(savedFont, 10) + 'px';
+/* Font size */
+const changeFontSize = delta => {
+  const c = $('chapter-container');
+  const next = Math.min(32, Math.max(12, parseInt(getComputedStyle(c).fontSize) + delta || 18));
+  c.style.fontSize = next + 'px';
+  store.set('fontSize', next);
+  rafUpdate();
+};
 
-      if (!window.location.hash) {
-        const last = getCookie('lastChapter');
-        goToChapter(last || 1);
-      }
-      handleHashChange();
 
-window.addEventListener('scroll', updateScrollProgress);
-window.addEventListener('resize', updateScrollProgress); // keeps it accurate on resize
-document.addEventListener('DOMContentLoaded', updateScrollProgress);
-    });
-    window.addEventListener('hashchange', handleHashChange);
+/* Theme toggle */
+function toggleThemeBySwitch(isChecked) {
+  const doc = document.documentElement;
+  doc.classList.toggle('mdui-theme-dark', isChecked);
+  doc.classList.toggle('mdui-theme-light', !isChecked);
+  store.set('theme', isChecked ? 'mdui-theme-dark' : 'mdui-theme-light');
+  rafUpdate();
+}
+
+/* Progress line update */
+function updateScrollProgress() {
+  const bar = $('scroll-progress');
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 1;
+  bar.style.width = (Math.max(0, Math.min(1, progress)) * 100) + '%';
+}
+
+/* Init */
+window.addEventListener('load', () => {
+  const slider = $('currentChapterValue');
+  const container = $('chapter-container');
+
+  $('chapter_list_icon').addEventListener("click", () => document.querySelector(".example-header").open = true);
+  $('close_chapter_list').addEventListener("click", () => document.querySelector(".example-header").open = false);
+
+  generateChapterOptions();
+  slider.addEventListener('input', e => goToChapter(e.target.value));
+  $('prevChapter').addEventListener('click', prevChapter);
+  $('nextChapter').addEventListener('click', nextChapter);
+  $('fontInc').addEventListener('click', () => changeFontSize(2));
+  $('fontDec').addEventListener('click', () => changeFontSize(-2));
+  $('themeSwitch').addEventListener('change', e => toggleThemeBySwitch(e.target.checked));
+
+  /* Restore prefs */
+  if (store.get('theme') === 'mdui-theme-dark') {
+    document.documentElement.classList.add('mdui-theme-dark');
+    $('themeSwitch').checked = true;
+  }
+  const savedFont = store.get('fontSize');
+  if (savedFont) container.style.fontSize = parseInt(savedFont, 10) + 'px';
+
+  if (!window.location.hash) goToChapter(store.get('lastChapter') || 1);
+  handleHashChange();
+
+  window.addEventListener('scroll', updateScrollProgress);
+  window.addEventListener('resize', updateScrollProgress);
+  document.addEventListener('DOMContentLoaded', updateScrollProgress);
+});
+window.addEventListener('hashchange', handleHashChange);
