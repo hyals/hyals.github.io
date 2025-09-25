@@ -135,35 +135,30 @@
   <!-- Theme handling -->
   <script defer>
 /* Storage helpers */
+/* ---------------- Storage + DOM helpers ---------------- */
 const store = {
-  set: (key, value) => localStorage.setItem(key, value),
-  get: key => localStorage.getItem(key)
+  set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
+  get: k => {
+    try { return JSON.parse(localStorage.getItem(k)); }
+    catch { return null; }
+  }
 };
-
-/* DOM helpers */
 const $ = id => document.getElementById(id);
 
-/* Theme toggle */
-function toggleThemeBySwitch(isChecked) {
-  const doc = document.documentElement;
-  doc.classList.toggle('mdui-theme-dark', isChecked);
-  doc.classList.toggle('mdui-theme-light', !isChecked);
-  store.set('theme', isChecked ? 'mdui-theme-dark' : 'mdui-theme-light');
+/* ---------------- Theme toggle ---------------- */
+function toggleTheme(on) {
+  document.documentElement.classList.toggle('mdui-theme-dark', on);
+  document.documentElement.classList.toggle('mdui-theme-light', !on);
+  store.set('themeDark', on);
+  requestAnimationFrame(updateScrollProgress);
 }
 
 window.addEventListener('load', () => {
-  const themeSwitch = $('themeSwitch');
-
-  /* Restore prefs */
-  if (store.get('theme') === 'mdui-theme-dark') {
+// Restore prefs
+  if (store.get('themeDark')) {
     document.documentElement.classList.add('mdui-theme-dark');
-    themeSwitch.checked = true;
+    $('themeSwitch').checked = true;
   }
-
-  /* Listen for changes */
-  themeSwitch.addEventListener('change', e => {
-    toggleThemeBySwitch(e.target.checked);
-  });
 });
 </script>
 </body>
