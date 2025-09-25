@@ -50,11 +50,10 @@ async function loadChapter(filePath, num) {
     if (!res.ok) throw new Error(res.status);
     const html = marked.parse((await res.text()).trim());
 
-    requestAnimationFrame(() => {
+    
       container.innerHTML = applyCharacterReplacements(html);
       container.scrollTop = 0;
       titleDiv.textContent = chapter.name;
-    });
 
     store.set('lastChapter', num);
   } catch {
