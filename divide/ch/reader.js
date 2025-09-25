@@ -7,7 +7,6 @@ const store = {
   }
 };
 const $ = id => document.getElementById(id);
-const rafUpdate = () => requestAnimationFrame(updateScrollProgress);
 
 /* ---------------- Character replacements ---------------- */
 const characterNames = {
@@ -19,42 +18,51 @@ const characterNames = {
 function applyCharacterReplacements(text) {
   return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
     const char = characterNames[key];
-    return char ? `
-      <fieldset class="character-box ${char.color}">
-        <legend>
-          <mdui-icon name="person" style="vertical-align:middle"></mdui-icon>
-          ${char.label}
-        </legend>
-        <p>${dialogue}</p>
-      </fieldset>` : m;
+    return char ? `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person" style="vertical-align:middle"></mdui-icon>${char.label}</legend><p>${dialogue}</p></fieldset>` : m;
   });
 }
+
+/* ---------------- Chapter data ---------------- */
+const chapters = [
+  { num: 1, name: "Prologue of Death and Sorrow" },
+  { num: 2, name: "I carry you with me, always" },
+  { num: 3, name: "Red Hues" }
+];
 
 /* ---------------- Chapter loading ---------------- */
 async function loadChapter(filePath, num) {
   const container = $('chapter-container'),
         titleDiv  = $('chapter-title'),
-        bar       = $('scroll-progress');
+        bar       = $('scroll-progress'),
+        chapter   = chapters.find(c => c.num === num);
+
+  if (!chapter) {
+    container.innerHTML = "<em>Chapter not found.</em>";
+    titleDiv.textContent = "";
+    return;
+  }
 
   bar.style.cssText = 'transition:width .3s ease;width:0%';
   container.innerHTML = `<em><mdui-linear-progress></mdui-linear-progress></em>`;
-  container.scrollTop = 0;
 
   try {
     const res = await fetch(filePath);
     if (!res.ok) throw new Error(res.status);
     const html = marked.parse((await res.text()).trim());
-    container.innerHTML = applyCharacterReplacements(html);
-    titleDiv.textContent =
-      new DOMParser().parseFromString(html, 'text/html')
-      .querySelector('h1')?.textContent || '';
+
+    requestAnimationFrame(() => {
+      container.innerHTML = applyCharacterReplacements(html);
+      container.scrollTop = 0;
+      titleDiv.textContent = chapter.name;
+    });
+
     store.set('lastChapter', num);
-    $('currentChapterValue').value = num;
   } catch {
     container.innerHTML = "<em>Could not load chapter.</em>";
     titleDiv.textContent = "";
   }
-  rafUpdate();
+
+  requestAnimationFrame(updateScrollProgress);
 }
 
 /* ---------------- Navigation ---------------- */
@@ -66,26 +74,34 @@ const prevChapter = () => { const n=currentChapterNum(); if(n>1) goToChapter(n-1
 function handleHashChange() {
   const n = currentChapterNum(),
         slider = $('currentChapterValue'),
-        max = +slider.max;
+        max = chapters.length;
+
   if (!n) return;
+
   loadChapter(`https://hyals.ink/divide/ch/chapter${n}.txt`, n);
-  slider.value = n;
-  $('nextChapter').disabled = n >= max;
-  $('prevChapter').disabled = n <= 1;
+
+  requestAnimationFrame(() => {
+    slider.value = n;
+    $('nextChapter').disabled = n >= max;
+    $('prevChapter').disabled = n <= 1;
+  });
 }
 
 /* ---------------- Chapter list ---------------- */
 function generateChapterOptions() {
-  const list = $('chapterList'),
-        max  = +$('currentChapterValue').max || 1;
+  const list = $('chapterList');
   list.replaceChildren();
-  for (let i=1;i<=max;i++) {
+
+  for (const ch of chapters) {
     const item = document.createElement('mdui-list-item');
-    item.setAttribute('headline', i);
-    item.textContent = i;
-    item.addEventListener('click', () => goToChapter(i));
+    item.setAttribute('headline', `${ch.num}. ${ch.name}`);
+    item.textContent = `${ch.num}. ${ch.name}`;
+    item.setAttribute('aria-label', `Go to chapter ${ch.num}: ${ch.name}`);
+    item.addEventListener('click', () => goToChapter(ch.num));
     list.appendChild(item);
   }
+
+  $('currentChapterValue').max = chapters.length;
 }
 
 /* ---------------- Font size ---------------- */
@@ -95,15 +111,15 @@ function changeFontSize(delta) {
         size = Math.min(32, Math.max(12, cur + delta));
   c.style.fontSize = size + 'px';
   store.set('fontSize', size);
-  rafUpdate();
+  requestAnimationFrame(updateScrollProgress);
 }
 
 /* ---------------- Theme toggle ---------------- */
 function toggleTheme(on) {
   document.documentElement.classList.toggle('mdui-theme-dark', on);
   document.documentElement.classList.toggle('mdui-theme-light', !on);
-  store.set('theme', on ? 'mdui-theme-dark' : 'mdui-theme-light');
-  rafUpdate();
+  store.set('themeDark', on);
+  requestAnimationFrame(updateScrollProgress);
 }
 
 /* ---------------- Progress bar ---------------- */
@@ -129,6 +145,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   generateChapterOptions();
+
   slider.addEventListener('input', e => goToChapter(e.target.value));
   $('prevChapter').addEventListener('click', prevChapter);
   $('nextChapter').addEventListener('click', nextChapter);
@@ -137,7 +154,7 @@ window.addEventListener('DOMContentLoaded', () => {
   $('themeSwitch').addEventListener('change', e => toggleTheme(e.target.checked));
 
   // Restore prefs
-  if (store.get('theme') === 'mdui-theme-dark') {
+  if (store.get('themeDark')) {
     document.documentElement.classList.add('mdui-theme-dark');
     $('themeSwitch').checked = true;
   }
@@ -145,9 +162,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (!location.hash) goToChapter(store.get('lastChapter') || 1);
   handleHashChange();
-
-  ['scroll','resize'].forEach(ev =>
-    window.addEventListener(ev, () => rafUpdate())
-  );
 });
+
+/* Debounced scroll/resize listener */
+let ticking = false;
+function onScrollOrResize() {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      updateScrollProgress();
+      ticking = false;
+    });
+    ticking = true;
+  }
+}
+['scroll', 'resize'].forEach(ev =>
+  window.addEventListener(ev, onScrollOrResize)
+);
+
 window.addEventListener('hashchange', handleHashChange);
