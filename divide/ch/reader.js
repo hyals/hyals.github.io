@@ -19,7 +19,7 @@ const characterNames = {
       return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
         const char = characterNames[key];
         if (!char) return m;
-        return `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person"></mdui-icon> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
+        return `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person" style="vertical-align:middle"></mdui-icon> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
       });
     }
 
