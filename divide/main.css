@@ -28,7 +28,7 @@ body {
       width: 0%;
       background-color: rgb(var(--mdui-color-primary));
       z-index: 1001; /* above content */
-      transition: width 300ms ease;
+      transition: width 150ms ease;
     }
 
     /* Appbar */
@@ -123,7 +123,7 @@ padding-left:1rem;
     #chapter-container {
       padding: 2rem 20px 0;
       font-family: Georgia, serif;
-      font-size: var(--font-size, 18px);
+      font-size: 18px;
       line-height: 1.8;
       white-space: pre-wrap;
       transition: all 0.3s;
@@ -194,4 +194,4 @@ padding-left:1rem;
     .character-box legend { font-weight: bold; padding: 0 0.5rem; }
     .character-box.red legend { color: #cc0064; }
     .character-box.blue legend { color: #0077cc; }
-    .character-box p { margin: 0.3rem 0; }
+    .character-box p { margin: 0.3rem 0.3rem; }
