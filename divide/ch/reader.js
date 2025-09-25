@@ -15,14 +15,13 @@ const characterNames = {
   Vita:  { label: "Vita",  color: "blue" },
   Gaukel:{ label: "Gaukel",color: "blue" }
 };
-function applyCharacterReplacements(text) {
-  return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
-    const char = characterNames[key];
-    return char
-      ? `<fieldset class="character-box ${char.color}"><legend><i class="mdui-icon material-icons" style="vertical-align:middle">person</i>${char.label}</legend><p>${dialogue}</p></fieldset>`
-      : m;
-  });
-}
+    function applyCharacterReplacements(text) {
+      return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
+        const char = characterNames[key];
+        if (!char) return m;
+        return `<fieldset class="character-box ${char.color}"><legend><i class="mdui-icon material-icons" style="vertical-align:middle">person</i> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
+      });
+    }
 
 /* Chapter loading */
 async function loadChapter(filePath, num) {
