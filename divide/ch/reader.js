@@ -6,6 +6,7 @@ const store = {
 
 /* DOM helpers */
 const $ = id => document.getElementById(id);
+const rafUpdate = () => requestAnimationFrame(updateScrollProgress);
 
 /* Character replacements */
 const characterNames = {
@@ -18,31 +19,10 @@ const characterNames = {
       return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
         const char = characterNames[key];
         if (!char) return m;
+        return `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person"></mdui-icon> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
         return `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person" style="vertical-align:middle"></mdui-icon> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
       });
     }
-
-/* Progress line update */
-const updateScrollProgress = (() => {
-  const bar = $('scroll-progress');
-  let ticking = false;
-
-  const update = () => {
-    const doc = document.documentElement;
-    const scrollTop = window.scrollY || doc.scrollTop;
-    const scrollHeight = doc.scrollHeight - doc.clientHeight;
-    const progress = scrollHeight > 0 ? Math.min(Math.max(scrollTop / scrollHeight, 0), 1) : 1;
-    bar.style.width = (progress * 100) + '%';
-    ticking = false;
-  };
-
-  return () => {
-    if (!ticking) {
-      requestAnimationFrame(update);
-      ticking = true;
-    }
-  };
-})();
 
 /* Chapter loading */
 async function loadChapter(filePath, num) {
@@ -71,7 +51,7 @@ async function loadChapter(filePath, num) {
   } catch {
     container.innerHTML = "<em>Could not load chapter.</em>";
     titleDiv.textContent = "";
-    updateScrollProgress();
+    rafUpdate();
   }
 }
 
@@ -116,7 +96,7 @@ const changeFontSize = delta => {
   const next = Math.min(32, Math.max(12, parseInt(getComputedStyle(c).fontSize) + delta || 18));
   c.style.fontSize = next + 'px';
   store.set('fontSize', next);
-  updateScrollProgress();
+  rafUpdate();
 };
 
 
@@ -126,9 +106,17 @@ function toggleThemeBySwitch(isChecked) {
   doc.classList.toggle('mdui-theme-dark', isChecked);
   doc.classList.toggle('mdui-theme-light', !isChecked);
   store.set('theme', isChecked ? 'mdui-theme-dark' : 'mdui-theme-light');
-  updateScrollProgress();
+  rafUpdate();
 }
 
+/* Progress line update */
+function updateScrollProgress() {
+  const bar = $('scroll-progress');
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 1;
+  bar.style.width = (Math.max(0, Math.min(1, progress)) * 100) + '%';
+}
 
 /* Init */
 window.addEventListener('load', () => {
@@ -159,6 +147,6 @@ window.addEventListener('load', () => {
 
   window.addEventListener('scroll', updateScrollProgress);
   window.addEventListener('resize', updateScrollProgress);
-  document.addEventListener('load', updateScrollProgress);
+  document.addEventListener('DOMContentLoaded', updateScrollProgress);
 });
 window.addEventListener('hashchange', handleHashChange);
