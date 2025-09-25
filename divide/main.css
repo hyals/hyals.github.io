@@ -28,7 +28,7 @@ body {
       width: 0%;
       background-color: rgb(var(--mdui-color-primary));
       z-index: 1001; /* above content */
-      transition: width 150ms ease;
+      transition: width 300ms linear;
     }
 
     /* Appbar */
