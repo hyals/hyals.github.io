@@ -1,4 +1,3 @@
-/* Storage helpers */
 const store = {
   set: (key, value) => localStorage.setItem(key, value),
   get: key => localStorage.getItem(key)
@@ -38,9 +37,9 @@ async function loadChapter(filePath, num) {
   try {
     const res = await fetch(filePath);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    let text = applyCharacterReplacements((await res.text()).trim());
+    let text = (await res.text()).trim();
     const html = marked.parse(text);
-    container.innerHTML = html;
+    container.innerHTML = applyCharacterReplacements(html);
 
     const h1 = new DOMParser().parseFromString(html, 'text/html').querySelector('h1');
     titleDiv.textContent = h1 ? h1.textContent : '';
