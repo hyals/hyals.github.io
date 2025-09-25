@@ -19,40 +19,46 @@ const characterNames = {
       return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
         const char = characterNames[key];
         if (!char) return m;
-        return `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person" style="vertical-align:middle"></mdui-icon> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
+        return `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person"></mdui-icon> ${char.label}</legend><p>${dialogue}</p></fieldset>`;
       });
     }
 
-/* Chapter loading */
 async function loadChapter(filePath, num) {
-  const container = $('chapter-container');
-  const titleDiv  = $('chapter-title');
-  const progressBar = $('scroll-progress');
+      const container = $('chapter-container');
+      const titleDiv = $('chapter-title');
+      const progressBar = $('scroll-progress');
 
-  progressBar.style.transition = 'width 300ms ease';
-  progressBar.style.width = '0%';
+      // Animate progress line back to 0 when switching chapters
+      progressBar.style.transition = 'width 300ms ease';
+      // force the animation even if width is already 0 -> set to 0%
+      progressBar.style.width = '0%';
 
-  container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
-  container.scrollTop = 0;
+      // show linear loading indicator in content area (MDUI component)
+      container.innerHTML = "<em><mdui-linear-progress></mdui-linear-progress></em>";
+      container.scrollTop = 0;
 
-  try {
-    const res = await fetch(filePath);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    let text = applyCharacterReplacements((await res.text()).trim());
-    const html = marked.parse(text);
-    container.innerHTML = html;
+      try {
+        const res = await fetch(filePath);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        let text = (await res.text()).trim();
+        text = applyCharacterReplacements(text);
+        const html = marked.parse(text);
+        container.innerHTML = html;
 
-    const h1 = new DOMParser().parseFromString(html, 'text/html').querySelector('h1');
-    titleDiv.textContent = h1 ? h1.textContent : '';
-    store.set('lastChapter', num);
-    $('currentChapterValue').value = num;
-    rafUpdate();
-  } catch {
-    container.innerHTML = "<em>Could not load chapter.</em>";
-    titleDiv.textContent = "";
-    rafUpdate();
-  }
-}
+        const parsed = new DOMParser().parseFromString(html, 'text/html');
+        const h1 = parsed.querySelector('h1');
+        titleDiv.textContent = h1 ? h1.textContent : '';
+        store.set('lastChapter', num);
+        $('currentChapterValue').value = num;
+        rafUpdate();
+      } catch {
+        container.innerHTML = "<em>Could not load chapter.</em>";
+        titleDiv.textContent = "";
+        // ensure the progress bar reflects no content
+        rafUpdate();
+      }
+    }
+
 
 /* Navigation */
 const currentChapterNum = () => {
