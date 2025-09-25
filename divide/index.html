@@ -134,42 +134,26 @@
 
   <!-- Theme handling -->
   <script defer>
-    function setCookie(name, value, days = 365) {
-      const d = new Date();
-      d.setTime(d.getTime() + days * 864e5);
-      document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
-    }
+  /* Storage helpers */
+const store = {
+  set: (key, value) => localStorage.setItem(key, value),
+  get: key => localStorage.getItem(key)
+};
 
-    function getCookie(name) {
-      return document.cookie.split(';').map(c => c.trim())
-        .find(c => c.startsWith(name + '='))?.split('=').slice(1).join('=') || null;
-    }
-
-    function toggleThemeBySwitch(isChecked) {
-      const doc = document.documentElement;
-      if (isChecked) {
-        doc.classList.add('mdui-theme-dark');
-        doc.classList.remove('mdui-theme-light');
-        setCookie('theme', 'mdui-theme-dark');
-      } else {
-        doc.classList.remove('mdui-theme-dark');
-        doc.classList.add('mdui-theme-light');
-        setCookie('theme', 'mdui-theme-light');
-      }
-    }
+/* Theme toggle */
+function toggleThemeBySwitch(isChecked) {
+  const doc = document.documentElement;
+  doc.classList.toggle('mdui-theme-dark', isChecked);
+  doc.classList.toggle('mdui-theme-light', !isChecked);
+  store.set('theme', isChecked ? 'mdui-theme-dark' : 'mdui-theme-light');
+}
 
     window.addEventListener('load', () => {
-      const themeSwitch = document.getElementById('themeSwitch');
-      themeSwitch.addEventListener('change', e => toggleThemeBySwitch(e.target.checked));
-
-      const savedTheme = getCookie('theme');
-      if (savedTheme === 'mdui-theme-dark') {
-        document.documentElement.classList.add('mdui-theme-dark');
-        themeSwitch.checked = true;
-      } else {
-        document.documentElement.classList.add('mdui-theme-light');
-        themeSwitch.checked = false;
-      }
+ /* Restore prefs */
+  if (store.get('theme') === 'mdui-theme-dark') {
+    document.documentElement.classList.add('mdui-theme-dark');
+    $('themeSwitch').checked = true;
+  }
     });
   </script>
 </body>
