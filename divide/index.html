@@ -154,6 +154,7 @@ function toggleTheme(on) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  $('themeSwitch').addEventListener('change', e => toggleTheme(e.target.checked));
 // Restore prefs
   if (store.get('themeDark')) {
     document.documentElement.classList.add('mdui-theme-dark');
