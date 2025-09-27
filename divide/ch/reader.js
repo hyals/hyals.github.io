@@ -79,9 +79,9 @@ function renderChapter(text, chapter) {
   requestAnimationFrame(() => {
     const html = marked.parse(text);
     DOM.container.innerHTML = applyCharacterReplacements(html);
-    window.scrollTo(0,0);
     DOM.bar.style.width = '0%';
     DOM.titleDiv.textContent = chapter.name;
+    window.scrollTo(0,0);
   });
   store.set("lastChapter", chapter.num);
 }
@@ -134,7 +134,6 @@ function toggleTheme(isDark) {
   document.documentElement.classList.toggle('mdui-theme-dark', isDark);
   document.documentElement.classList.toggle('mdui-theme-light', !isDark);
   store.set('themeDark', isDark);
-  requestAnimationFrame(updateScrollProgress);
 }
 
 /* ---------------- Progress bar ---------------- */
