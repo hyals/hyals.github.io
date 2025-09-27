@@ -79,7 +79,7 @@ function renderChapter(text, chapter) {
   requestAnimationFrame(() => {
     const html = marked.parse(text);
     DOM.container.innerHTML = applyCharacterReplacements(html);
-    DOM.container.scrollTop = 0;
+    window.scrollTo(0,0);
     DOM.bar.style.width = '0%';
     DOM.titleDiv.textContent = chapter.name;
   });
