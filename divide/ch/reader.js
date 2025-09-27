@@ -58,7 +58,6 @@ async function loadChapter(num) {
   }
 
   // Otherwise fetch from server
-  DOM.bar.style.width = '0%';
   DOM.container.innerHTML = `<mdui-linear-progress></mdui-linear-progress>`;
   DOM.titleDiv.textContent = "";
 
@@ -81,6 +80,7 @@ function renderChapter(text, chapter) {
     const html = marked.parse(text);
     DOM.container.innerHTML = applyCharacterReplacements(html);
     DOM.container.scrollTop = 0;
+    DOM.bar.style.width = '0%';
     DOM.titleDiv.textContent = chapter.name;
   });
   store.set("lastChapter", chapter.num);
