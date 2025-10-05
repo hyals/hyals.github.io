@@ -173,7 +173,7 @@ window.addEventListener('DOMContentLoaded', () => {
     $('themeSwitch').checked = themeDark;
   }
   const fontSize = store.get('fontSize');
-  if (fontSize) DOM.container.style.setProperty('--font-size', fontSize + 'px');
+  if (fontSize) DOM.container.style.setProperty('--ch-font-size', fontSize + 'px');
 
   // Init chapters
   generateChapterOptions();
