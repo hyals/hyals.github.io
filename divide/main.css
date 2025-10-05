@@ -1,3 +1,7 @@
+:root {
+  --ch-font-size: 18px;
+}
+
 body {
       font-family: "Roboto", sans-serif;
       margin:auto;
@@ -123,7 +127,7 @@ padding-left:1rem;
     #chapter-container {
       padding: 2rem 20px 0;
       font-family: Georgia, serif;
-      font-size: var(--font-size, 18px);
+      font-size: var(--ch-font-size, 18px);
       line-height: 1.8;
       white-space: pre-wrap;
       transition: all 0.3s;
