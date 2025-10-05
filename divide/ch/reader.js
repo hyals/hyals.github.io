@@ -122,10 +122,10 @@ function generateChapterOptions() {
 
 /* ---------------- Font size ---------------- */
 function changeFontSize(delta) {
-  const cur = parseInt(getComputedStyle(DOM.container).fontSize, 10) || 18;
-  const size = Math.min(CONFIG.maxFontSize, Math.max(CONFIG.minFontSize, cur + delta));
-  DOM.container.style.fontSize = size + 'px';
-  store.set('fontSize', size);
+  const cur = parseInt(getComputedStyle(DOM.container).fontSize, 10);
+  const next = Math.min(CONFIG.maxFontSize, Math.max(CONFIG.minFontSize, cur + delta));
+  DOM.container.style.setProperty('--ch-font-size', next + 'px');
+  store.set('fontSize', next);
   requestAnimationFrame(updateScrollProgress);
 }
 
@@ -173,7 +173,7 @@ window.addEventListener('DOMContentLoaded', () => {
     $('themeSwitch').checked = themeDark;
   }
   const fontSize = store.get('fontSize');
-  if (fontSize) DOM.container.style.fontSize = fontSize + 'px';
+  if (fontSize) DOM.container.style.setProperty('--font-size', fontSize + 'px');
 
   // Init chapters
   generateChapterOptions();
