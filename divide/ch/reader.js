@@ -36,7 +36,7 @@ function applyCharacterReplacements(text) {
   return text.replace(/\[(\w+)\]\s*(.*)/g, (m, key, dialogue) => {
     const char = CONFIG.characterNames[key];
     return char
-      ? `<fieldset class="character-box ${char.color}"><legend><mdui-icon name="person" style="vertical-align:middle"></mdui-icon>${char.label}</legend><p>${dialogue}</p></fieldset>`
+      ? `<fieldset class="character-box ${char.color}"><legend style="display:flex;align-items:center"><mdui-icon name="person"></mdui-icon>${char.label}</legend><p>${dialogue}</p></fieldset>`
       : m;
   });
 }
